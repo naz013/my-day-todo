@@ -1,8 +1,10 @@
-package com.github.naz013.tasker.data
+package com.github.naz013.tasker.home
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Ignore
-import android.arch.persistence.room.PrimaryKey
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LiveData
+import com.github.naz013.tasker.data.AppDb
+import com.github.naz013.tasker.data.TaskGroup
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -19,17 +21,7 @@ import android.arch.persistence.room.PrimaryKey
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@Entity
-data class Task(
-        @PrimaryKey(autoGenerate = true)
-        var id: Int,
-        var done: Boolean,
-        var summary: String,
-        var groupId: Int,
-        var important: Boolean,
-        var comment: String,
-        var dt: String
-) {
-    @Ignore
-    constructor() : this(0, false, "", 0, false, "", "")
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
+
+    val data: LiveData<List<TaskGroup>> = AppDb.getInMemoryDatabase(application.applicationContext).groupDao().loadAll()
 }

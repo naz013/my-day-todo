@@ -11,7 +11,7 @@
         android:padding="16dp"
         android:text="My Day"
         android:textColor="@color/colorAccent"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView

@@ -1,10 +1,9 @@
 package com.github.naz013.tasker.data
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy.REPLACE
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.TypeConverter
+import com.github.naz013.tasker.data.Task
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -21,14 +20,13 @@ import android.arch.persistence.room.Query
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@Dao
-interface TaskDao {
-    @Query("select * from Task")
-    fun loadAll(): LiveData<Task?>
+class TasksConverter {
+    @TypeConverter
+    fun toJson(items: List<Task>): String = Gson().toJson(items)
 
-    @Insert(onConflict = REPLACE)
-    fun insert(item: Task)
-
-    @Query("DELETE FROM Task")
-    fun deleteAll()
+    @TypeConverter
+    fun toList(json: String): List<Task> {
+        val type = object : TypeToken<List<Task>>() {}.type
+        return Gson().fromJson(json, type)
+    }
 }

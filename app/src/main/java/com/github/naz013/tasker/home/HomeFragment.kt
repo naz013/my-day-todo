@@ -1,11 +1,16 @@
 package com.github.naz013.tasker.home
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.BaseFragment
+import com.github.naz013.tasker.data.TaskGroup
+import com.github.naz013.tasker.task.AddTaskFragment
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -33,6 +38,9 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    private var mAdapter: TasksListAdapter? = null
+    private lateinit var viewModel: HomeViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
@@ -40,6 +48,36 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fab.onClick { openSettings() }
+
+        mAdapter = TasksListAdapter()
+        mAdapter?.callback = { position, action ->
+            performAction(position, action)
+        }
+
+        tasksList.layoutManager = LinearLayoutManager(context)
+        tasksList.adapter = mAdapter
+
+        initViewModel()
+    }
+
+    private fun performAction(group: TaskGroup, action: Int) {
+        when (action) {
+            TasksListAdapter.OPEN -> openGroup(group)
+            TasksListAdapter.ADD -> openAddScreen(group)
+        }
+    }
+
+    private fun openAddScreen(group: TaskGroup) {
+        navInterface?.openFragment(AddTaskFragment.newInstance(group.id), AddTaskFragment.TAG)
+    }
+
+    private fun openGroup(group: TaskGroup) {
+
+    }
+
+    private fun initViewModel() {
+        viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        viewModel.data.observe(this, Observer { data -> if (data != null) mAdapter?.setData(data) })
     }
 
     private fun openSettings() {

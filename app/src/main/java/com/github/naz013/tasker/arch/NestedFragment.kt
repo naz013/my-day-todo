@@ -15,5 +15,5 @@ package com.github.naz013.tasker.arch
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class NestedFragment : BaseFragment() {
+abstract class NestedFragment : BaseFragment() {
 }

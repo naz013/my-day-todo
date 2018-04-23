@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
 import android.arch.persistence.room.Query
+import android.arch.persistence.room.Transaction
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -23,12 +24,20 @@ import android.arch.persistence.room.Query
  */
 @Dao
 interface GroupDao {
-    @Query("select * from task_group")
-    fun loadAll(): LiveData<TaskGroup?>
+    @Transaction
+    @Query("select * from TaskGroup order by position")
+    fun loadAll(): LiveData<List<TaskGroup>>
+
+    @Query("select * from TaskGroup where id = :id")
+    fun loadById(id: Int): LiveData<TaskGroup?>
+
+    @Transaction
+    @Query("select * from TaskGroup order by position")
+    fun getAll(): List<TaskGroup>
 
     @Insert(onConflict = REPLACE)
     fun insert(group: TaskGroup)
 
-    @Query("DELETE FROM task_group")
+    @Query("DELETE FROM TaskGroup")
     fun deleteAll()
 }

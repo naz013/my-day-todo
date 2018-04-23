@@ -1,7 +1,6 @@
 package com.github.naz013.tasker.data
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -18,5 +17,16 @@ import android.arch.persistence.room.PrimaryKey
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@Entity(tableName = "task_group")
-data class TaskGroup(@PrimaryKey(autoGenerate = true) var id: Int, var name: String = "", var color: String = "#ff0000")
+@Entity(indices = [Index("position"), Index("name")])
+@TypeConverters(TasksConverter::class)
+data class TaskGroup(
+        @PrimaryKey(autoGenerate = true)
+        var id: Int,
+        var color: String,
+        var position: Int,
+        var name: String,
+        var tasks: MutableList<Task>
+) {
+    @Ignore
+    constructor():this(0, "", 0, "", mutableListOf())
+}

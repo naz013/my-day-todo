@@ -1,6 +1,16 @@
 package com.github.naz013.tasker.task
 
-import com.github.naz013.tasker.arch.BaseFragment
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.os.Bundle
+import android.text.TextUtils
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.github.naz013.tasker.R
+import com.github.naz013.tasker.arch.NestedFragment
+import com.github.naz013.tasker.data.TaskGroup
+import kotlinx.android.synthetic.main.fragment_add.*
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -17,5 +27,54 @@ import com.github.naz013.tasker.arch.BaseFragment
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class AddTaskFragment : BaseFragment() {
+class AddTaskFragment : NestedFragment() {
+
+    companion object {
+        const val TAG = "AddTaskFragment"
+        private const val ARG_ID = "arg_id"
+        fun newInstance(id: Int): AddTaskFragment {
+            val fragment = AddTaskFragment()
+            val bundle = Bundle()
+            bundle.putInt(ARG_ID, id)
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
+
+    private var mGroupId: Int = 0
+    private var mGroup: TaskGroup? = null
+    private lateinit var viewModel: AddViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (arguments != null) {
+            mGroupId = arguments?.getInt(ARG_ID)!!
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_add, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModel = ViewModelProviders.of(this, AddViewModel.Factory(activity?.application!!, mGroupId)).get(AddViewModel::class.java)
+        viewModel.data.observe(this, Observer { group -> if (group != null) showGroup(group) })
+    }
+
+    private fun showGroup(group: TaskGroup) {
+        mGroup = group
+        groupTitleView.text = group.name
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val summary = summaryView.text.toString().trim()
+        val group = mGroup
+        if (!TextUtils.isEmpty(summary) && group != null) viewModel.saveTask(summary, group)
+    }
 }

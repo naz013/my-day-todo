@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity(), NavInterface {
     }
 
     override fun onFragmentSelect(fragment: BaseFragment) {
-
+        this.fragment = fragment
     }
 
     override fun openFragment(fragment: BaseFragment, tag: String) {

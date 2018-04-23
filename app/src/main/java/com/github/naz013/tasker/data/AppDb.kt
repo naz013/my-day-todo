@@ -26,7 +26,6 @@ import android.content.Context
 abstract class AppDb : RoomDatabase() {
 
     abstract fun groupDao(): GroupDao
-    abstract fun taskDao(): TaskDao
 
     companion object {
         private val DB_NAME = "app_db"
@@ -47,7 +46,6 @@ abstract class AppDb : RoomDatabase() {
 
     fun cleanDb() {
         groupDao().deleteAll()
-        taskDao().deleteAll()
     }
 }
 
