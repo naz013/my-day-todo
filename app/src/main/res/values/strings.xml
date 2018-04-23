@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Tasker</string>
+    <string name="press_again_to_exit">Press again to exit</string>
 </resources>
