@@ -46,32 +46,11 @@ class MainActivity : AppCompatActivity(), NavInterface {
         moveBack()
     }
 
-    private fun moveBack() {
-        if (fragment != null) {
-            if (fragment is NestedFragment && fragment?.canGoBack()!!) {
-                super.onBackPressed()
-                return
-            }
-        }
-        if (isBackPressed) {
-            if (System.currentTimeMillis() - pressedTime < PRESS_AGAIN_TIME) {
-                finish()
-            } else {
-                isBackPressed = false
-                onBackPressed()
-            }
-        } else {
-            isBackPressed = true
-            pressedTime = System.currentTimeMillis()
-            Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show()
-        }
-    }
-
     private fun replaceFragment(fragment: Fragment, tag: String) {
         clearBackStack()
         val ft = supportFragmentManager.beginTransaction()
         ft.add(R.id.fragmentContainer, fragment, tag)
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         ft.addToBackStack(tag)
         ft.commit()
     }
@@ -90,8 +69,29 @@ class MainActivity : AppCompatActivity(), NavInterface {
     override fun openFragment(fragment: BaseFragment, tag: String) {
         val ft = supportFragmentManager.beginTransaction()
         ft.add(R.id.fragmentContainer, fragment, tag)
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         ft.addToBackStack(tag)
         ft.commit()
+    }
+
+    override fun moveBack() {
+        if (fragment != null) {
+            if (fragment is NestedFragment && fragment?.canGoBack()!!) {
+                super.onBackPressed()
+                return
+            }
+        }
+        if (isBackPressed) {
+            if (System.currentTimeMillis() - pressedTime < PRESS_AGAIN_TIME) {
+                finish()
+            } else {
+                isBackPressed = false
+                onBackPressed()
+            }
+        } else {
+            isBackPressed = true
+            pressedTime = System.currentTimeMillis()
+            Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show()
+        }
     }
 }

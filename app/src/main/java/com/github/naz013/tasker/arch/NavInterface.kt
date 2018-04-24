@@ -19,4 +19,6 @@ interface NavInterface {
     fun onFragmentSelect(fragment: BaseFragment)
 
     fun openFragment(fragment: BaseFragment, tag: String)
+
+    fun moveBack()
 }

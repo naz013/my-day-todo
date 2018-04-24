@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.data.TaskGroup
+import com.github.naz013.tasker.settings.SettingsFragment
 import com.github.naz013.tasker.task.AddTaskFragment
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -81,6 +82,6 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun openSettings() {
-
+        navInterface?.openFragment(SettingsFragment.newInstance(), SettingsFragment.TAG)
     }
 }

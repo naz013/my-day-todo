@@ -30,7 +30,7 @@ class TaskerApp : Application() {
             val groups = db.groupDao().getAll()
             if (groups.isEmpty()) {
                 db.groupDao().insert(TaskGroup(0, "#FF4081", 0, "Todo", mutableListOf()))
-                db.groupDao().insert(TaskGroup(0, "#00E676", 1, "Places to go", mutableListOf()))
+                db.groupDao().insert(TaskGroup(0, "#69F0AE", 1, "Places to go", mutableListOf()))
                 db.groupDao().insert(TaskGroup(0, "#FFAB40", 2, "Talk with", mutableListOf()))
             }
         }
