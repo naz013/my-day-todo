@@ -145,6 +145,6 @@
         android:layout_margin="16dp"
         app:backgroundTint="?colorAccent"
         app:fabSize="mini"
-        app:srcCompat="@drawable/ic_clear_white" />
+        app:srcCompat="@drawable/ic_left_arrow_white" />
 
 </RelativeLayout>
