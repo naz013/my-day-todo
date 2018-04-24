@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_checked="true" android:drawable="@drawable/ic_favourite_on" />
-    <item android:state_checked="false" android:drawable="@drawable/ic_favourite_off" />
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:enterFadeDuration="@android:integer/config_shortAnimTime" android:exitFadeDuration="@android:integer/config_shortAnimTime">
+    <item android:drawable="@drawable/ic_favourite_on" android:state_checked="true" />
+    <item android:drawable="@drawable/ic_favourite_off" android:state_checked="false" />
     <item android:drawable="@drawable/ic_favourite_off" />
 </selector>

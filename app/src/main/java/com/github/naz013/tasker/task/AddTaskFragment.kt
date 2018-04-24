@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.data.TaskGroup
+import com.github.naz013.tasker.utils.Prefs
+import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_add.*
 
 /**
@@ -61,6 +63,16 @@ class AddTaskFragment : NestedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
+
+        if (!Prefs.getInstance(context!!).isCreateBannerShown()) {
+            closeButton.onClick { hideBanner() }
+            bannerView.visibility = View.VISIBLE
+        } else bannerView.visibility = View.GONE
+    }
+
+    private fun hideBanner() {
+        Prefs.getInstance(context!!).setCreateBannerShown(true)
+        bannerView.visibility = View.GONE
     }
 
     private fun initViewModel() {
