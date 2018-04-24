@@ -1,11 +1,8 @@
 package com.github.naz013.tasker.data
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
+import android.arch.persistence.room.*
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
-import android.arch.persistence.room.Query
-import android.arch.persistence.room.Transaction
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -37,6 +34,12 @@ interface GroupDao {
 
     @Insert(onConflict = REPLACE)
     fun insert(group: TaskGroup)
+
+    @Insert(onConflict = REPLACE)
+    fun insert(groups: List<TaskGroup>)
+
+    @Delete
+    fun delete(group: TaskGroup)
 
     @Query("DELETE FROM TaskGroup")
     fun deleteAll()

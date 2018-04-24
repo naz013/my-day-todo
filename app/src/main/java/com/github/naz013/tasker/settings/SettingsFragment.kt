@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.NestedFragment
+import com.github.naz013.tasker.settings.groups.GroupsFragment
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_settings.*
@@ -44,6 +45,7 @@ class SettingsFragment : NestedFragment() {
         fab.onClick { navInterface?.moveBack() }
         favButton.onClick { changeFav() }
         fontButton.onClick { navInterface?.openFragment(FontSizeSettingsFragment.newInstance(), FontSizeSettingsFragment.TAG) }
+        groupButton.onClick { navInterface?.openFragment(GroupsFragment.newInstance(), GroupsFragment.TAG) }
 
         initFav()
     }

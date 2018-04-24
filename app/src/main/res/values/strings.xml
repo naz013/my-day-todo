@@ -10,4 +10,5 @@
     <string name="favorite_first">Favorite First</string>
     <string name="font_size">Font Size</string>
     <string name="task_automatically_saves_on_exit">Task automatically saves on exit</string>
+    <string name="add_group">Add Group</string>
 </resources>

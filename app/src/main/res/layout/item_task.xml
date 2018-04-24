@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="4dp"
+    android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/statusView"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginTop="2dp"
         app:srcCompat="@drawable/ic_status_check" />
 
     <TextView
@@ -29,16 +29,16 @@
     <ImageView
         android:id="@+id/favouriteView"
         android:layout_width="32dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="2dp"
+        android:layout_height="32dp"
+        android:scaleType="centerInside"
         app:srcCompat="@drawable/ic_favourite_on" />
 
     <ImageView
         android:id="@+id/deleteView"
         android:layout_width="32dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="2dp"
+        android:layout_height="32dp"
+        android:scaleType="centerInside"
         android:visibility="gone"
-        app:srcCompat="@drawable/ic_garbage_red" />
+        app:srcCompat="@drawable/ic_delete_forever_red" />
 
 </LinearLayout>
