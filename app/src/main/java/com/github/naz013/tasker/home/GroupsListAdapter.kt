@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.data.Task
 import com.github.naz013.tasker.data.TaskGroup
+import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.item_group.view.*
 import kotlinx.android.synthetic.main.item_task.view.*
@@ -76,11 +77,16 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>() {
             itemView.cardView.onClick { callback?.invoke(items[adapterPosition], OPEN) }
         }
 
-        private fun loadItems(container: LinearLayout, list: List<Task>) {
+        private fun loadItems(container: LinearLayout, list: MutableList<Task>) {
             container.isFocusableInTouchMode = false
             container.isFocusable = false
             container.removeAllViewsInLayout()
-            list.sortedByDescending { it.important }.sortedBy { it.done }.forEach {
+            var items = list
+            val isImportantEnabled = Prefs.getInstance(container.context).isImportantEnabled()
+            if (isImportantEnabled) {
+                items = items.sortedByDescending { it.important }.toMutableList()
+            }
+            items.sortedBy { it.done }.forEach {
                 val binding = LayoutInflater.from(container.context).inflate(R.layout.item_task, container, false)
                 val checkView = binding.statusView
                 val textView = binding.summaryView

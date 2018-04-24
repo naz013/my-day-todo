@@ -85,4 +85,9 @@ class HomeFragment : BaseFragment() {
     private fun openSettings() {
         navInterface?.openFragment(SettingsFragment.newInstance(), SettingsFragment.TAG)
     }
+
+    override fun onBackStackResume() {
+        super.onBackStackResume()
+        mAdapter?.notifyDataSetChanged()
+    }
 }

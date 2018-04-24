@@ -2,6 +2,11 @@
     <string name="app_name">My Day</string>
     <string name="press_again_to_exit">Press again to exit</string>
     <string name="new_task">New Task</string>
+    <string name="new_group">New Group</string>
+    <string name="edit_group">Edit Group</string>
     <string name="summary">Summary</string>
     <string name="settings">Settings</string>
+    <string name="groups">Groups</string>
+    <string name="favorite_first">Favorite First</string>
+    <string name="font_size">Font Size</string>
 </resources>

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.NestedFragment
+import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_settings.*
 
@@ -41,6 +42,22 @@ class SettingsFragment : NestedFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         fab.onClick { navInterface?.moveBack() }
+        favButton.onClick { changeFav() }
 
+        initFav()
+    }
+
+    private fun initFav() {
+        if (Prefs.getInstance(context!!).isImportantEnabled()) {
+            favIcon.setBackgroundResource(R.drawable.round_green)
+        } else {
+            favIcon.setBackgroundResource(R.drawable.round_red)
+        }
+    }
+
+    private fun changeFav() {
+        val prefs = Prefs.getInstance(context!!)
+        prefs.setImportantEnabled(!prefs.isImportantEnabled())
+        initFav()
     }
 }

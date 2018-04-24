@@ -12,6 +12,7 @@ import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.data.Task
 import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.task.AddViewModel
+import com.github.naz013.tasker.utils.Prefs
 import kotlinx.android.synthetic.main.fragment_view_group.*
 
 /**
@@ -87,6 +88,11 @@ class ViewGroupFragment : NestedFragment() {
     private fun showGroup(group: TaskGroup) {
         mGroup = group
         titleView.text = group.name
-        mAdapter.setData(group.tasks.sortedByDescending { it.important }.sortedBy { it.done })
+        var list = group.tasks
+        val isImportantEnabled = Prefs.getInstance(context!!).isImportantEnabled()
+        if (isImportantEnabled) {
+            list = list.sortedByDescending { it.important }.toMutableList()
+        }
+        mAdapter.setData(list.sortedBy { it.done })
     }
 }

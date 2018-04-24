@@ -23,10 +23,9 @@ open class Prefs private constructor(context: Context) {
     companion object {
 
         private const val PREFS_NAME = "my_day"
-        private const val OFFLINE_MODE = "offline_mode"
-        private const val START_DAY = "start_day"
-        private const val INTRO_SHOWED = "intro_showed"
-        private const val STORAGE_ASKED = "storage_asked"
+        private const val IMPORTANT_FIRST = "important_first"
+        private const val CLEAR_DAY = "clear_day"
+        private const val FONT_SIZE = "font_size"
 
         private var instance: Prefs? = null
 
@@ -47,29 +46,23 @@ open class Prefs private constructor(context: Context) {
 
     private var prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    fun setStartDay(value: Int) {
-        putInt(START_DAY, value)
+    fun setFontSize(value: Int) {
+        putInt(FONT_SIZE, value)
     }
 
-    fun getStartDay(): Int = getInt(START_DAY)
+    fun getFontSize(): Int = getInt(FONT_SIZE, 14)
 
-    fun setIntroShowed(value: Boolean) {
-        putBoolean(INTRO_SHOWED, value)
+    fun setImportantEnabled(value: Boolean) {
+        putBoolean(IMPORTANT_FIRST, value)
     }
 
-    fun isIntroShowed(): Boolean = getBoolean(INTRO_SHOWED)
+    fun isImportantEnabled(): Boolean = getBoolean(IMPORTANT_FIRST)
 
-    fun setStorageAsked(value: Boolean) {
-        putBoolean(STORAGE_ASKED, value)
+    fun setClearOnDay(value: Boolean) {
+        putBoolean(CLEAR_DAY, value)
     }
 
-    fun isStorageAsked(): Boolean = getBoolean(STORAGE_ASKED)
-
-    fun setOfflineMode(offline: Boolean) {
-        putBoolean(OFFLINE_MODE, offline)
-    }
-
-    fun isOfflineMode(): Boolean = getBoolean(OFFLINE_MODE)
+    fun isClearOnDay(): Boolean = getBoolean(CLEAR_DAY)
 
     private fun putString(stringToSave: String, value: String) {
         prefs.edit().putString(stringToSave, value).apply()
@@ -79,12 +72,12 @@ open class Prefs private constructor(context: Context) {
         prefs.edit().putInt(stringToSave, value).apply()
     }
 
-    private fun getInt(stringToLoad: String): Int {
+    private fun getInt(stringToLoad: String, def: Int): Int {
         return try {
-            prefs.getInt(stringToLoad, 0)
+            prefs.getInt(stringToLoad, def)
         } catch (e: ClassCastException) {
             try {
-                Integer.parseInt(prefs.getString(stringToLoad, "0"))
+                Integer.parseInt(prefs.getString(stringToLoad, "$def"))
             } catch (e1: ClassCastException) {
                 0
             }
