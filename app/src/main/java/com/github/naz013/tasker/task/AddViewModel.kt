@@ -38,6 +38,12 @@ class AddViewModel(application: Application, val id: Int) : AndroidViewModel(app
         }
     }
 
+    fun saveGroup(group: TaskGroup) {
+        async(CommonPool) {
+            mDb.groupDao().insert(group)
+        }
+    }
+
     class Factory(private val application: Application, val id: Int) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")

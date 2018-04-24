@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.item_task.view.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class TasksListAdapter : RecyclerView.Adapter<TasksListAdapter.Holder>() {
+class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>() {
 
     companion object {
         const val ADD = 0
@@ -62,7 +62,7 @@ class TasksListAdapter : RecyclerView.Adapter<TasksListAdapter.Holder>() {
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(taskGroup: TaskGroup) {
-            Log.d("TasksListAdapter", "bind: $taskGroup")
+            Log.d("GroupsListAdapter", "bind: $taskGroup")
             val drawable = itemView.groupTitleView.background as GradientDrawable
             drawable.setColor(Color.parseColor(taskGroup.color))
 

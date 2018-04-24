@@ -7,8 +7,9 @@
 
     <ImageView
         android:id="@+id/statusView"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="2dp"
         app:srcCompat="@drawable/ic_status_check" />
 
     <TextView
@@ -21,12 +22,22 @@
         android:layout_weight="1"
         android:maxLines="2"
         android:text="Hello"
+        android:textColor="@color/colorAccent"
         android:textSize="14sp" />
 
     <ImageView
         android:id="@+id/favouriteView"
         android:layout_width="32dp"
-        android:layout_height="16dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="2dp"
         app:srcCompat="@drawable/ic_favourite_on" />
+
+    <ImageView
+        android:id="@+id/deleteView"
+        android:layout_width="32dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="2dp"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_clear_red" />
 
 </LinearLayout>

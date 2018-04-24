@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.data.TaskGroup
+import com.github.naz013.tasker.group.view.ViewGroupFragment
 import com.github.naz013.tasker.settings.SettingsFragment
 import com.github.naz013.tasker.task.AddTaskFragment
 import com.mcxiaoke.koi.ext.onClick
@@ -39,7 +40,7 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    private var mAdapter: TasksListAdapter? = null
+    private var mAdapter: GroupsListAdapter? = null
     private lateinit var viewModel: HomeViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,7 +51,7 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         fab.onClick { openSettings() }
 
-        mAdapter = TasksListAdapter()
+        mAdapter = GroupsListAdapter()
         mAdapter?.callback = { position, action ->
             performAction(position, action)
         }
@@ -63,8 +64,8 @@ class HomeFragment : BaseFragment() {
 
     private fun performAction(group: TaskGroup, action: Int) {
         when (action) {
-            TasksListAdapter.OPEN -> openGroup(group)
-            TasksListAdapter.ADD -> openAddScreen(group)
+            GroupsListAdapter.OPEN -> openGroup(group)
+            GroupsListAdapter.ADD -> openAddScreen(group)
         }
     }
 
@@ -73,7 +74,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun openGroup(group: TaskGroup) {
-
+        navInterface?.openFragment(ViewGroupFragment.newInstance(group.id), ViewGroupFragment.TAG)
     }
 
     private fun initViewModel() {
