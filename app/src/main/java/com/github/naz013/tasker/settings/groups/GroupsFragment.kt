@@ -14,7 +14,6 @@ import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.arch.OnStartDragListener
 import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.group.AddGroupFragment
-import com.github.naz013.tasker.group.view.ViewGroupFragment
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_groups.*
 
@@ -88,7 +87,7 @@ class GroupsFragment : NestedFragment(), OnStartDragListener {
     }
 
     private fun openGroup(group: TaskGroup) {
-        navInterface?.openFragment(ViewGroupFragment.newInstance(group.id), ViewGroupFragment.TAG)
+        navInterface?.openFragment(AddGroupFragment.newInstance(group.id), AddGroupFragment.TAG)
     }
 
     private fun initViewModel() {

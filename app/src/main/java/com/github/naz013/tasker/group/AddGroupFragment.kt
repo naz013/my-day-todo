@@ -2,8 +2,6 @@ package com.github.naz013.tasker.group
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -13,9 +11,10 @@ import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.task.AddViewModel
+import com.github.naz013.tasker.utils.GroupColorsController
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
-import kotlinx.android.synthetic.main.fragment_add.*
+import kotlinx.android.synthetic.main.fragment_add_group.*
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -49,6 +48,7 @@ class AddGroupFragment : NestedFragment() {
     private var mGroupId: Int = 0
     private var mGroup: TaskGroup? = null
     private lateinit var viewModel: AddViewModel
+    private lateinit var colorsController: GroupColorsController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,21 +58,24 @@ class AddGroupFragment : NestedFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_add, container, false)
+        return inflater.inflate(R.layout.fragment_add_group, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
 
-        if (!Prefs.getInstance(context!!).isCreateBannerShown()) {
+        if (!Prefs.getInstance(context!!).isGroupBannerShown()) {
             closeButton.onClick { hideBanner() }
             bannerView.visibility = View.VISIBLE
         } else bannerView.visibility = View.GONE
+
+        colorsController = GroupColorsController()
+        colorsController.fillSlider(colorSwitchContainer)
     }
 
     private fun hideBanner() {
-        Prefs.getInstance(context!!).setCreateBannerShown(true)
+        Prefs.getInstance(context!!).setGroupBannerShown(true)
         bannerView.visibility = View.GONE
     }
 
@@ -83,15 +86,25 @@ class AddGroupFragment : NestedFragment() {
 
     private fun showGroup(group: TaskGroup) {
         mGroup = group
-        groupTitleView.text = group.name
-        val drawable = groupTitleView.background as GradientDrawable
-        drawable.setColor(Color.parseColor(group.color))
+        nameView.setText(group.name)
+        titleView.text = getString(R.string.edit_group)
+        colorsController.selectColor(group.color)
     }
 
     override fun onStop() {
         super.onStop()
-        val summary = summaryView.text.toString().trim()
-        val group = mGroup
-        if (!TextUtils.isEmpty(summary) && group != null) viewModel.saveTask(summary, group, favouriteView.isChecked)
+        val summary = nameView.text.toString().trim()
+        var group = mGroup
+        if (!TextUtils.isEmpty(summary)) {
+            if (group == null) {
+                group = TaskGroup().apply {
+                    position = 100
+                }
+            }
+            viewModel.saveGroup(group.apply {
+                this.name = summary
+                this.color = colorsController.getSelectedColor()
+            })
+        }
     }
 }

@@ -27,6 +27,7 @@ open class Prefs private constructor(context: Context) {
         private const val CLEAR_DAY = "clear_day"
         private const val FONT_SIZE = "font_size"
         private const val CREATE_BANNER_SHOWN = "create_banner_shown"
+        private const val GROUP_BANNER_SHOWN = "group_banner_shown"
 
         private var instance: Prefs? = null
 
@@ -64,6 +65,12 @@ open class Prefs private constructor(context: Context) {
     }
 
     fun isCreateBannerShown(): Boolean = getBoolean(CREATE_BANNER_SHOWN)
+
+    fun setGroupBannerShown(value: Boolean) {
+        putBoolean(GROUP_BANNER_SHOWN, value)
+    }
+
+    fun isGroupBannerShown(): Boolean = getBoolean(GROUP_BANNER_SHOWN)
 
     fun setClearOnDay(value: Boolean) {
         putBoolean(CLEAR_DAY, value)

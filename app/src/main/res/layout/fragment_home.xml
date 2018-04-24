@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -18,21 +18,21 @@
         android:id="@+id/tasksList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/titleView"
         android:layout_gravity="bottom"
         android:layout_marginTop="16dp"
         android:overScrollMode="never"
-        android:scrollbars="none"
-        app:layout_anchor="@+id/titleView"
-        app:layout_anchorGravity="bottom" />
+        android:scrollbars="none" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
         app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_menu_white" />
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

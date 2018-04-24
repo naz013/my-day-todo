@@ -9,6 +9,7 @@
     <string name="groups">Groups</string>
     <string name="favorite_first">Favorite First</string>
     <string name="font_size">Font Size</string>
-    <string name="task_automatically_saves_on_exit">Task automatically saves on exit</string>
-    <string name="add_group">Add Group</string>
+    <string name="task_automatically_saves_on_exit">Task will be automatically saved on exit</string>
+    <string name="group_automatically_saves_on_exit">Group will be automatically saved on exit</string>
+    <string name="name">Name</string>
 </resources>
