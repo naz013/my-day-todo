@@ -2,6 +2,8 @@ package com.github.naz013.tasker.task
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -69,12 +71,14 @@ class AddTaskFragment : NestedFragment() {
     private fun showGroup(group: TaskGroup) {
         mGroup = group
         groupTitleView.text = group.name
+        val drawable = groupTitleView.background as GradientDrawable
+        drawable.setColor(Color.parseColor(group.color))
     }
 
     override fun onStop() {
         super.onStop()
         val summary = summaryView.text.toString().trim()
         val group = mGroup
-        if (!TextUtils.isEmpty(summary) && group != null) viewModel.saveTask(summary, group)
+        if (!TextUtils.isEmpty(summary) && group != null) viewModel.saveTask(summary, group, favouriteView.isChecked)
     }
 }

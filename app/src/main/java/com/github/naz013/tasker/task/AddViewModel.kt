@@ -31,9 +31,9 @@ class AddViewModel(application: Application, val id: Int) : AndroidViewModel(app
     private val mDb = AppDb.getInMemoryDatabase(application.applicationContext)
     val data: LiveData<TaskGroup?> = mDb.groupDao().loadById(id)
 
-    fun saveTask(summary: String, group: TaskGroup) {
+    fun saveTask(summary: String, group: TaskGroup, important: Boolean) {
         async(CommonPool) {
-            group.tasks.add(Task(0, false, summary, group.id, false, "", ""))
+            group.tasks.add(Task(0, false, summary, group.id, important, "", ""))
             mDb.groupDao().insert(group)
         }
     }

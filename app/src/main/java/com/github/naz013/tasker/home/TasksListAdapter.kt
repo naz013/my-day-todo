@@ -3,6 +3,7 @@ package com.github.naz013.tasker.home
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,6 +62,7 @@ class TasksListAdapter : RecyclerView.Adapter<TasksListAdapter.Holder>() {
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(taskGroup: TaskGroup) {
+            Log.d("TasksListAdapter", "bind: $taskGroup")
             val drawable = itemView.groupTitleView.background as GradientDrawable
             drawable.setColor(Color.parseColor(taskGroup.color))
 
@@ -78,7 +80,7 @@ class TasksListAdapter : RecyclerView.Adapter<TasksListAdapter.Holder>() {
             container.isFocusableInTouchMode = false
             container.isFocusable = false
             container.removeAllViewsInLayout()
-            list.sortedBy { it.important }.sortedBy { it.done }.forEach {
+            list.sortedByDescending { it.important }.sortedBy { it.done }.forEach {
                 val binding = LayoutInflater.from(container.context).inflate(R.layout.item_task, container, false)
                 val checkView = binding.statusView
                 val textView = binding.summaryView
