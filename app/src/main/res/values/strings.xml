@@ -12,4 +12,5 @@
     <string name="task_automatically_saves_on_exit">Task will be automatically saved on exit</string>
     <string name="group_automatically_saves_on_exit">Group will be automatically saved on exit</string>
     <string name="name">Name</string>
+    <string name="clear_every_day">Clear Every Day</string>
 </resources>

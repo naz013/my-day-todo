@@ -62,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:maxLines="1"
+                        android:maxLines="2"
                         android:text="@string/groups"
                         android:textColor="@color/colorAccent"
                         android:textSize="15sp" />
@@ -92,7 +92,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:maxLines="1"
+                        android:maxLines="2"
                         android:text="@string/favorite_first"
                         android:textColor="@color/colorAccent"
                         android:textSize="15sp" />
@@ -121,7 +121,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:maxLines="1"
+                        android:maxLines="2"
                         android:text="@string/font_size"
                         android:textColor="@color/colorAccent"
                         android:textSize="15sp" />
@@ -130,9 +130,44 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
+                <LinearLayout
+                    android:id="@+id/dayButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/dayIcon"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/round_red"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/ic_refresh_white" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="@string/clear_every_day"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
-
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton

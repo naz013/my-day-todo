@@ -3,6 +3,8 @@ package com.github.naz013.tasker.arch
 import android.app.Application
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.data.TaskGroup
+import com.github.naz013.tasker.utils.Prefs
+import com.github.naz013.tasker.utils.TimeUtils
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.async
 
@@ -32,6 +34,12 @@ class TaskerApp : Application() {
                 db.groupDao().insert(TaskGroup(0, "#FF4081", 0, "Todo", mutableListOf()))
                 db.groupDao().insert(TaskGroup(0, "#69F0AE", 1, "Places to go", mutableListOf()))
                 db.groupDao().insert(TaskGroup(0, "#FFAB40", 2, "Talk with", mutableListOf()))
+            } else if (Prefs.getInstance(this@TaskerApp).isClearOnDay() &&
+                    !TimeUtils.isSameDay(Prefs.getInstance(this@TaskerApp).getLastLaunch())) {
+                groups.forEach {
+                    it.tasks.clear()
+                }
+                db.groupDao().insert(groups)
             }
         }
     }

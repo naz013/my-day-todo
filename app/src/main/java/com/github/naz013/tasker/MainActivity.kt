@@ -11,6 +11,8 @@ import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.arch.NavInterface
 import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.home.HomeFragment
+import com.github.naz013.tasker.utils.Prefs
+import com.github.naz013.tasker.utils.TimeUtils
 
 class MainActivity : AppCompatActivity(), NavInterface {
 
@@ -93,5 +95,10 @@ class MainActivity : AppCompatActivity(), NavInterface {
             pressedTime = System.currentTimeMillis()
             Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Prefs.getInstance(this).setLastLaunch(TimeUtils.getGmtStamp())
     }
 }

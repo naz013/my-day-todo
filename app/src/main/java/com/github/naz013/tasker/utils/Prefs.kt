@@ -28,6 +28,7 @@ open class Prefs private constructor(context: Context) {
         private const val FONT_SIZE = "font_size"
         private const val CREATE_BANNER_SHOWN = "create_banner_shown"
         private const val GROUP_BANNER_SHOWN = "group_banner_shown"
+        private const val LAST_LAUNCH = "last_launch"
 
         private var instance: Prefs? = null
 
@@ -47,6 +48,14 @@ open class Prefs private constructor(context: Context) {
     }
 
     private var prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+
+    fun setLastLaunch(time: String) {
+        putString(LAST_LAUNCH, time)
+    }
+
+    fun getLastLaunch(): String {
+        return getString(LAST_LAUNCH, TimeUtils.getGmtStamp())
+    }
 
     fun setFontSize(value: Int) {
         putInt(FONT_SIZE, value)
@@ -110,13 +119,13 @@ open class Prefs private constructor(context: Context) {
         }
     }
 
-    private fun getString(stringToLoad: String): String {
+    private fun getString(stringToLoad: String, def: String = ""): String {
         try {
-            return prefs.getString(stringToLoad, "")
+            return prefs.getString(stringToLoad, def)
         } catch (e: NullPointerException) {
             e.printStackTrace()
         }
-        return ""
+        return def
     }
 
     private fun hasKey(checkString: String): Boolean = prefs.contains(checkString)

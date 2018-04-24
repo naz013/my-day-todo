@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.settings.groups.GroupsFragment
@@ -44,23 +45,31 @@ class SettingsFragment : NestedFragment() {
 
         fab.onClick { navInterface?.moveBack() }
         favButton.onClick { changeFav() }
+        dayButton.onClick { changeDay() }
         fontButton.onClick { navInterface?.openFragment(FontSizeSettingsFragment.newInstance(), FontSizeSettingsFragment.TAG) }
         groupButton.onClick { navInterface?.openFragment(GroupsFragment.newInstance(), GroupsFragment.TAG) }
 
-        initFav()
+        initValue(favIcon, Prefs.getInstance(context!!).isImportantEnabled())
+        initValue(dayIcon, Prefs.getInstance(context!!).isClearOnDay())
     }
 
-    private fun initFav() {
-        if (Prefs.getInstance(context!!).isImportantEnabled()) {
-            favIcon.setBackgroundResource(R.drawable.round_green)
+    private fun initValue(imageView: ImageView, value: Boolean) {
+        if (value) {
+            imageView.setBackgroundResource(R.drawable.round_green)
         } else {
-            favIcon.setBackgroundResource(R.drawable.round_red)
+            imageView.setBackgroundResource(R.drawable.round_red)
         }
     }
 
     private fun changeFav() {
         val prefs = Prefs.getInstance(context!!)
         prefs.setImportantEnabled(!prefs.isImportantEnabled())
-        initFav()
+        initValue(favIcon, prefs.isImportantEnabled())
+    }
+
+    private fun changeDay() {
+        val prefs = Prefs.getInstance(context!!)
+        prefs.setClearOnDay(!prefs.isClearOnDay())
+        initValue(dayIcon, prefs.isClearOnDay())
     }
 }
