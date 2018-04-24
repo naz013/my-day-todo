@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -81,8 +82,9 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>() {
             container.isFocusableInTouchMode = false
             container.isFocusable = false
             container.removeAllViewsInLayout()
+            val prefs = Prefs.getInstance(container.context)
             var items = list
-            val isImportantEnabled = Prefs.getInstance(container.context).isImportantEnabled()
+            val isImportantEnabled = prefs.isImportantEnabled()
             if (isImportantEnabled) {
                 items = items.sortedByDescending { it.important }.toMutableList()
             }
@@ -99,6 +101,7 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>() {
                 checkView.visibility = View.VISIBLE
                 favView.visibility = if (it.important) View.VISIBLE else View.INVISIBLE
                 textView.text = it.summary
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, prefs.getFontSize().toFloat())
                 container.addView(binding)
             }
         }

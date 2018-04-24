@@ -8,7 +8,7 @@ import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
-import kotlinx.android.synthetic.main.fragment_settings.*
+import kotlinx.android.synthetic.main.fragment_font_size.*
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -25,40 +25,35 @@ import kotlinx.android.synthetic.main.fragment_settings.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class SettingsFragment : NestedFragment() {
+class FontSizeSettingsFragment : NestedFragment() {
 
     companion object {
-        const val TAG = "SettingsFragment"
-        fun newInstance(): SettingsFragment {
-            return SettingsFragment()
+        const val TAG = "FontSizeSettingsFragment"
+        fun newInstance(): FontSizeSettingsFragment {
+            return FontSizeSettingsFragment()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+        return inflater.inflate(R.layout.fragment_font_size, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         fab.onClick { navInterface?.moveBack() }
-        favButton.onClick { changeFav() }
-        fontButton.onClick { navInterface?.openFragment(FontSizeSettingsFragment.newInstance(), FontSizeSettingsFragment.TAG) }
-
-        initFav()
     }
 
-    private fun initFav() {
-        if (Prefs.getInstance(context!!).isImportantEnabled()) {
-            favIcon.setBackgroundResource(R.drawable.round_green)
-        } else {
-            favIcon.setBackgroundResource(R.drawable.round_red)
+    override fun onResume() {
+        super.onResume()
+        slider.value = Prefs.getInstance(context!!).getFontSize()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val newValue = slider.value
+        if (newValue > 11) {
+            Prefs.getInstance(context!!).setFontSize(newValue)
         }
-    }
-
-    private fun changeFav() {
-        val prefs = Prefs.getInstance(context!!)
-        prefs.setImportantEnabled(!prefs.isImportantEnabled())
-        initFav()
     }
 }

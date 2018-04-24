@@ -1,11 +1,13 @@
 package com.github.naz013.tasker.group.view
 
 import android.support.v7.widget.RecyclerView
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.data.Task
+import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.item_task.view.*
 
@@ -52,6 +54,7 @@ class TasksListAdapter : RecyclerView.Adapter<TasksListAdapter.Holder>() {
 
         fun bind(task: Task) {
             itemView.summaryView.text = task.summary
+            itemView.summaryView.setTextSize(TypedValue.COMPLEX_UNIT_SP, Prefs.getInstance(itemView.context).getFontSize().toFloat())
             if (task.done) {
                 itemView.statusView.setImageResource(R.drawable.ic_status_check)
             } else {
