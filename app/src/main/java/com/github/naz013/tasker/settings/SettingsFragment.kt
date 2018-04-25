@@ -46,6 +46,8 @@ class SettingsFragment : NestedFragment() {
 
         fab.onClick { navInterface?.moveBack() }
 
+        infoButton.onClick { navInterface?.openFragment(AboutFragment.newInstance(), AboutFragment.TAG) }
+
         favButton.onClick { changeFav() }
         favButton.onLongClick { openExtraSettings(getString(R.string.favorite_first), Prefs.IMPORTANT_FIRST, Prefs.IMPORTANT_FIRST_IDS) }
 

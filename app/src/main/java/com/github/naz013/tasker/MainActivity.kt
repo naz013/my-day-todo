@@ -30,10 +30,7 @@ class MainActivity : AppCompatActivity(), NavInterface {
         setContentView(R.layout.activity_main)
 
         supportFragmentManager.addOnBackStackChangedListener { onStackChanged() }
-    }
 
-    override fun onEnterAnimationComplete() {
-        super.onEnterAnimationComplete()
         openFragment(HomeFragment.newInstance(), HomeFragment.TAG)
     }
 

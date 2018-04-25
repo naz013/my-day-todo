@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
@@ -13,38 +14,79 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/settings"
+        android:text="@string/about"
         android:textColor="@color/colorAccent"
         android:textSize="24sp"
         android:textStyle="bold" />
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/tasksList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/titleView"
-        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="16dp"
         android:overScrollMode="never"
-        android:paddingBottom="16dp"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        app:layout_anchor="@+id/titleView"
+        app:layout_anchorGravity="bottom">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/colorAccent"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/versionView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                tools:text="1.0.2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:text="@string/copyright"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:text="@string/design_by_johnyvino_uplabs"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal"
                 android:weightSum="3">
 
                 <LinearLayout
-                    android:id="@+id/groupButton"
+                    android:id="@+id/rateButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -54,36 +96,6 @@
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:background="@drawable/round_grey"
-                        android:scaleType="centerInside"
-                        app:srcCompat="@drawable/ic_folder_white" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:maxLines="2"
-                        android:text="@string/groups"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/favButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:id="@+id/favIcon"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:background="@drawable/round_red"
                         android:scaleType="centerInside"
                         app:srcCompat="@drawable/ic_favourite_white" />
 
@@ -93,17 +105,17 @@
                         android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:maxLines="2"
-                        android:text="@string/favorite_first"
+                        android:text="@string/rate_app"
                         android:textColor="@color/colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/fontButton"
+                    android:id="@+id/feedbackButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -114,7 +126,36 @@
                         android:layout_height="64dp"
                         android:background="@drawable/round_grey"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/ic_font_size_white" />
+                        app:srcCompat="@drawable/ic_email_white" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="@string/send_feedback"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/gitButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/round_grey"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/ic_github_logo" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -122,85 +163,27 @@
                         android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:maxLines="2"
-                        android:text="@string/font_size"
+                        android:text="@string/source_code"
                         android:textColor="@color/colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 android:weightSum="3">
 
                 <LinearLayout
-                    android:id="@+id/dayButton"
+                    android:id="@+id/moreButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:id="@+id/dayIcon"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:background="@drawable/round_red"
-                        android:scaleType="centerInside"
-                        app:srcCompat="@drawable/ic_refresh_white" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:maxLines="2"
-                        android:text="@string/clear_every_day"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/uncheckButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:id="@+id/uncheckIcon"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:background="@drawable/round_red"
-                        android:scaleType="centerInside"
-                        app:srcCompat="@drawable/ic_clear_white" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:maxLines="2"
-                        android:text="@string/uncheck_tasks_on_new_day"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/infoButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -211,19 +194,20 @@
                         android:layout_height="64dp"
                         android:background="@drawable/round_grey"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/ic_info_white" />
+                        app:srcCompat="@drawable/ic_play_store" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:maxLines="2"
-                        android:text="@string/about"
+                        android:text="@string/more_apps"
                         android:textColor="@color/colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
@@ -234,7 +218,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="bottom"
         android:layout_margin="16dp"
         app:backgroundTint="?colorAccent"
         app:fabSize="mini"

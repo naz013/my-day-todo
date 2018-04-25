@@ -17,4 +17,11 @@
     <string name="disabled">Disabled</string>
     <string name="enabled">Enabled</string>
     <string name="custom">Custom</string>
+    <string name="about">About</string>
+    <string name="copyright">\"2018 © Nazar Suhovich\"</string>
+    <string name="rate_app">Rate App</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="source_code">Source Code</string>
+    <string name="design_by_johnyvino_uplabs">Design by: Johnyvino (UpLabs)</string>
+    <string name="more_apps">More Apps</string>
 </resources>
