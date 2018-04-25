@@ -1,5 +1,15 @@
 # my-day-todo
+
+<img src="https://github.com/naz013/my-day-todo/raw/master/res/store_icon.png" width="100" alt="My Day">
+
 Simple TODO app
+
+Screenshots
+
+<img src="https://github.com/naz013/my-day-todo/raw/master/res/scr_1.png" width="400" alt="Screenshot">
+<img src="https://github.com/naz013/my-day-todo/raw/master/res/scr_2.png" width="400" alt="Screenshot">
+<img src="https://github.com/naz013/my-day-todo/raw/master/res/scr_3.png" width="400" alt="Screenshot">
+<img src="https://github.com/naz013/my-day-todo/raw/master/res/scr_4.png" width="400" alt="Screenshot">
 
 License
 -------
