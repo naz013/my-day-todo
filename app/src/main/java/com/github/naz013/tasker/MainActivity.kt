@@ -1,9 +1,6 @@
 package com.github.naz013.tasker
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
@@ -22,7 +19,6 @@ class MainActivity : AppCompatActivity(), NavInterface {
 
     private var isBackPressed: Boolean = false
     private var pressedTime: Long = 0
-    private val mUiHandler = Handler(Looper.getMainLooper())
     private var fragment: BaseFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,22 +39,6 @@ class MainActivity : AppCompatActivity(), NavInterface {
 
     override fun onBackPressed() {
         moveBack()
-    }
-
-    private fun replaceFragment(fragment: Fragment, tag: String) {
-        clearBackStack()
-        val ft = supportFragmentManager.beginTransaction()
-        ft.add(R.id.fragmentContainer, fragment, tag)
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        ft.addToBackStack(tag)
-        ft.commit()
-    }
-
-    private fun clearBackStack() {
-        val fm = supportFragmentManager
-        for (i in 0 until fm.backStackEntryCount) {
-            fm.popBackStack()
-        }
     }
 
     override fun onFragmentSelect(fragment: BaseFragment) {
