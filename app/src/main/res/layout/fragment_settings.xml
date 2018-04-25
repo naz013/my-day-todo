@@ -44,9 +44,8 @@
                     android:id="@+id/groupButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:padding="8dp">
 
@@ -73,9 +72,8 @@
                     android:id="@+id/favButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:padding="8dp">
 
@@ -103,9 +101,8 @@
                     android:id="@+id/fontButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:padding="8dp">
 
@@ -140,9 +137,8 @@
                     android:id="@+id/dayButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:padding="8dp">
 
@@ -170,9 +166,8 @@
                     android:id="@+id/uncheckButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:padding="8dp">
 
@@ -200,9 +195,8 @@
                     android:id="@+id/infoButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:padding="8dp">
 
