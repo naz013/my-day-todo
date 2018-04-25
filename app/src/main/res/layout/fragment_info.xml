@@ -73,6 +73,15 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:text="@string/icons_from_flaticon_com"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -95,7 +104,7 @@
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:background="@drawable/round_grey"
+                        android:background="@drawable/round_green_blue"
                         android:scaleType="centerInside"
                         app:srcCompat="@drawable/ic_favourite_white" />
 
@@ -124,7 +133,7 @@
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:background="@drawable/round_grey"
+                        android:background="@drawable/round_green_blue"
                         android:scaleType="centerInside"
                         app:srcCompat="@drawable/ic_email_white" />
 
@@ -153,7 +162,7 @@
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:background="@drawable/round_grey"
+                        android:background="@drawable/round_green_blue"
                         android:scaleType="centerInside"
                         app:srcCompat="@drawable/ic_github_logo" />
 
@@ -192,7 +201,7 @@
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:background="@drawable/round_grey"
+                        android:background="@drawable/round_green_blue"
                         android:scaleType="centerInside"
                         app:srcCompat="@drawable/ic_play_store" />
 
