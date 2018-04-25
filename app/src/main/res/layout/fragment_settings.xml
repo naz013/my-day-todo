@@ -177,7 +177,7 @@
                         android:layout_height="64dp"
                         android:background="@drawable/round_red"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/ic_clear_white" />
+                        app:srcCompat="@drawable/ic_checked" />
 
                     <TextView
                         android:layout_width="match_parent"
