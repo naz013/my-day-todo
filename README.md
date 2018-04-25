@@ -6,8 +6,15 @@ Simple TODO app
 
 Screenshots
 
-![](https://github.com/naz013/my-day-todo/raw/master/res/scr_1.jpg) ![](https://github.com/naz013/my-day-todo/raw/master/res/scr_2.jpg "title-2")
-![](https://github.com/naz013/my-day-todo/raw/master/res/scr_3.jpg) ![](https://github.com/naz013/my-day-todo/raw/master/res/scr_4.jpg "title-2")
+<p float="left">
+  <img src="https://github.com/naz013/my-day-todo/raw/master/res/scr_1.jpg" width="300" />
+  <img src="https://github.com/naz013/my-day-todo/raw/master/res/scr_2.jpg" width="300" />
+</p>
+
+<p float="left">
+  <img src="https://github.com/naz013/my-day-todo/raw/master/res/scr_3.jpg" width="300" />
+  <img src="https://github.com/naz013/my-day-todo/raw/master/res/scr_4.jpg" width="300" />
+</p>
 
 License
 -------
