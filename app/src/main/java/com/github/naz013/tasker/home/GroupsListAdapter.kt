@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.github.naz013.tasker.R
-import com.github.naz013.tasker.data.Task
 import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
@@ -70,7 +69,7 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>() {
 
             itemView.groupTitleView.text = taskGroup.name
 
-            loadItems(itemView.tasksList, taskGroup.tasks)
+            loadItems(itemView.tasksList, taskGroup)
         }
 
         init {
@@ -78,14 +77,15 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>() {
             itemView.cardView.onClick { callback?.invoke(items[adapterPosition], OPEN) }
         }
 
-        private fun loadItems(container: LinearLayout, list: MutableList<Task>) {
+        private fun loadItems(container: LinearLayout, taskGroup: TaskGroup) {
             container.isFocusableInTouchMode = false
             container.isFocusable = false
             container.removeAllViewsInLayout()
             val prefs = Prefs.getInstance(container.context)
-            var items = list
-            val isImportantEnabled = prefs.isImportantEnabled()
-            if (isImportantEnabled) {
+            var items = taskGroup.tasks
+            val important = prefs.getImportant()
+            val importantIds = prefs.getStringList(Prefs.IMPORTANT_FIRST_IDS)
+            if (important == Prefs.ENABLED || (important == Prefs.CUSTOM && importantIds.contains(taskGroup.id.toString()))) {
                 items = items.sortedByDescending { it.important }.toMutableList()
             }
             items.sortedBy { it.done }.forEach {

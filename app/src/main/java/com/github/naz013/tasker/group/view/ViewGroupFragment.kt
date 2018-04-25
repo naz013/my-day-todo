@@ -89,8 +89,9 @@ class ViewGroupFragment : NestedFragment() {
         mGroup = group
         titleView.text = group.name
         var list = group.tasks
-        val isImportantEnabled = Prefs.getInstance(context!!).isImportantEnabled()
-        if (isImportantEnabled) {
+        val important = Prefs.getInstance(context!!).getImportant()
+        val importantIds = Prefs.getInstance(context!!).getStringList(Prefs.IMPORTANT_FIRST_IDS)
+        if (important == Prefs.ENABLED || (important == Prefs.CUSTOM && importantIds.contains(group.id.toString()))) {
             list = list.sortedByDescending { it.important }.toMutableList()
         }
         mAdapter.setData(list.sortedBy { it.done })

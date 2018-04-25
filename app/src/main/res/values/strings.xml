@@ -13,4 +13,8 @@
     <string name="group_automatically_saves_on_exit">Group will be automatically saved on exit</string>
     <string name="name">Name</string>
     <string name="clear_every_day">Clear Every Day</string>
+    <string name="uncheck_tasks_on_new_day">Uncheck Tasks On New Day</string>
+    <string name="disabled">Disabled</string>
+    <string name="enabled">Enabled</string>
+    <string name="custom">Custom</string>
 </resources>

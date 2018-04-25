@@ -25,7 +25,8 @@ data class TaskGroup(
         var color: String,
         var position: Int,
         var name: String,
-        var tasks: MutableList<Task>
+        var tasks: MutableList<Task>,
+        var active: Boolean = true
 ) {
     @Ignore
     constructor():this(0, "", 0, "", mutableListOf())

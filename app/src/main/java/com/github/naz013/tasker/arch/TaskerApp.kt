@@ -34,12 +34,39 @@ class TaskerApp : Application() {
                 db.groupDao().insert(TaskGroup(0, "#FF4081", 0, "Todo", mutableListOf()))
                 db.groupDao().insert(TaskGroup(0, "#69F0AE", 1, "Places to go", mutableListOf()))
                 db.groupDao().insert(TaskGroup(0, "#FFAB40", 2, "Talk with", mutableListOf()))
-            } else if (Prefs.getInstance(this@TaskerApp).isClearOnDay() &&
-                    !TimeUtils.isSameDay(Prefs.getInstance(this@TaskerApp).getLastLaunch())) {
-                groups.forEach {
-                    it.tasks.clear()
+            } else if (!TimeUtils.isSameDay(Prefs.getInstance(this@TaskerApp).getLastLaunch())) {
+                val prefs = Prefs.getInstance(this@TaskerApp)
+                val clear = prefs.getClearOnDay()
+                if (clear == Prefs.ENABLED) {
+                    groups.forEach {
+                        it.tasks.clear()
+                    }
+                    db.groupDao().insert(groups)
+                } else if (clear == Prefs.CUSTOM) {
+                    val ids = prefs.getStringList(Prefs.CLEAR_GROUP_IDS)
+                    if (!ids.isEmpty()) {
+                        groups.filter { ids.contains(it.id.toString()) }.forEach {
+                            it.tasks.clear()
+                        }
+                        db.groupDao().insert(groups)
+                    }
                 }
-                db.groupDao().insert(groups)
+
+                val unCheck = prefs.getClearChecks()
+                if (unCheck == Prefs.ENABLED) {
+                    groups.forEach {
+                        it.tasks.forEach { it.done = false }
+                    }
+                    db.groupDao().insert(groups)
+                } else if (unCheck == Prefs.CUSTOM) {
+                    val ids = prefs.getStringList(Prefs.CLEAR_CHECKS_IDS)
+                    if (!ids.isEmpty()) {
+                        groups.filter { ids.contains(it.id.toString()) }.forEach {
+                            it.tasks.forEach { it.done = false }
+                        }
+                        db.groupDao().insert(groups)
+                    }
+                }
             }
         }
     }

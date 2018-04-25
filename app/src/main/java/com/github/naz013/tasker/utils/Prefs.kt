@@ -22,9 +22,16 @@ open class Prefs private constructor(context: Context) {
 
     companion object {
 
+        const val DISABLED = 0
+        const val ENABLED = 1
+        const val CUSTOM = 2
         private const val PREFS_NAME = "my_day"
-        private const val IMPORTANT_FIRST = "important_first"
-        private const val CLEAR_DAY = "clear_day"
+        const val IMPORTANT_FIRST = "important_first"
+        const val IMPORTANT_FIRST_IDS = "important_first_ids"
+        const val CLEAR_GROUP = "clear_day"
+        const val CLEAR_GROUP_IDS = "clear_day_ids"
+        const val CLEAR_CHECKS = "clear_checks"
+        const val CLEAR_CHECKS_IDS = "clear_checks_ids"
         private const val FONT_SIZE = "font_size"
         private const val CREATE_BANNER_SHOWN = "create_banner_shown"
         private const val GROUP_BANNER_SHOWN = "group_banner_shown"
@@ -49,6 +56,12 @@ open class Prefs private constructor(context: Context) {
 
     private var prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
+    fun setClearChecks(value: Int) {
+        putInt(CLEAR_CHECKS, value)
+    }
+
+    fun getClearChecks(): Int = getInt(CLEAR_CHECKS, DISABLED)
+
     fun setLastLaunch(time: String) {
         putString(LAST_LAUNCH, time)
     }
@@ -63,11 +76,11 @@ open class Prefs private constructor(context: Context) {
 
     fun getFontSize(): Int = getInt(FONT_SIZE, 14)
 
-    fun setImportantEnabled(value: Boolean) {
-        putBoolean(IMPORTANT_FIRST, value)
+    fun setImportant(value: Int) {
+        putInt(IMPORTANT_FIRST, value)
     }
 
-    fun isImportantEnabled(): Boolean = getBoolean(IMPORTANT_FIRST)
+    fun getImportant(): Int = getInt(IMPORTANT_FIRST, DISABLED)
 
     fun setCreateBannerShown(value: Boolean) {
         putBoolean(CREATE_BANNER_SHOWN, value)
@@ -81,21 +94,29 @@ open class Prefs private constructor(context: Context) {
 
     fun isGroupBannerShown(): Boolean = getBoolean(GROUP_BANNER_SHOWN)
 
-    fun setClearOnDay(value: Boolean) {
-        putBoolean(CLEAR_DAY, value)
+    fun setClearOnDay(value: Int) {
+        putInt(CLEAR_GROUP, value)
     }
 
-    fun isClearOnDay(): Boolean = getBoolean(CLEAR_DAY)
+    fun getClearOnDay(): Int = getInt(CLEAR_GROUP, DISABLED)
+
+    fun getStringList(key: String): Set<String> {
+        return prefs.getStringSet(key, setOf())
+    }
+
+    fun putStringList(key: String, set: Set<String>) {
+        prefs.edit().putStringSet(key, set).apply()
+    }
 
     private fun putString(stringToSave: String, value: String) {
         prefs.edit().putString(stringToSave, value).apply()
     }
 
-    private fun putInt(stringToSave: String, value: Int) {
+    fun putInt(stringToSave: String, value: Int) {
         prefs.edit().putInt(stringToSave, value).apply()
     }
 
-    private fun getInt(stringToLoad: String, def: Int): Int {
+    fun getInt(stringToLoad: String, def: Int): Int {
         return try {
             prefs.getInt(stringToLoad, def)
         } catch (e: ClassCastException) {

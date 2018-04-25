@@ -10,6 +10,7 @@ import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.settings.groups.GroupsFragment
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
+import com.mcxiaoke.koi.ext.onLongClick
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 /**
@@ -44,32 +45,71 @@ class SettingsFragment : NestedFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         fab.onClick { navInterface?.moveBack() }
+
         favButton.onClick { changeFav() }
+        favButton.onLongClick { openExtraSettings(getString(R.string.favorite_first), Prefs.IMPORTANT_FIRST, Prefs.IMPORTANT_FIRST_IDS) }
+
         dayButton.onClick { changeDay() }
+        dayButton.onLongClick { openExtraSettings(getString(R.string.clear_every_day), Prefs.CLEAR_GROUP, Prefs.CLEAR_GROUP_IDS) }
+
+        uncheckButton.onClick { changeUncheck() }
+        uncheckButton.onLongClick { openExtraSettings(getString(R.string.uncheck_tasks_on_new_day), Prefs.CLEAR_CHECKS, Prefs.CLEAR_CHECKS_IDS) }
+
         fontButton.onClick { navInterface?.openFragment(FontSizeSettingsFragment.newInstance(), FontSizeSettingsFragment.TAG) }
         groupButton.onClick { navInterface?.openFragment(GroupsFragment.newInstance(), GroupsFragment.TAG) }
-
-        initValue(favIcon, Prefs.getInstance(context!!).isImportantEnabled())
-        initValue(dayIcon, Prefs.getInstance(context!!).isClearOnDay())
     }
 
-    private fun initValue(imageView: ImageView, value: Boolean) {
-        if (value) {
-            imageView.setBackgroundResource(R.drawable.round_green)
-        } else {
-            imageView.setBackgroundResource(R.drawable.round_red)
+    override fun onBackStackResume() {
+        super.onBackStackResume()
+        val prefs = Prefs.getInstance(context!!)
+        initValue(favIcon, prefs.getImportant())
+        initValue(dayIcon, prefs.getClearOnDay())
+        initValue(uncheckIcon, prefs.getClearChecks())
+    }
+
+    private fun openExtraSettings(title: String, key: String, keyList: String): Boolean {
+        navInterface?.openFragment(SwitchableSettingsFragment.newInstance(title, key, keyList), SwitchableSettingsFragment.TAG)
+        return true
+    }
+
+    private fun initValue(imageView: ImageView, value: Int) {
+        when (value) {
+            1 -> imageView.setBackgroundResource(R.drawable.round_green)
+            0 -> imageView.setBackgroundResource(R.drawable.round_red)
+            else -> imageView.setBackgroundResource(R.drawable.round_orange)
         }
+    }
+
+    private fun changeUncheck() {
+        val prefs = Prefs.getInstance(context!!)
+        val value = prefs.getClearChecks()
+        if (value == 0) {
+            prefs.setClearChecks(1)
+        } else {
+            prefs.setClearChecks(0)
+        }
+        initValue(uncheckIcon, prefs.getClearChecks())
     }
 
     private fun changeFav() {
         val prefs = Prefs.getInstance(context!!)
-        prefs.setImportantEnabled(!prefs.isImportantEnabled())
-        initValue(favIcon, prefs.isImportantEnabled())
+        val value = prefs.getImportant()
+        if (value == 0) {
+            prefs.setImportant(1)
+        } else {
+            prefs.setImportant(0)
+        }
+        initValue(favIcon, prefs.getImportant())
     }
 
     private fun changeDay() {
         val prefs = Prefs.getInstance(context!!)
-        prefs.setClearOnDay(!prefs.isClearOnDay())
-        initValue(dayIcon, prefs.isClearOnDay())
+        val value = prefs.getClearOnDay()
+        if (value == 0) {
+            prefs.setClearOnDay(1)
+        } else {
+            prefs.setClearOnDay(0)
+        }
+        initValue(dayIcon, prefs.getClearOnDay())
     }
 }

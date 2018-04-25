@@ -166,6 +166,36 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/uncheckButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/uncheckIcon"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/round_red"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/ic_clear_white" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="@string/uncheck_tasks_on_new_day"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
