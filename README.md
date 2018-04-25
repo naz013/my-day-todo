@@ -1,4 +1,4 @@
-# my-day-todo
+# My Day - TODO App
 
 <img src="https://github.com/naz013/my-day-todo/raw/master/res/store_icon.png" width="100" alt="My Day">
 
