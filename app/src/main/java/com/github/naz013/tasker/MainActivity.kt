@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), NavInterface {
 
     override fun openFragment(fragment: BaseFragment, tag: String) {
         val ft = supportFragmentManager.beginTransaction()
-        ft.add(R.id.fragmentContainer, fragment, tag)
+        ft.replace(R.id.fragmentContainer, fragment, tag)
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         ft.addToBackStack(tag)
         ft.commit()
