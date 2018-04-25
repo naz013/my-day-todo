@@ -10,6 +10,7 @@ import com.github.naz013.tasker.data.Task
 import com.github.naz013.tasker.data.TaskGroup
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.async
+import java.util.*
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -33,7 +34,7 @@ class AddViewModel(application: Application, val id: Int) : AndroidViewModel(app
 
     fun saveTask(summary: String, group: TaskGroup, important: Boolean) {
         async(CommonPool) {
-            group.tasks.add(Task(0, false, summary, group.id, important, "", ""))
+            group.tasks.add(Task((UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE).toInt(), false, summary, group.id, important, "", ""))
             mDb.groupDao().insert(group)
         }
     }

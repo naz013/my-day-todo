@@ -3,6 +3,7 @@ package com.github.naz013.tasker.data
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
+import java.util.*
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -31,5 +32,5 @@ data class Task(
         var dt: String
 ) {
     @Ignore
-    constructor() : this(0, false, "", 0, false, "", "")
+    constructor() : this((UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE).toInt(), false, "", 0, false, "", "")
 }

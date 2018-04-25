@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "406986457656",
+    "firebase_url": "https://my-day-50d9c.firebaseio.com",
+    "project_id": "my-day-50d9c",
+    "storage_bucket": "my-day-50d9c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406986457656:android:d4ef996ac18c256f",
+        "android_client_info": {
+          "package_name": "com.github.naz013.tasker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "406986457656-gc7sauor0rje4tnfggi530qekmpj4rcg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7BaHlxtRtjVYH0fETLnIhdonC1a-CepY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
