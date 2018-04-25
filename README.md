@@ -2,7 +2,11 @@
 
 <img src="https://github.com/naz013/my-day-todo/raw/master/res/store_icon.png" width="100" alt="My Day">
 
-Simple TODO app
+Simplest TODO app ever.
+
+<a href='https://play.google.com/store/apps/details?id=com.github.naz013.emojirateslider&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+<img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/>
+</a>
 
 Screenshots
 
