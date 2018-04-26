@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
@@ -21,36 +22,37 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/tasksList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/titleView"
         android:layout_gravity="bottom"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="64dp"
         android:overScrollMode="never"
         android:scrollbars="none"
         app:layout_anchor="@+id/titleView"
-        app:layout_anchorGravity="bottom" />
+        app:layout_anchorGravity="bottom"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:layout_marginBottom="16dp"
+        android:layout_marginEnd="72dp"
         android:layout_toStartOf="@+id/fabAdd"
         app:backgroundTint="?colorAccent"
         app:fabSize="mini"
+        app:layout_anchor="@id/fabAdd"
         app:srcCompat="@drawable/ic_arrow_back_white" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_add_white" />
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

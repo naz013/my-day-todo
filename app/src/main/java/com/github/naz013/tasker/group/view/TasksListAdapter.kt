@@ -32,6 +32,7 @@ class TasksListAdapter : RecyclerView.Adapter<TasksListAdapter.Holder>() {
 
     private val items: MutableList<Task> = mutableListOf()
     var callback: ((List<Task>) -> Unit)? = null
+    var deleteCallback: ((Int) -> Unit)? = null
 
     init {
         registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
@@ -98,11 +99,11 @@ class TasksListAdapter : RecyclerView.Adapter<TasksListAdapter.Holder>() {
         init {
             itemView.statusView.onClick { changeDone(adapterPosition) }
             itemView.favouriteView.onClick { changeFav(adapterPosition) }
-            itemView.deleteView.onClick { delete(adapterPosition) }
+            itemView.deleteView.onClick { deleteCallback?.invoke(adapterPosition) }
         }
     }
 
-    private fun delete(position: Int) {
+    fun delete(position: Int) {
         items.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(0, items.size)

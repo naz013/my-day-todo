@@ -25,4 +25,7 @@
     <string name="design_by_johnyvino_uplabs">Design by: Johnyvino (UpLabs)</string>
     <string name="more_apps">More Apps</string>
     <string name="icons_from_flaticon_com">Icons from: flaticon.com</string>
+    <string name="delete_this_task_">Delete this task?</string>
+    <string name="yes">Yes, delete</string>
+    <string name="delete_this_group_">Delete this group?</string>
 </resources>

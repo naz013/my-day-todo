@@ -3,6 +3,8 @@ package com.github.naz013.tasker.settings.groups
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -57,9 +59,8 @@ class GroupsFragment : NestedFragment(), OnStartDragListener {
 
         mAdapter = GroupsListAdapter()
         mAdapter?.mDragStartListener = this
-        mAdapter?.callback = { position, action ->
-            performAction(position, action)
-        }
+        mAdapter?.callback = { position, action -> performAction(position, action) }
+        mAdapter?.deleteCallback = { position -> showSnackbar(position) }
 
         tasksList.layoutManager = LinearLayoutManager(context)
         tasksList.adapter = mAdapter
@@ -69,6 +70,13 @@ class GroupsFragment : NestedFragment(), OnStartDragListener {
         mItemTouchHelper?.attachToRecyclerView(tasksList)
 
         initViewModel()
+    }
+
+    private fun showSnackbar(position: Int) {
+        val snack = Snackbar.make(coordinator, getString(R.string.delete_this_group_), Snackbar.LENGTH_LONG)
+        snack.setAction(getString(R.string.yes), { mAdapter?.delete(position) })
+        snack.setActionTextColor(ContextCompat.getColor(context!!, R.color.colorRed))
+        snack.show()
     }
 
     private fun performAction(group: TaskGroup, action: Int) {

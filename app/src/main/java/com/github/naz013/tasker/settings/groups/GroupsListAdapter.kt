@@ -41,6 +41,7 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>(), Item
     val items: MutableList<TaskGroup> = mutableListOf()
     var callback: ((TaskGroup, Int) -> Unit)? = null
     var mDragStartListener: OnStartDragListener? = null
+    var deleteCallback: ((Int) -> Unit)? = null
 
     init {
         registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
@@ -100,7 +101,7 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>(), Item
 
         init {
             itemView.onClick { edit(adapterPosition) }
-            itemView.deleteView.onClick { delete(adapterPosition) }
+            itemView.deleteView.onClick { deleteCallback?.invoke(adapterPosition) }
             itemView.handleView.setOnTouchListener({ _, event ->
                 if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
                     mDragStartListener?.onStartDrag(this)
@@ -114,7 +115,7 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>(), Item
         callback?.invoke(items[position], EDIT)
     }
 
-    private fun delete(position: Int) {
+    fun delete(position: Int) {
         callback?.invoke(items[position], DELETE)
     }
 }

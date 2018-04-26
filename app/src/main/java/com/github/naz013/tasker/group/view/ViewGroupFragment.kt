@@ -3,6 +3,8 @@ package com.github.naz013.tasker.group.view
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -66,9 +68,17 @@ class ViewGroupFragment : NestedFragment() {
         tasksList.layoutManager = LinearLayoutManager(context)
         mAdapter = TasksListAdapter()
         mAdapter.callback = { list -> saveUpdates(list) }
+        mAdapter.deleteCallback = { position -> showSnackbar(position) }
         tasksList.adapter = mAdapter
 
         initViewModel()
+    }
+
+    private fun showSnackbar(position: Int) {
+        val snack = Snackbar.make(coordinator, getString(R.string.delete_this_task_), Snackbar.LENGTH_LONG)
+        snack.setAction(getString(R.string.yes), { mAdapter.delete(position) })
+        snack.setActionTextColor(ContextCompat.getColor(context!!, R.color.colorRed))
+        snack.show()
     }
 
     private fun saveUpdates(list: List<Task>) {
