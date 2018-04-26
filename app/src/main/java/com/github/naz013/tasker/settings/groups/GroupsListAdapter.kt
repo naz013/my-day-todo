@@ -1,6 +1,7 @@
 package com.github.naz013.tasker.settings.groups
 
 import android.support.v4.view.MotionEventCompat
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -35,17 +36,42 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>(), Item
     companion object {
         const val DELETE = 0
         const val EDIT = 1
-        const val ADD = 2
     }
 
     val items: MutableList<TaskGroup> = mutableListOf()
     var callback: ((TaskGroup, Int) -> Unit)? = null
     var mDragStartListener: OnStartDragListener? = null
 
+    init {
+        registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                if (itemCount > positionStart + 1) {
+                    notifyItemChanged(positionStart + 1, true)
+                }
+            }
+
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                super.onItemRangeRemoved(positionStart, itemCount)
+                if (itemCount > positionStart) {
+                    notifyItemChanged(positionStart, true)
+                }
+            }
+
+            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+                super.onItemRangeMoved(fromPosition, toPosition, itemCount)
+                notifyItemChanged(fromPosition)
+                notifyItemChanged(toPosition)
+            }
+        })
+    }
+
     fun setData(data: List<TaskGroup>) {
-        items.clear()
-        items.addAll(data)
-        notifyDataSetChanged()
+        val diffCallback = GroupsDiffCallback(this.items, data)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        this.items.clear()
+        this.items.addAll(data)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {

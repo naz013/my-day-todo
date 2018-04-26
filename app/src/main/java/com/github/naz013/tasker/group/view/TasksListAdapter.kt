@@ -1,5 +1,6 @@
 package com.github.naz013.tasker.group.view
 
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -32,10 +33,36 @@ class TasksListAdapter : RecyclerView.Adapter<TasksListAdapter.Holder>() {
     private val items: MutableList<Task> = mutableListOf()
     var callback: ((List<Task>) -> Unit)? = null
 
+    init {
+        registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                if (itemCount > positionStart + 1) {
+                    notifyItemChanged(positionStart + 1, true)
+                }
+            }
+
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                super.onItemRangeRemoved(positionStart, itemCount)
+                if (itemCount > positionStart) {
+                    notifyItemChanged(positionStart, true)
+                }
+            }
+
+            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+                super.onItemRangeMoved(fromPosition, toPosition, itemCount)
+                notifyItemChanged(fromPosition)
+                notifyItemChanged(toPosition)
+            }
+        })
+    }
+
     fun setData(data: List<Task>) {
-        items.clear()
-        items.addAll(data)
-        notifyDataSetChanged()
+        val diffCallback = TasksDiffCallback(this.items, data)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        this.items.clear()
+        this.items.addAll(data)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -77,6 +104,8 @@ class TasksListAdapter : RecyclerView.Adapter<TasksListAdapter.Holder>() {
 
     private fun delete(position: Int) {
         items.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(0, items.size)
         callback?.invoke(items)
     }
 
@@ -84,6 +113,7 @@ class TasksListAdapter : RecyclerView.Adapter<TasksListAdapter.Holder>() {
         val item = items[position]
         item.done = !item.done
         items[position] = item
+        notifyItemChanged(position)
         callback?.invoke(items)
     }
 
@@ -91,6 +121,23 @@ class TasksListAdapter : RecyclerView.Adapter<TasksListAdapter.Holder>() {
         val item = items[position]
         item.important = !item.important
         items[position] = item
+        notifyItemChanged(position)
         callback?.invoke(items)
+    }
+
+    inner class TasksDiffCallback(private val oldList: List<Task>, private val newList: List<Task>) : DiffUtil.Callback() {
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].id == newList[newItemPosition].id
+        }
+
+        override fun getOldListSize(): Int = oldList.size
+
+        override fun getNewListSize(): Int = newList.size
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            val p1 = oldList[oldItemPosition]
+            val p2 = newList[newItemPosition]
+            return p1 == p2
+        }
     }
 }

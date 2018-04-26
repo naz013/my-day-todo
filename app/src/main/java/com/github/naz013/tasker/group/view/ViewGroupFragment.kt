@@ -94,6 +94,6 @@ class ViewGroupFragment : NestedFragment() {
         if (important == Prefs.ENABLED || (important == Prefs.CUSTOM && importantIds.contains(group.id.toString()))) {
             list = list.sortedByDescending { it.important }.toMutableList()
         }
-        mAdapter.setData(list.sortedBy { it.done })
+        mAdapter.setData(list.sortedByDescending { it.dt }.sortedBy { it.done })
     }
 }

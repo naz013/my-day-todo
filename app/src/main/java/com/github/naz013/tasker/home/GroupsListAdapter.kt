@@ -2,6 +2,7 @@ package com.github.naz013.tasker.home
 
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.util.TypedValue
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.data.TaskGroup
+import com.github.naz013.tasker.settings.groups.GroupsDiffCallback
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.item_group.view.*
@@ -42,10 +44,36 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>() {
     private val items: MutableList<TaskGroup> = mutableListOf()
     var callback: ((TaskGroup, Int) -> Unit)? = null
 
+    init {
+        registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                if (itemCount > positionStart + 1) {
+                    notifyItemChanged(positionStart + 1, true)
+                }
+            }
+
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                super.onItemRangeRemoved(positionStart, itemCount)
+                if (itemCount > positionStart) {
+                    notifyItemChanged(positionStart, true)
+                }
+            }
+
+            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+                super.onItemRangeMoved(fromPosition, toPosition, itemCount)
+                notifyItemChanged(fromPosition)
+                notifyItemChanged(toPosition)
+            }
+        })
+    }
+
     fun setData(data: List<TaskGroup>) {
-        items.clear()
-        items.addAll(data)
-        notifyDataSetChanged()
+        val diffCallback = GroupsDiffCallback(this.items, data)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        this.items.clear()
+        this.items.addAll(data)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -88,7 +116,7 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>() {
             if (important == Prefs.ENABLED || (important == Prefs.CUSTOM && importantIds.contains(taskGroup.id.toString()))) {
                 items = items.sortedByDescending { it.important }.toMutableList()
             }
-            items.sortedBy { it.done }.forEach {
+            items.sortedByDescending { it.dt }.sortedBy { it.done }.forEach {
                 val binding = LayoutInflater.from(container.context).inflate(R.layout.item_task, container, false)
                 val checkView = binding.statusView
                 val textView = binding.summaryView

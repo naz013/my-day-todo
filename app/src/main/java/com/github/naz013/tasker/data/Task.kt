@@ -3,6 +3,7 @@ package com.github.naz013.tasker.data
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
+import com.github.naz013.tasker.utils.TimeUtils
 import java.util.*
 
 /**
@@ -32,5 +33,6 @@ data class Task(
         var dt: String
 ) {
     @Ignore
-    constructor() : this((UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE).toInt(), false, "", 0, false, "", "")
+    constructor() : this((UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE).toInt(),
+            false, "", 0, false, "", TimeUtils.getGmtStamp())
 }
