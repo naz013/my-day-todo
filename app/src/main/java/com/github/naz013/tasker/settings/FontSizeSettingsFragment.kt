@@ -52,8 +52,6 @@ class FontSizeSettingsFragment : NestedFragment() {
     override fun onStop() {
         super.onStop()
         val newValue = slider.value
-        if (newValue > 11) {
-            Prefs.getInstance(context!!).setFontSize(newValue)
-        }
+        Prefs.getInstance(context!!).setFontSize(newValue)
     }
 }
