@@ -13,6 +13,7 @@ import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.data.Task
 import com.github.naz013.tasker.data.TaskGroup
+import com.github.naz013.tasker.task.AddTaskFragment
 import com.github.naz013.tasker.task.AddViewModel
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
@@ -50,7 +51,7 @@ class ViewGroupFragment : NestedFragment() {
     private var mGroupId: Int = 0
     private var mGroup: TaskGroup? = null
     private lateinit var viewModel: AddViewModel
-    private lateinit var mAdapter: TasksListAdapter
+    private val mAdapter = TasksListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,19 +68,30 @@ class ViewGroupFragment : NestedFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         fab.onClick { navInterface?.moveBack() }
+        fabAdd.onClick { navInterface?.openFragment(AddTaskFragment.newInstance(mGroupId), AddTaskFragment.TAG) }
 
         tasksList.layoutManager = LinearLayoutManager(context)
-        mAdapter = TasksListAdapter()
+
         mAdapter.callback = { list -> saveUpdates(list) }
         mAdapter.deleteCallback = { position -> showSnackbar(position) }
         tasksList.adapter = mAdapter
 
+        updateEmpty()
+
         initViewModel()
+    }
+
+    private fun updateEmpty() {
+        if (mAdapter.itemCount == 0) {
+            emptyView.visibility = View.VISIBLE
+        } else {
+            emptyView.visibility = View.GONE
+        }
     }
 
     private fun showSnackbar(position: Int) {
         val snack = Snackbar.make(coordinator, getString(R.string.delete_this_task_), Snackbar.LENGTH_LONG)
-        snack.setAction(getString(R.string.yes), { mAdapter.delete(position) })
+        snack.setAction(getString(R.string.yes)) { mAdapter.delete(position) }
         snack.setActionTextColor(ContextCompat.getColor(context!!, R.color.colorRed))
         snack.show()
     }
@@ -108,5 +120,6 @@ class ViewGroupFragment : NestedFragment() {
             list = list.sortedByDescending { it.important }.toMutableList()
         }
         mAdapter.setData(list.sortedByDescending { it.dt }.sortedBy { it.done })
+        updateEmpty()
     }
 }
