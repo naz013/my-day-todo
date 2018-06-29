@@ -18,6 +18,14 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
+        if (!Prefs.getInstance(this).isFirstAdded()) {
+            addEmptyGroups()
+        } else {
+            openApp()
+        }
+    }
+
+    private fun addEmptyGroups() {
         async(CommonPool) {
             val db = AppDb.getInMemoryDatabase(this@SplashScreenActivity)
             val groups = db.groupDao().getAll()
@@ -62,11 +70,16 @@ class SplashScreenActivity : AppCompatActivity() {
                     }
                 }
             }
-            Thread.sleep(1000)
+            Thread.sleep(250)
             async(UI) {
-                startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
-                finish()
-            }
+                Prefs.getInstance(this@SplashScreenActivity).setFirstAdded(true)
+                openApp()
+            }.await()
         }
+    }
+
+    private fun openApp() {
+        startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
+        finish()
     }
 }

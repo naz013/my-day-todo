@@ -48,7 +48,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:text="@string/there_is_no_groups_go_to_settings_to_add_one"
+                android:text="@string/use_button_to_create_new_group"
                 android:textColor="@color/colorAccent"
                 android:textSize="24sp" />
 

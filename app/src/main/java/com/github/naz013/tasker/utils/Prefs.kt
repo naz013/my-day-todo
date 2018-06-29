@@ -36,6 +36,7 @@ open class Prefs private constructor(context: Context) {
         private const val CREATE_BANNER_SHOWN = "create_banner_shown"
         private const val GROUP_BANNER_SHOWN = "group_banner_shown"
         private const val LAST_LAUNCH = "last_launch"
+        private const val FIRST_INSERT_GROUPS = "first_insert_groups"
 
         private var instance: Prefs? = null
 
@@ -87,6 +88,12 @@ open class Prefs private constructor(context: Context) {
     }
 
     fun isCreateBannerShown(): Boolean = getBoolean(CREATE_BANNER_SHOWN)
+
+    fun setFirstAdded(value: Boolean) {
+        putBoolean(FIRST_INSERT_GROUPS, value)
+    }
+
+    fun isFirstAdded(): Boolean = getBoolean(FIRST_INSERT_GROUPS)
 
     fun setGroupBannerShown(value: Boolean) {
         putBoolean(GROUP_BANNER_SHOWN, value)

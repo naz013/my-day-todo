@@ -2,6 +2,7 @@ package com.github.naz013.tasker.group.view
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
@@ -113,6 +114,7 @@ class ViewGroupFragment : NestedFragment() {
     private fun showGroup(group: TaskGroup) {
         mGroup = group
         titleView.text = group.name
+        titleView.setTextColor(Color.parseColor(group.color))
         var list = group.tasks
         val important = Prefs.getInstance(context!!).getImportant()
         val importantIds = Prefs.getInstance(context!!).getStringList(Prefs.IMPORTANT_FIRST_IDS)
