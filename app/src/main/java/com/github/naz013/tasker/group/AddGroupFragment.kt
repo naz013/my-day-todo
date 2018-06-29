@@ -63,6 +63,8 @@ class AddGroupFragment : NestedFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fab.onClick { navInterface?.moveBack() }
+
         initViewModel()
 
         if (!Prefs.getInstance(context!!).isGroupBannerShown()) {

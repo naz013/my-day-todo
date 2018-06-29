@@ -15,6 +15,7 @@ import com.github.naz013.tasker.data.Task
 import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.task.AddViewModel
 import com.github.naz013.tasker.utils.Prefs
+import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_view_group.*
 
 /**
@@ -64,6 +65,8 @@ class ViewGroupFragment : NestedFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        fab.onClick { navInterface?.moveBack() }
 
         tasksList.layoutManager = LinearLayoutManager(context)
         mAdapter = TasksListAdapter()
