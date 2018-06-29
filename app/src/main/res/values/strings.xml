@@ -28,4 +28,6 @@
     <string name="delete_this_task_">Delete this task?</string>
     <string name="yes">Yes, delete</string>
     <string name="delete_this_group_">Delete this group?</string>
+    <string name="there_is_no_groups_go_to_settings_to_add_one">There is no groups. Go to Settings to add one.</string>
+    <string name="use_button_to_create_new_group">Use + button to create new group.</string>
 </resources>

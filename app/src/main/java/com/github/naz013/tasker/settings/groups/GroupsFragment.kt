@@ -45,7 +45,7 @@ class GroupsFragment : NestedFragment(), OnStartDragListener {
     }
 
     private var mItemTouchHelper: ItemTouchHelper? = null
-    private var mAdapter: GroupsListAdapter? = null
+    private var mAdapter: GroupsListAdapter = GroupsListAdapter()
     private lateinit var viewModel: GroupsViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -58,23 +58,33 @@ class GroupsFragment : NestedFragment(), OnStartDragListener {
         fabAdd.onClick { openAddScreen() }
 
         mAdapter = GroupsListAdapter()
-        mAdapter?.mDragStartListener = this
-        mAdapter?.callback = { position, action -> performAction(position, action) }
-        mAdapter?.deleteCallback = { position -> showSnackbar(position) }
+        mAdapter.mDragStartListener = this
+        mAdapter.callback = { position, action -> performAction(position, action) }
+        mAdapter.deleteCallback = { position -> showSnackbar(position) }
 
         tasksList.layoutManager = LinearLayoutManager(context)
         tasksList.adapter = mAdapter
 
-        val callback = SimpleItemTouchHelperCallback(mAdapter!!)
+        val callback = SimpleItemTouchHelperCallback(mAdapter)
         mItemTouchHelper = ItemTouchHelper(callback)
         mItemTouchHelper?.attachToRecyclerView(tasksList)
+
+        updateEmpty()
 
         initViewModel()
     }
 
+    private fun updateEmpty() {
+        if (mAdapter.itemCount == 0) {
+            emptyView.visibility = View.VISIBLE
+        } else {
+            emptyView.visibility = View.GONE
+        }
+    }
+
     private fun showSnackbar(position: Int) {
         val snack = Snackbar.make(coordinator, getString(R.string.delete_this_group_), Snackbar.LENGTH_LONG)
-        snack.setAction(getString(R.string.yes), { mAdapter?.delete(position) })
+        snack.setAction(getString(R.string.yes)) { mAdapter.delete(position) }
         snack.setActionTextColor(ContextCompat.getColor(context!!, R.color.colorRed))
         snack.show()
     }
@@ -104,7 +114,8 @@ class GroupsFragment : NestedFragment(), OnStartDragListener {
     }
 
     private fun updateList(data: List<TaskGroup>) {
-        mAdapter?.setData(data)
+        mAdapter.setData(data)
+        updateEmpty()
     }
 
     override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
@@ -113,6 +124,6 @@ class GroupsFragment : NestedFragment(), OnStartDragListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.saveGroups(mAdapter?.items)
+        viewModel.saveGroups(mAdapter.items)
     }
 }

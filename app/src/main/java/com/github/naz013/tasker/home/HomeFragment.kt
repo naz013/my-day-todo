@@ -40,7 +40,7 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    private var mAdapter: GroupsListAdapter? = null
+    private var mAdapter: GroupsListAdapter = GroupsListAdapter()
     private lateinit var viewModel: HomeViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -51,13 +51,13 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         fab.onClick { openSettings() }
 
-        mAdapter = GroupsListAdapter()
-        mAdapter?.callback = { position, action ->
+        mAdapter.callback = { position, action ->
             performAction(position, action)
         }
 
         tasksList.layoutManager = LinearLayoutManager(context)
         tasksList.adapter = mAdapter
+        updateEmpty()
 
         initViewModel()
     }
@@ -79,7 +79,18 @@ class HomeFragment : BaseFragment() {
 
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        viewModel.data.observe(this, Observer { data -> if (data != null) mAdapter?.setData(data) })
+        viewModel.data.observe(this, Observer { data -> if (data != null) {
+            mAdapter.setData(data)
+            updateEmpty()
+        } })
+    }
+
+    private fun updateEmpty() {
+        if (mAdapter.itemCount == 0) {
+            emptyView.visibility = View.VISIBLE
+        } else {
+            emptyView.visibility = View.GONE
+        }
     }
 
     private fun openSettings() {
@@ -88,6 +99,7 @@ class HomeFragment : BaseFragment() {
 
     override fun onBackStackResume() {
         super.onBackStackResume()
-        mAdapter?.notifyDataSetChanged()
+        mAdapter.notifyDataSetChanged()
+        updateEmpty()
     }
 }
