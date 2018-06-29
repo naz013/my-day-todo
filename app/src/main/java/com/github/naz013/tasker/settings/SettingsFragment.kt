@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.NestedFragment
+import com.github.naz013.tasker.settings.backup.BackupSettingsFragment
 import com.github.naz013.tasker.settings.groups.GroupsFragment
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
@@ -59,6 +60,7 @@ class SettingsFragment : NestedFragment() {
 
         fontButton.onClick { navInterface?.openFragment(FontSizeSettingsFragment.newInstance(), FontSizeSettingsFragment.TAG) }
         groupButton.onClick { navInterface?.openFragment(GroupsFragment.newInstance(), GroupsFragment.TAG) }
+        backupButton.onClick { navInterface?.openFragment(BackupSettingsFragment.newInstance(), BackupSettingsFragment.TAG) }
     }
 
     override fun onBackStackResume() {
