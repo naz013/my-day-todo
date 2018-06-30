@@ -18,6 +18,7 @@ import com.github.naz013.tasker.task.AddTaskFragment
 import com.github.naz013.tasker.task.AddViewModel
 import com.github.naz013.tasker.utils.GoogleDrive
 import com.github.naz013.tasker.utils.LocalDrive
+import com.github.naz013.tasker.utils.Notifier
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_view_group.*
@@ -74,6 +75,7 @@ class ViewGroupFragment : NestedFragment() {
 
         fab.onClick { navInterface?.moveBack() }
         fabAdd.onClick { navInterface?.openFragment(AddTaskFragment.newInstance(mGroupId), AddTaskFragment.TAG) }
+        fabNotification.onClick { showNotification() }
 
         tasksList.layoutManager = LinearLayoutManager(context)
 
@@ -84,6 +86,11 @@ class ViewGroupFragment : NestedFragment() {
         updateEmpty()
 
         initViewModel()
+    }
+
+    private fun showNotification() {
+        val group = mGroup ?: return
+        Notifier(context!!).showNotification(group)
     }
 
     private fun updateEmpty() {

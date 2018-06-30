@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="4dp"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/statusView"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:padding="4dp"
-        app:srcCompat="@drawable/ic_status_check" />
+        app:srcCompat="@drawable/ic_status_check_white" />
 
     <TextView
         android:id="@+id/summaryView"
@@ -24,23 +24,15 @@
         android:layout_marginStart="16dp"
         android:layout_weight="1"
         android:maxLines="2"
-        tools:text="Hello"
-        android:textColor="@color/colorAccent"
-        android:textSize="14sp" />
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        tools:text="Hello" />
 
     <ImageView
         android:id="@+id/favouriteView"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:scaleType="centerInside"
-        app:srcCompat="@drawable/ic_favourite_on" />
-
-    <ImageView
-        android:id="@+id/deleteView"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:scaleType="centerInside"
-        android:visibility="gone"
-        app:srcCompat="@drawable/ic_delete_forever_red" />
+        app:srcCompat="@drawable/ic_favourite_on_white" />
 
 </LinearLayout>

@@ -36,4 +36,6 @@
     <string name="failed_to_login_to_drive">Failed to login to Google Drive</string>
     <string name="please_wait">Please wait...</string>
     <string name="local">Local</string>
+    <string name="group_channel">Group notification channel</string>
+    <string name="default_group_notifications">Default channel</string>
 </resources>
