@@ -69,6 +69,25 @@ class SettingsFragment : NestedFragment() {
         initValue(favIcon, prefs.getImportant())
         initValue(dayIcon, prefs.getClearOnDay())
         initValue(uncheckIcon, prefs.getClearChecks())
+        initBackupValue()
+    }
+
+    private fun initBackupValue() {
+        when {
+            isAllBackupEnabled() -> backupIcon.setBackgroundResource(R.drawable.round_green)
+            isAllBackupDisabled() -> backupIcon.setBackgroundResource(R.drawable.round_red)
+            else -> backupIcon.setBackgroundResource(R.drawable.round_orange)
+        }
+    }
+
+    private fun isAllBackupEnabled(): Boolean {
+        return Prefs.getInstance(context!!).isLocalBackupEnabled()
+                && Prefs.getInstance(context!!).getGoogleEmail().matches(".*@.*".toRegex())
+    }
+
+    private fun isAllBackupDisabled(): Boolean {
+        return !Prefs.getInstance(context!!).isLocalBackupEnabled()
+                && !Prefs.getInstance(context!!).getGoogleEmail().matches(".*@.*".toRegex())
     }
 
     private fun openExtraSettings(title: String, key: String, keyList: String): Boolean {

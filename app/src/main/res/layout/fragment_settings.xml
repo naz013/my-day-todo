@@ -236,6 +236,7 @@
                 android:padding="8dp">
 
                 <ImageView
+                    android:id="@+id/backupIcon"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:background="@drawable/round_green_blue"
