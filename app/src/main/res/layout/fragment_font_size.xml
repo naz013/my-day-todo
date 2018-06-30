@@ -18,6 +18,17 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/showCase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/slider"
+        android:gravity="center"
+        android:text="@string/aa"
+        android:visibility="gone" />
+
     <abak.tr.com.boxedverticalseekbar.BoxedVertical
         android:id="@+id/slider"
         android:layout_width="60dp"
@@ -31,7 +42,7 @@
         app:cornerRadius="20"
         app:defaultValue="11"
         app:imageEnabled="false"
-        app:max="25"
+        app:max="30"
         app:progressColor="@color/colorGreen"
         app:step="1"
         app:textBottomPadding="20"

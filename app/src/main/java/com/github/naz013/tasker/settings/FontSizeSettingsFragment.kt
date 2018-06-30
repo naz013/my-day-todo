@@ -1,6 +1,7 @@
 package com.github.naz013.tasker.settings
 
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,17 +42,18 @@ class FontSizeSettingsFragment : NestedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        updateShowcase(Prefs.getInstance(context!!).getFontSize())
+
         fab.onClick { navInterface?.moveBack() }
+        slider.value = Prefs.getInstance(context!!).getFontSize()
     }
 
-    override fun onResume() {
-        super.onResume()
-        slider.value = Prefs.getInstance(context!!).getFontSize()
+    private fun updateShowcase(points: Int) {
+        showCase.setTextSize(TypedValue.COMPLEX_UNIT_SP, points.toFloat())
     }
 
     override fun onStop() {
         super.onStop()
-        val newValue = slider.value
-        Prefs.getInstance(context!!).setFontSize(newValue)
+        Prefs.getInstance(context!!).setFontSize(slider.value)
     }
 }
