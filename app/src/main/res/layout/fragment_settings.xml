@@ -241,7 +241,7 @@
                     android:layout_height="64dp"
                     android:background="@drawable/round_green_blue"
                     android:scaleType="centerInside"
-                    app:srcCompat="@drawable/ic_outline_backup_white" />
+                    app:srcCompat="@drawable/ic_cloud" />
 
                 <TextView
                     android:layout_width="wrap_content"

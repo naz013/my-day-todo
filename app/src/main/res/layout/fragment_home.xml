@@ -30,7 +30,7 @@
 
             <ImageView
                 android:layout_width="72dp"
-                app:srcCompat="@drawable/ic_empty_groups"
+                app:srcCompat="@drawable/ic_empty_folder"
                 android:layout_height="72dp" />
 
             <TextView
