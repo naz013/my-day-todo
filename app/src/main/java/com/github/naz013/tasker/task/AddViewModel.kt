@@ -8,6 +8,8 @@ import android.arch.lifecycle.ViewModelProvider
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.data.Task
 import com.github.naz013.tasker.data.TaskGroup
+import com.github.naz013.tasker.utils.GoogleDrive
+import com.github.naz013.tasker.utils.LocalDrive
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.async
 import java.util.*
@@ -36,6 +38,16 @@ class AddViewModel(application: Application, val id: Int) : AndroidViewModel(app
         async(CommonPool) {
             group.tasks.add(Task((UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE).toInt(), false, summary, group.id, important, "", ""))
             mDb.groupDao().insert(group)
+            backupData()
+        }
+    }
+
+    private fun backupData() {
+        val googleDrive = GoogleDrive(getApplication())
+        val localDrive = LocalDrive(getApplication())
+        async(CommonPool) {
+            googleDrive.saveToDrive()
+            localDrive.saveToDrive()
         }
     }
 
