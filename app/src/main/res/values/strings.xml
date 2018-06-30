@@ -32,4 +32,8 @@
     <string name="use_button_to_create_new_group">Use + button to create new group.</string>
     <string name="you_complete_all_your_tasks">You complete all your tasks.</string>
     <string name="backup">Backup</string>
+    <string name="google_drive">Google Drive</string>
+    <string name="failed_to_login_to_drive">Failed to login to Google Drive</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="local">Local</string>
 </resources>

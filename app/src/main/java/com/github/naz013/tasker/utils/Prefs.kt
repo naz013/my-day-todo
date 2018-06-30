@@ -37,6 +37,8 @@ open class Prefs private constructor(context: Context) {
         private const val GROUP_BANNER_SHOWN = "group_banner_shown"
         private const val LAST_LAUNCH = "last_launch"
         private const val FIRST_INSERT_GROUPS = "first_insert_groups"
+        private const val LOCAL_BACKUP = "local_backup"
+        private const val GOOGLE_EMAIL = "google_email"
 
         private var instance: Prefs? = null
 
@@ -56,6 +58,20 @@ open class Prefs private constructor(context: Context) {
     }
 
     private var prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+
+    fun setLocalBackupEnabled(value: Boolean) {
+        putBoolean(LOCAL_BACKUP, value)
+    }
+
+    fun isLocalBackupEnabled(): Boolean = getBoolean(LOCAL_BACKUP)
+
+    fun setGoogleEmail(value: String) {
+        putString(GOOGLE_EMAIL, value)
+    }
+
+    fun getGoogleEmail(): String {
+        return getString(GOOGLE_EMAIL, "")
+    }
 
     fun setClearChecks(value: Int) {
         putInt(CLEAR_CHECKS, value)

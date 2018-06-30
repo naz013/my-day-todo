@@ -16,8 +16,12 @@ import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.arch.OnStartDragListener
 import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.group.AddGroupFragment
+import com.github.naz013.tasker.utils.GoogleDrive
+import com.github.naz013.tasker.utils.LocalDrive
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_groups.*
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.async
 
 
 /**
@@ -125,5 +129,15 @@ class GroupsFragment : NestedFragment(), OnStartDragListener {
     override fun onDestroy() {
         super.onDestroy()
         viewModel.saveGroups(mAdapter.items)
+        backupData()
+    }
+
+    private fun backupData() {
+        val googleDrive = GoogleDrive(activity!!)
+        val localDrive = LocalDrive(activity!!)
+        async(CommonPool) {
+            googleDrive.saveToDrive()
+            localDrive.saveToDrive()
+        }
     }
 }

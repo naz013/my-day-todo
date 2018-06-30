@@ -16,9 +16,13 @@ import com.github.naz013.tasker.data.Task
 import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.task.AddTaskFragment
 import com.github.naz013.tasker.task.AddViewModel
+import com.github.naz013.tasker.utils.GoogleDrive
+import com.github.naz013.tasker.utils.LocalDrive
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_view_group.*
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.async
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -123,5 +127,19 @@ class ViewGroupFragment : NestedFragment() {
         }
         mAdapter.setData(list.sortedByDescending { it.dt }.sortedBy { it.done })
         updateEmpty()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        backupData()
+    }
+
+    private fun backupData() {
+        val googleDrive = GoogleDrive(activity!!)
+        val localDrive = LocalDrive(activity!!)
+        async(CommonPool) {
+            googleDrive.saveToDrive()
+            localDrive.saveToDrive()
+        }
     }
 }

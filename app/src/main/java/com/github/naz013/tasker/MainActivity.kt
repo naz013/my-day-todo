@@ -1,8 +1,10 @@
 package com.github.naz013.tasker
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.arch.NavInterface
@@ -77,5 +79,11 @@ class MainActivity : AppCompatActivity(), NavInterface {
     override fun onDestroy() {
         Prefs.getInstance(this).setLastLaunch(TimeUtils.getGmtStamp())
         super.onDestroy()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("MainActivity", "onActivityResult: ")
+        fragment?.onActivityResult(requestCode, resultCode, data)
     }
 }
