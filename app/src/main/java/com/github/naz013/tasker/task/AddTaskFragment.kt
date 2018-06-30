@@ -12,13 +12,9 @@ import android.view.ViewGroup
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.data.TaskGroup
-import com.github.naz013.tasker.utils.GoogleDrive
-import com.github.naz013.tasker.utils.LocalDrive
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_add.*
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.async
 
 /**
  * Copyright 2018 Nazar Suhovich

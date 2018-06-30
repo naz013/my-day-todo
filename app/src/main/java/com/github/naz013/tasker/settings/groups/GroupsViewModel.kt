@@ -6,7 +6,7 @@ import android.arch.lifecycle.LiveData
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.data.TaskGroup
 import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -29,14 +29,14 @@ class GroupsViewModel(application: Application) : AndroidViewModel(application) 
     val data: LiveData<List<TaskGroup>> = mDb.groupDao().loadAll()
 
     fun deleteGroup(group: TaskGroup) {
-        async(CommonPool) {
+        launch(CommonPool) {
             mDb.groupDao().delete(group)
         }
     }
 
     fun saveGroups(items: MutableList<TaskGroup>?) {
         if (items != null) {
-            async(CommonPool) {
+            launch(CommonPool) {
                 val newList = mutableListOf<TaskGroup>()
                 for (i in 0 until items.size) {
                     newList.add(items[i].apply {

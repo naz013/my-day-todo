@@ -10,7 +10,9 @@ import com.github.naz013.tasker.utils.Prefs
 import com.github.naz013.tasker.utils.TimeUtils
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.withContext
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -26,7 +28,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun addEmptyGroups() {
-        async(CommonPool) {
+        launch(CommonPool) {
             val db = AppDb.getInMemoryDatabase(this@SplashScreenActivity)
             val groups = db.groupDao().getAll()
             if (groups.isEmpty()) {
@@ -70,11 +72,11 @@ class SplashScreenActivity : AppCompatActivity() {
                     }
                 }
             }
-            Thread.sleep(250)
-            async(UI) {
-                Prefs.getInstance(this@SplashScreenActivity).setFirstAdded(true)
+            Prefs.getInstance(this@SplashScreenActivity).setFirstAdded(true)
+            delay(250)
+            withContext(UI) {
                 openApp()
-            }.await()
+            }
         }
     }
 

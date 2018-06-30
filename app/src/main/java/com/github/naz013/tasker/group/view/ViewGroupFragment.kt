@@ -23,7 +23,7 @@ import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_view_group.*
 import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -142,9 +142,10 @@ class ViewGroupFragment : NestedFragment() {
     }
 
     private fun backupData() {
-        val googleDrive = GoogleDrive(activity!!)
-        val localDrive = LocalDrive(activity!!)
-        async(CommonPool) {
+        val app = activity?.application ?: return
+        launch(CommonPool) {
+            val googleDrive = GoogleDrive(app)
+            val localDrive = LocalDrive(app)
             googleDrive.saveToDrive()
             localDrive.saveToDrive()
         }

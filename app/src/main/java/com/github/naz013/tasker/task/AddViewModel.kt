@@ -11,7 +11,7 @@ import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.utils.GoogleDrive
 import com.github.naz013.tasker.utils.LocalDrive
 import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
 import java.util.*
 
 /**
@@ -35,24 +35,18 @@ class AddViewModel(application: Application, val id: Int) : AndroidViewModel(app
     val data: LiveData<TaskGroup?> = mDb.groupDao().loadById(id)
 
     fun saveTask(summary: String, group: TaskGroup, important: Boolean) {
-        async(CommonPool) {
+        launch(CommonPool) {
             group.tasks.add(Task((UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE).toInt(), false, summary, group.id, important, "", ""))
             mDb.groupDao().insert(group)
-            backupData()
-        }
-    }
-
-    private fun backupData() {
-        val googleDrive = GoogleDrive(getApplication())
-        val localDrive = LocalDrive(getApplication())
-        async(CommonPool) {
+            val googleDrive = GoogleDrive(getApplication())
+            val localDrive = LocalDrive(getApplication())
             googleDrive.saveToDrive()
             localDrive.saveToDrive()
         }
     }
 
     fun saveGroup(group: TaskGroup) {
-        async(CommonPool) {
+        launch(CommonPool) {
             mDb.groupDao().insert(group)
         }
     }

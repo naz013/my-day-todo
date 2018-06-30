@@ -49,11 +49,14 @@ class GoogleDrive(val context: Context) {
         val user = Prefs.getInstance(context).getGoogleEmail()
         Log.d("GoogleDrive", "init: $user")
         if (user.matches(".*@.*".toRegex())) {
-            val credential = GoogleAccountCredential.usingOAuth2(context, Arrays.asList(DriveScopes.DRIVE_APPDATA))
-            credential.selectedAccountName = user
-            val mJsonFactory = GsonFactory.getDefaultInstance()
-            val mTransport = AndroidHttp.newCompatibleTransport()
-            driveService = Drive.Builder(mTransport, mJsonFactory, credential).setApplicationName(APPLICATION_NAME).build()
+            try {
+                val credential = GoogleAccountCredential.usingOAuth2(context, Arrays.asList(DriveScopes.DRIVE_APPDATA))
+                credential.selectedAccountName = user
+                val mJsonFactory = GsonFactory.getDefaultInstance()
+                val mTransport = AndroidHttp.newCompatibleTransport()
+                driveService = Drive.Builder(mTransport, mJsonFactory, credential).setApplicationName(APPLICATION_NAME).build()
+            } catch (e: Exception) {
+            }
         } else {
             Prefs.getInstance(context).setGoogleEmail("")
         }
@@ -65,57 +68,68 @@ class GoogleDrive(val context: Context) {
 
         deleteDataJson()
 
-        val fileMetadata = File()
-        fileMetadata.name = FILE_NAME
-        fileMetadata.parents = Collections.singletonList("appDataFolder")
+        try {
+            val fileMetadata = File()
+            fileMetadata.name = FILE_NAME
+            fileMetadata.parents = Collections.singletonList("appDataFolder")
 
-        val groups = AppDb.getInMemoryDatabase(context).groupDao().getAll()
-        val data = Gson().toJson(groups)
-        Log.d("GoogleDrive", "saveToDrive: $data")
-        val array = data.toByteArray(StandardCharsets.UTF_8)
-        val stream = ByteArrayInputStream(array)
-        val content = object : AbstractInputStreamContent("application/json") {
-            override fun getLength(): Long = array.size.toLong()
-            override fun retrySupported(): Boolean = true
-            override fun getInputStream(): InputStream = stream
+            val groups = AppDb.getInMemoryDatabase(context).groupDao().getAll()
+            val data = Gson().toJson(groups)
+            Log.d("GoogleDrive", "saveToDrive: $data")
+            val array = data.toByteArray(StandardCharsets.UTF_8)
+            val stream = ByteArrayInputStream(array)
+            val content = object : AbstractInputStreamContent("application/json") {
+                override fun getLength(): Long = array.size.toLong()
+                override fun retrySupported(): Boolean = true
+                override fun getInputStream(): InputStream = stream
+            }
+
+            val file = service.files().create(fileMetadata, content).setFields("id").execute()
+            println("File ID: " + file.id)
+        } catch (e: Exception) {
         }
-
-        val file = service.files().create(fileMetadata, content).setFields("id").execute()
-        println("File ID: " + file.id)
     }
 
     private fun deleteDataJson() {
         if (!context.isConnected()) return
         val service = driveService ?: return
-        val files = service.files().list()
-                .setSpaces("appDataFolder")
-                .setFields("nextPageToken, files(id, name)")
-                .setPageSize(10)
-                .execute()
-        for (file in files.files) {
-            Log.d("GoogleDrive", "deleteDataJson: " + file.name)
-            if (file.name.contains("data")) {
-                service.files().delete(file.id).execute()
+        try {
+            val files = service.files().list()
+                    .setSpaces("appDataFolder")
+                    .setFields("nextPageToken, files(id, name)")
+                    .setPageSize(10)
+                    .execute()
+            for (file in files.files) {
+                Log.d("GoogleDrive", "deleteDataJson: " + file.name)
+                if (file.name.contains("data")) {
+                    service.files().delete(file.id).execute()
+                }
             }
+        } catch (e: Exception) {
         }
     }
 
     fun restoreFromDrive(): List<TaskGroup> {
         if (!context.isConnected()) return listOf()
         val service = driveService ?: return listOf()
-        val files = service.files().list()
-                .setSpaces("appDataFolder")
-                .setFields("nextPageToken, files(id, name)")
-                .setPageSize(10)
-                .execute()
-        for (file in files.files) {
-            Log.d("GoogleDrive", "restoreFromDrive: " + file.name)
-            if (file.name == FILE_NAME) {
-                val outputStream = ByteArrayOutputStream()
-                service.files().get(file.id).executeMediaAndDownloadTo(outputStream)
-                val type = object : TypeToken<List<TaskGroup>>() {}.type
-                return Gson().fromJson(outputStream.toString(), type)
+
+        try {
+            val files = service.files().list()
+                    .setSpaces("appDataFolder")
+                    .setFields("nextPageToken, files(id, name)")
+                    .setPageSize(10)
+                    .execute()
+            Log.d("GoogleDrive", "restoreFromDrive: start")
+            for (file in files.files) {
+                Log.d("GoogleDrive", "restoreFromDrive: " + file.name)
+                if (file.name == FILE_NAME) {
+                    val outputStream = ByteArrayOutputStream()
+                    service.files().get(file.id).executeMediaAndDownloadTo(outputStream)
+                    val type = object : TypeToken<List<TaskGroup>>() {}.type
+                    return Gson().fromJson(outputStream.toString(), type)
+                }
             }
+        } catch (e: Exception) {
         }
         return listOf()
     }

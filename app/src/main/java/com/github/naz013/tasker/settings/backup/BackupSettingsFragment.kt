@@ -35,6 +35,8 @@ import kotlinx.android.synthetic.main.fragment_backup_settings.*
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.withContext
 import java.io.IOException
 
 
@@ -114,32 +116,35 @@ class BackupSettingsFragment : NestedFragment() {
     }
 
     private fun startLocalSync() {
-        val appDb = AppDb.getInMemoryDatabase(context!!)
-        val drive = LocalDrive(context!!)
-        async(UI) {
+        launch(UI) {
             showProgress()
-            async(CommonPool) {
+            withContext(CommonPool) {
+                val appDb = AppDb.getInMemoryDatabase(activity!!)
+                val drive = LocalDrive(activity!!)
                 val oldList = appDb.groupDao().getAll()
-                val driveList = drive.restoreFromDrive()
-                Log.d("BackupSettingsFragment", "startLocalSync: " + oldList.size + ", " + driveList.size)
-                if (!driveList.isEmpty() && !oldList.isEmpty()) {
-                    async(UI) {
+                val cloudList = drive.restoreFromDrive()
+                Log.d("BackupSettingsFragment", "startGoogleSync: " + oldList.size + ", " + cloudList.size)
+                if (!cloudList.isEmpty() && !oldList.isEmpty()) {
+                    Log.d("BackupSettingsFragment", "startGoogleSync: merge")
+                    withContext(UI) {
                         hideProgress()
-                        showMergeDialog(oldList, driveList, "SD Card")
-                    }.await()
-                } else if (!driveList.isEmpty()) {
-                    appDb.groupDao().insert(driveList)
-                    async(UI) {
+                        showMergeDialog(oldList, cloudList, "SD Card")
+                    }
+                } else if (!cloudList.isEmpty()) {
+                    Log.d("BackupSettingsFragment", "startGoogleSync: local")
+                    appDb.groupDao().insert(cloudList)
+                    withContext(UI) {
                         hideProgress()
-                        toast("Found ${driveList.size} groups")
-                    }.await()
+                        toast("Found ${cloudList.size} groups")
+                    }
                 } else {
-                    async(UI) {
+                    Log.d("BackupSettingsFragment", "startGoogleSync: nothing")
+                    withContext(UI) {
                         hideProgress()
                         toast("Nothing restored")
-                    }.await()
+                    }
                 }
-            }.await()
+            }
         }
     }
 
@@ -200,25 +205,27 @@ class BackupSettingsFragment : NestedFragment() {
     }
 
     private fun getAndUseAuthTokenInAsyncTask(account: Account) {
-        showProgress()
-        async(CommonPool) {
-            val token = getAccessToken(account)
-            async(UI) {
-                hideProgress()
-                if (token != null) {
-                    if (token == RT_CODE) {
-                        if (rtIntent != null) {
-                            activity!!.startActivityForResult(rtIntent, REQUEST_ACCOUNT_PICKER)
+        launch(UI) {
+            showProgress()
+            withContext(CommonPool) {
+                val token = getAccessToken(account)
+                withContext(UI) {
+                    hideProgress()
+                    if (token != null) {
+                        if (token == RT_CODE) {
+                            if (rtIntent != null) {
+                                activity!!.startActivityForResult(rtIntent, REQUEST_ACCOUNT_PICKER)
+                            } else {
+                                toast(getString(R.string.failed_to_login_to_drive))
+                            }
                         } else {
-                            toast(getString(R.string.failed_to_login_to_drive))
+                            finishLogin()
                         }
                     } else {
-                        finishLogin()
+                        toast(getString(R.string.failed_to_login_to_drive))
                     }
-                } else {
-                    toast(getString(R.string.failed_to_login_to_drive))
                 }
-            }.await()
+            }
         }
     }
 
@@ -285,32 +292,35 @@ class BackupSettingsFragment : NestedFragment() {
     }
 
     private fun startGoogleSync() {
-        val appDb = AppDb.getInMemoryDatabase(context!!)
-        val drive = GoogleDrive(context!!)
-        async(UI) {
+        launch(UI) {
             showProgress()
-            async(CommonPool) {
+            withContext(CommonPool) {
+                val appDb = AppDb.getInMemoryDatabase(activity!!)
+                val drive = GoogleDrive(activity!!)
                 val oldList = appDb.groupDao().getAll()
                 val cloudList = drive.restoreFromDrive()
                 Log.d("BackupSettingsFragment", "startGoogleSync: " + oldList.size + ", " + cloudList.size)
                 if (!cloudList.isEmpty() && !oldList.isEmpty()) {
-                    async(UI) {
+                    Log.d("BackupSettingsFragment", "startGoogleSync: merge")
+                    withContext(UI) {
                         hideProgress()
                         showMergeDialog(oldList, cloudList, "Google Drive")
-                    }.await()
+                    }
                 } else if (!cloudList.isEmpty()) {
+                    Log.d("BackupSettingsFragment", "startGoogleSync: local")
                     appDb.groupDao().insert(cloudList)
-                    async(UI) {
+                    withContext(UI) {
                         hideProgress()
                         toast("Found ${cloudList.size} groups")
-                    }.await()
+                    }
                 } else {
-                    async(UI) {
+                    Log.d("BackupSettingsFragment", "startGoogleSync: nothing")
+                    withContext(UI) {
                         hideProgress()
                         toast("Nothing restored")
-                    }.await()
+                    }
                 }
-            }.await()
+            }
         }
     }
 

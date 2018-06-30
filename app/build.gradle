@@ -25,6 +25,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -58,8 +59,7 @@ dependencies {
 
     implementation 'com.mcxiaoke.koi:core:0.5.4'
     implementation 'org.jetbrains.anko:anko-commons:0.10.4'
-    implementation 'org.jetbrains.anko:anko-coroutines:0.10.4'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.18'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.23.3'
 
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'android.arch.persistence.room:runtime:1.1.1'
