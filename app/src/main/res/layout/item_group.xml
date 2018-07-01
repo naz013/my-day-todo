@@ -54,7 +54,7 @@
         android:elevation="2dp"
         android:padding="8dp"
         android:textAllCaps="true"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

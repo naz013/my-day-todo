@@ -73,16 +73,24 @@ class Notifier(val context: Context) {
         builder.setSmallIcon(R.drawable.ic_app_icon_white)
         builder.priority = NotificationCompat.PRIORITY_MIN
         remoteViews.setTextViewText(R.id.titleView, group.name)
-        remoteViews.setImageViewResource(R.id.bellIcon, R.drawable.ic_alarm)
+        remoteViews.setImageViewResource(R.id.bellIcon, R.drawable.ic_alarm_black)
         remoteViews.setImageViewResource(R.id.closeIcon, R.drawable.ic_cancel)
 
         val cancelIntent = Intent(context, ActionsReceiver::class.java)
                 .setAction(ActionsReceiver.ACTION_CANCEL_NOTIFICATION)
                 .putExtra(ActionsReceiver.ARG_ID, group.id)
-        val cancelPendingIntent = PendingIntent.getBroadcast(context, 0, cancelIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+        val cancelPendingIntent = PendingIntent.getBroadcast(context, group.id, cancelIntent, 0)
         remoteViews.setOnClickPendingIntent(R.id.closeIcon, cancelPendingIntent)
 
-        group.tasks.forEach {
+        var list = group.tasks
+        val important = Prefs.getInstance(context).getImportant()
+        val importantIds = Prefs.getInstance(context).getStringList(Prefs.IMPORTANT_FIRST_IDS)
+        if (important == Prefs.ENABLED || (important == Prefs.CUSTOM && importantIds.contains(group.id.toString()))) {
+            list = list.sortedByDescending { it.important }.toMutableList()
+        }
+        list = list.sortedByDescending { it.dt }.sortedBy { it.done }.toMutableList()
+
+        list.forEach {
             val rV = RemoteViews(context.packageName, R.layout.item_task_notification)
 
             rV.setTextViewText(R.id.summaryView, it.summary)
@@ -104,7 +112,7 @@ class Notifier(val context: Context) {
         builder.setCustomBigContentView(remoteViews)
 
         val intent = Intent(context, SplashScreenActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(context, group.id, intent, 0)
         builder.setContentIntent(pendingIntent)
 
         manager?.notify(group.id, builder.build())

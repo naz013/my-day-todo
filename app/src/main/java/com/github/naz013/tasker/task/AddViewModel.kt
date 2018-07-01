@@ -10,8 +10,11 @@ import com.github.naz013.tasker.data.Task
 import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.utils.GoogleDrive
 import com.github.naz013.tasker.utils.LocalDrive
+import com.github.naz013.tasker.utils.Notifier
 import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.withContext
 import java.util.*
 
 /**
@@ -48,6 +51,11 @@ class AddViewModel(application: Application, val id: Int) : AndroidViewModel(app
     fun saveGroup(group: TaskGroup) {
         launch(CommonPool) {
             mDb.groupDao().insert(group)
+            if (group.notificationEnabled) {
+                withContext(UI) {
+                    Notifier(getApplication()).showNotification(group)
+                }
+            }
         }
     }
 
