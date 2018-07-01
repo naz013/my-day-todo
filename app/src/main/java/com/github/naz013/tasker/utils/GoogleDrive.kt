@@ -2,6 +2,7 @@ package com.github.naz013.tasker.utils
 
 import android.content.Context
 import android.util.Log
+import com.crashlytics.android.Crashlytics
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.data.TaskGroup
 import com.google.api.client.extensions.android.http.AndroidHttp
@@ -56,6 +57,8 @@ class GoogleDrive(val context: Context) {
                 val mTransport = AndroidHttp.newCompatibleTransport()
                 driveService = Drive.Builder(mTransport, mJsonFactory, credential).setApplicationName(APPLICATION_NAME).build()
             } catch (e: Exception) {
+                Crashlytics.log(e.message)
+                Log.d("GoogleDrive", "init: " + e.message)
             }
         } else {
             Prefs.getInstance(context).setGoogleEmail("")
@@ -87,6 +90,8 @@ class GoogleDrive(val context: Context) {
             val file = service.files().create(fileMetadata, content).setFields("id").execute()
             println("File ID: " + file.id)
         } catch (e: Exception) {
+            Crashlytics.log(e.message)
+            Log.d("GoogleDrive", "saveToDrive: " + e.message)
         }
     }
 
@@ -106,6 +111,8 @@ class GoogleDrive(val context: Context) {
                 }
             }
         } catch (e: Exception) {
+            Crashlytics.log(e.message)
+            Log.d("GoogleDrive", "deleteDataJson: " + e.message)
         }
     }
 
@@ -130,6 +137,8 @@ class GoogleDrive(val context: Context) {
                 }
             }
         } catch (e: Exception) {
+            Crashlytics.log(e.message)
+            Log.d("GoogleDrive", "restoreFromDrive: " + e.message)
         }
         return listOf()
     }
