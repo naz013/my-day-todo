@@ -89,11 +89,6 @@ class ViewGroupFragment : NestedFragment() {
 
     private fun showNotification() {
         val group = mGroup ?: return
-        if (group.notificationEnabled) {
-            Notifier(context!!).hideNotification(group)
-        } else {
-            Notifier(context!!).showNotification(group)
-        }
         group.notificationEnabled = !group.notificationEnabled
         viewModel.saveGroup(group)
     }
