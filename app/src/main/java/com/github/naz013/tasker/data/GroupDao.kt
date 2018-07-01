@@ -32,6 +32,9 @@ interface GroupDao {
     @Query("select * from TaskGroup order by position")
     fun getAll(): List<TaskGroup>
 
+    @Query("select * from TaskGroup where id = :id")
+    fun getById(id: Int): TaskGroup?
+
     @Insert(onConflict = REPLACE)
     fun insert(group: TaskGroup)
 

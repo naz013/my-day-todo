@@ -13,6 +13,7 @@ import android.widget.RemoteViews
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.SplashScreenActivity
 import com.github.naz013.tasker.data.TaskGroup
+import com.github.naz013.tasker.services.ActionsReceiver
 
 
 /**
@@ -68,11 +69,19 @@ class Notifier(val context: Context) {
         val remoteViews = RemoteViews(context.packageName, R.layout.view_notification)
         val builder = NotificationCompat.Builder(context, Notifier.CHANNEL_GROUP)
         builder.setAutoCancel(false)
-        builder.setOngoing(false)
+        builder.setOngoing(true)
         builder.setSmallIcon(R.drawable.ic_app_icon_white)
         builder.priority = NotificationCompat.PRIORITY_MIN
         remoteViews.setTextViewText(R.id.titleView, group.name)
         remoteViews.setImageViewResource(R.id.bellIcon, R.drawable.ic_alarm)
+        remoteViews.setImageViewResource(R.id.closeIcon, R.drawable.ic_cancel)
+
+        val cancelIntent = Intent(context, ActionsReceiver::class.java)
+                .setAction(ActionsReceiver.ACTION_CANCEL_NOTIFICATION)
+                .putExtra(ActionsReceiver.ARG_ID, group.id)
+        val cancelPendingIntent = PendingIntent.getBroadcast(context, 0, cancelIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+        remoteViews.setOnClickPendingIntent(R.id.closeIcon, cancelPendingIntent)
+
         group.tasks.forEach {
             val rV = RemoteViews(context.packageName, R.layout.item_task_notification)
 

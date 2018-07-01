@@ -32,6 +32,11 @@ class MainActivity : AppCompatActivity(), NavInterface {
         openFragment(HomeFragment.newInstance(), HomeFragment.TAG)
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+    }
+
     private fun onStackChanged() {
         if (supportFragmentManager.backStackEntryCount > 0) {
             val f = supportFragmentManager.findFragmentById(R.id.fragmentContainer)

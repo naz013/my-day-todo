@@ -26,7 +26,22 @@ class SplashScreenActivity : AppCompatActivity() {
         } else if (!TimeUtils.isSameDay(Prefs.getInstance(this@SplashScreenActivity).getLastLaunch())) {
             verifyGroups()
         } else {
-            openApp()
+            checkNotifications()
+        }
+    }
+
+    private fun checkNotifications() {
+        launch(CommonPool) {
+            val db = AppDb.getInMemoryDatabase(this@SplashScreenActivity)
+            val groups = db.groupDao().getAll()
+            withContext(UI) {
+                val notifier = Notifier(this@SplashScreenActivity)
+                groups.forEach {
+                    if (it.notificationEnabled) notifier.showNotification(it)
+                    else notifier.hideNotification(it)
+                }
+                openApp()
+            }
         }
     }
 
