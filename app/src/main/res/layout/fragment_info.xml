@@ -105,7 +105,7 @@
                         android:layout_height="64dp"
                         android:background="@drawable/round_green_blue"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/ic_favourite_white" />
+                        app:srcCompat="@drawable/ic_heart" />
 
                     <TextView
                         android:layout_width="match_parent"

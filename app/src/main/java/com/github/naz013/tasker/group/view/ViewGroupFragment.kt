@@ -133,9 +133,9 @@ class ViewGroupFragment : NestedFragment() {
 
         fabNotification.setImageResource(if (group.notificationEnabled) R.drawable.ic_silence else R.drawable.ic_alarm)
         if (group.notificationEnabled) {
-            Notifier(context!!).hideNotification(group)
-        } else {
             Notifier(context!!).showNotification(group)
+        } else {
+            Notifier(context!!).hideNotification(group)
         }
 
         titleView.text = group.name

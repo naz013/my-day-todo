@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.data.TaskGroup
+import com.github.naz013.tasker.utils.Notifier
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 
@@ -29,6 +30,7 @@ class GroupsViewModel(application: Application) : AndroidViewModel(application) 
     val data: LiveData<List<TaskGroup>> = mDb.groupDao().loadAll()
 
     fun deleteGroup(group: TaskGroup) {
+        if (group.notificationEnabled) Notifier(getApplication()).hideNotification(group)
         launch(CommonPool) {
             mDb.groupDao().delete(group)
         }
