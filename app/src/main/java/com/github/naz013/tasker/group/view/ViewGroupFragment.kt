@@ -90,7 +90,13 @@ class ViewGroupFragment : NestedFragment() {
 
     private fun showNotification() {
         val group = mGroup ?: return
-        Notifier(context!!).showNotification(group)
+        if (group.notificationEnabled) {
+            Notifier(context!!).hideNotification(group)
+        } else {
+            Notifier(context!!).showNotification(group)
+        }
+        group.notificationEnabled = !group.notificationEnabled
+        viewModel.saveGroup(group)
     }
 
     private fun updateEmpty() {
@@ -124,6 +130,14 @@ class ViewGroupFragment : NestedFragment() {
 
     private fun showGroup(group: TaskGroup) {
         mGroup = group
+
+        fabNotification.setImageResource(if (group.notificationEnabled) R.drawable.ic_silence else R.drawable.ic_alarm)
+        if (group.notificationEnabled) {
+            Notifier(context!!).hideNotification(group)
+        } else {
+            Notifier(context!!).showNotification(group)
+        }
+
         titleView.text = group.name
         titleView.setTextColor(Color.parseColor(group.color))
         var list = group.tasks

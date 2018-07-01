@@ -56,6 +56,11 @@ class Notifier(val context: Context) {
         return mChannel
     }
 
+    fun hideNotification(group: TaskGroup) {
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+        manager?.cancel(group.id)
+    }
+
     fun showNotification(group: TaskGroup) {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
         manager?.cancel(group.id)
