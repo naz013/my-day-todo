@@ -10,8 +10,8 @@ android {
         applicationId "com.github.naz013.tasker"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 8
-        versionName "1.0.4"
+        versionCode 9
+        versionName "1.0.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
@@ -27,6 +27,15 @@ android {
             minifyEnabled true
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    def formattedDate = new Date().format('yyyy-MM-dd')
+                    def newName = outputFileName
+                    newName = newName.replace("release", formattedDate + "_" + versionName.replace(".", "_"))
+                    newName = newName.replace("app-", "my_day_")
+                    outputFileName = newName
+                }
+            }
         }
     }
     packagingOptions {
