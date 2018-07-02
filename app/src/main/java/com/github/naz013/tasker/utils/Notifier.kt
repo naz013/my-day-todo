@@ -9,7 +9,6 @@ import android.graphics.Color
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
-import android.view.View
 import android.widget.RemoteViews
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.SplashScreenActivity
@@ -66,7 +65,6 @@ class Notifier(val context: Context) {
     fun showNotification(group: TaskGroup) {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
         manager?.cancel(group.id)
-
         val remoteViews = RemoteViews(context.packageName, R.layout.view_notification)
         val builder = NotificationCompat.Builder(context, Notifier.CHANNEL_GROUP)
         builder.setAutoCancel(false)
@@ -76,13 +74,11 @@ class Notifier(val context: Context) {
         remoteViews.setTextViewText(R.id.titleView, group.name)
         remoteViews.setImageViewResource(R.id.bellIcon, R.drawable.ic_alarm_black)
         remoteViews.setImageViewResource(R.id.closeIcon, R.drawable.ic_cancel)
-
         val cancelIntent = Intent(context, ActionsReceiver::class.java)
                 .setAction(ActionsReceiver.ACTION_CANCEL_NOTIFICATION)
                 .putExtra(ActionsReceiver.ARG_ID, group.id)
         val cancelPendingIntent = PendingIntent.getBroadcast(context, group.id, cancelIntent, 0)
         remoteViews.setOnClickPendingIntent(R.id.closeIcon, cancelPendingIntent)
-
         var list = group.tasks
         val important = Prefs.getInstance(context).getImportant()
         val importantIds = Prefs.getInstance(context).getStringList(Prefs.IMPORTANT_FIRST_IDS)
@@ -90,37 +86,25 @@ class Notifier(val context: Context) {
             list = list.sortedByDescending { it.important }.toMutableList()
         }
         list = list.sortedByDescending { it.dt }.sortedBy { it.done }.toMutableList()
-
         if (!list.isEmpty()) {
-            remoteViews.setViewVisibility(R.id.containerView, View.VISIBLE)
             list.forEach {
                 val rV = RemoteViews(context.packageName, R.layout.item_task_notification)
-
                 rV.setTextViewText(R.id.summaryView, it.summary)
-                if (it.done) {
-                    rV.setImageViewResource(R.id.statusView, R.drawable.ic_status_check_white)
-                } else {
-                    rV.setImageViewResource(R.id.statusView, R.drawable.ic_status_non_check_white)
-                }
-                if (it.important) {
-                    rV.setImageViewResource(R.id.favouriteView, R.drawable.ic_favourite_on_white)
-                } else {
-                    rV.setImageViewResource(R.id.favouriteView, R.drawable.ic_favourite_off_white)
-                }
-
+                if (it.done) rV.setImageViewResource(R.id.statusView, R.drawable.ic_status_check_white)
+                else rV.setImageViewResource(R.id.statusView, R.drawable.ic_status_non_check_white)
+                if (it.important) rV.setImageViewResource(R.id.favouriteView, R.drawable.ic_favourite_on_white)
+                else rV.setImageViewResource(R.id.favouriteView, R.drawable.ic_favourite_off_white)
                 remoteViews.addView(R.id.containerView, rV)
             }
         } else {
-            remoteViews.setViewVisibility(R.id.containerView, View.GONE)
+            val rV = RemoteViews(context.packageName, R.layout.item_empty_tasks)
+            remoteViews.addView(R.id.containerView, rV)
         }
         remoteViews.setInt(R.id.notificationBg, "setBackgroundColor", Color.parseColor(group.color))
-
         builder.setCustomBigContentView(remoteViews)
-
         val intent = Intent(context, SplashScreenActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(context, group.id, intent, 0)
         builder.setContentIntent(pendingIntent)
-
         manager?.notify(group.id, builder.build())
     }
 }

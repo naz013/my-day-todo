@@ -39,4 +39,5 @@
     <string name="group_channel">Group notification channel</string>
     <string name="default_group_notifications">Default channel</string>
     <string name="aa">Aa</string>
+    <string name="no_tasks">No tasks</string>
 </resources>
