@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
+import android.view.View
 import android.widget.RemoteViews
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.SplashScreenActivity
@@ -90,22 +91,27 @@ class Notifier(val context: Context) {
         }
         list = list.sortedByDescending { it.dt }.sortedBy { it.done }.toMutableList()
 
-        list.forEach {
-            val rV = RemoteViews(context.packageName, R.layout.item_task_notification)
+        if (!list.isEmpty()) {
+            remoteViews.setViewVisibility(R.id.containerView, View.VISIBLE)
+            list.forEach {
+                val rV = RemoteViews(context.packageName, R.layout.item_task_notification)
 
-            rV.setTextViewText(R.id.summaryView, it.summary)
-            if (it.done) {
-                rV.setImageViewResource(R.id.statusView, R.drawable.ic_status_check_white)
-            } else {
-                rV.setImageViewResource(R.id.statusView, R.drawable.ic_status_non_check_white)
-            }
-            if (it.important) {
-                rV.setImageViewResource(R.id.favouriteView, R.drawable.ic_favourite_on_white)
-            } else {
-                rV.setImageViewResource(R.id.favouriteView, R.drawable.ic_favourite_off_white)
-            }
+                rV.setTextViewText(R.id.summaryView, it.summary)
+                if (it.done) {
+                    rV.setImageViewResource(R.id.statusView, R.drawable.ic_status_check_white)
+                } else {
+                    rV.setImageViewResource(R.id.statusView, R.drawable.ic_status_non_check_white)
+                }
+                if (it.important) {
+                    rV.setImageViewResource(R.id.favouriteView, R.drawable.ic_favourite_on_white)
+                } else {
+                    rV.setImageViewResource(R.id.favouriteView, R.drawable.ic_favourite_off_white)
+                }
 
-            remoteViews.addView(R.id.containerView, rV)
+                remoteViews.addView(R.id.containerView, rV)
+            }
+        } else {
+            remoteViews.setViewVisibility(R.id.containerView, View.GONE)
         }
         remoteViews.setInt(R.id.notificationBg, "setBackgroundColor", Color.parseColor(group.color))
 
