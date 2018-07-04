@@ -69,6 +69,7 @@ class Notifier(val context: Context) {
         val builder = NotificationCompat.Builder(context, Notifier.CHANNEL_GROUP)
         builder.setAutoCancel(false)
         builder.setOngoing(true)
+        builder.setContentTitle(group.name)
         builder.setSmallIcon(R.drawable.ic_app_icon_white)
         builder.priority = NotificationCompat.PRIORITY_MIN
         remoteViews.setTextViewText(R.id.titleView, group.name)
