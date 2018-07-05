@@ -58,6 +58,9 @@ class SettingsFragment : NestedFragment() {
         uncheckButton.onClick { changeUncheck() }
         uncheckButton.onLongClick { openExtraSettings(getString(R.string.uncheck_tasks_on_new_day), Prefs.CLEAR_CHECKS, Prefs.CLEAR_CHECKS_IDS) }
 
+        notificationButton.onClick { changeNotification() }
+        notificationButton.onLongClick { openExtraSettings(getString(R.string.notification_on_boot), Prefs.BOOT_NOTIFICATION, Prefs.BOOT_IDS) }
+
         fontButton.onClick { navInterface?.openFragment(FontSizeSettingsFragment.newInstance(), FontSizeSettingsFragment.TAG) }
         groupButton.onClick { navInterface?.openFragment(GroupsFragment.newInstance(), GroupsFragment.TAG) }
         backupButton.onClick { navInterface?.openFragment(BackupSettingsFragment.newInstance(), BackupSettingsFragment.TAG) }
@@ -69,6 +72,7 @@ class SettingsFragment : NestedFragment() {
         initValue(favIcon, prefs.getImportant())
         initValue(dayIcon, prefs.getClearOnDay())
         initValue(uncheckIcon, prefs.getClearChecks())
+        initValue(notificationIcon, prefs.getBootNotification())
         initBackupValue()
     }
 
@@ -97,19 +101,30 @@ class SettingsFragment : NestedFragment() {
 
     private fun initValue(imageView: ImageView, value: Int) {
         when (value) {
-            1 -> imageView.setBackgroundResource(R.drawable.round_green)
-            0 -> imageView.setBackgroundResource(R.drawable.round_red)
+            Prefs.ENABLED -> imageView.setBackgroundResource(R.drawable.round_green)
+            Prefs.DISABLED -> imageView.setBackgroundResource(R.drawable.round_red)
             else -> imageView.setBackgroundResource(R.drawable.round_orange)
         }
+    }
+
+    private fun changeNotification() {
+        val prefs = Prefs.getInstance(context!!)
+        val value = prefs.getBootNotification()
+        if (value == Prefs.DISABLED) {
+            prefs.setBootNotification(Prefs.ENABLED)
+        } else {
+            prefs.setBootNotification(Prefs.DISABLED)
+        }
+        initValue(notificationIcon, prefs.getBootNotification())
     }
 
     private fun changeUncheck() {
         val prefs = Prefs.getInstance(context!!)
         val value = prefs.getClearChecks()
-        if (value == 0) {
-            prefs.setClearChecks(1)
+        if (value == Prefs.DISABLED) {
+            prefs.setClearChecks(Prefs.ENABLED)
         } else {
-            prefs.setClearChecks(0)
+            prefs.setClearChecks(Prefs.DISABLED)
         }
         initValue(uncheckIcon, prefs.getClearChecks())
     }
@@ -117,10 +132,10 @@ class SettingsFragment : NestedFragment() {
     private fun changeFav() {
         val prefs = Prefs.getInstance(context!!)
         val value = prefs.getImportant()
-        if (value == 0) {
-            prefs.setImportant(1)
+        if (value == Prefs.DISABLED) {
+            prefs.setImportant(Prefs.ENABLED)
         } else {
-            prefs.setImportant(0)
+            prefs.setImportant(Prefs.DISABLED)
         }
         initValue(favIcon, prefs.getImportant())
     }
@@ -128,10 +143,10 @@ class SettingsFragment : NestedFragment() {
     private fun changeDay() {
         val prefs = Prefs.getInstance(context!!)
         val value = prefs.getClearOnDay()
-        if (value == 0) {
-            prefs.setClearOnDay(1)
+        if (value == Prefs.DISABLED) {
+            prefs.setClearOnDay(Prefs.ENABLED)
         } else {
-            prefs.setClearOnDay(0)
+            prefs.setClearOnDay(Prefs.DISABLED)
         }
         initValue(dayIcon, prefs.getClearOnDay())
     }

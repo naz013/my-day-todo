@@ -192,6 +192,72 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/backupButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/backupIcon"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/round_green_blue"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/ic_cloud" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="@string/backup"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:id="@+id/notificationButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/notificationIcon"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/round_red"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/ic_alarm" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="@string/notification_on_boot"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/infoButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -218,44 +284,8 @@
                         android:textSize="15sp" />
 
                 </LinearLayout>
-            </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <LinearLayout
-                android:id="@+id/backupButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <ImageView
-                    android:id="@+id/backupIcon"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:background="@drawable/round_green_blue"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/ic_cloud" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:maxLines="2"
-                    android:text="@string/backup"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="15sp" />
 
             </LinearLayout>
-
-        </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

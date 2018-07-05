@@ -15,7 +15,6 @@ import com.github.naz013.tasker.SplashScreenActivity
 import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.services.ActionsReceiver
 
-
 /**
  * Copyright 2018 Nazar Suhovich
  * <p/>

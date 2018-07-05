@@ -32,6 +32,7 @@ open class Prefs private constructor(context: Context) {
         const val CLEAR_GROUP_IDS = "clear_day_ids"
         const val CLEAR_CHECKS = "clear_checks"
         const val CLEAR_CHECKS_IDS = "clear_checks_ids"
+        const val BOOT_IDS = "boot_ids"
         private const val FONT_SIZE = "font_size"
         private const val CREATE_BANNER_SHOWN = "create_banner_shown"
         private const val GROUP_BANNER_SHOWN = "group_banner_shown"
@@ -39,6 +40,7 @@ open class Prefs private constructor(context: Context) {
         private const val FIRST_INSERT_GROUPS = "first_insert_groups"
         private const val LOCAL_BACKUP = "local_backup"
         private const val GOOGLE_EMAIL = "google_email"
+        const val BOOT_NOTIFICATION = "boot_notification"
 
         private var instance: Prefs? = null
 
@@ -58,6 +60,12 @@ open class Prefs private constructor(context: Context) {
     }
 
     private var prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+
+    fun setBootNotification(value: Int) {
+        putInt(BOOT_NOTIFICATION, value)
+    }
+
+    fun getBootNotification(): Int = getInt(BOOT_NOTIFICATION, DISABLED)
 
     fun setLocalBackupEnabled(value: Boolean) {
         putBoolean(LOCAL_BACKUP, value)
