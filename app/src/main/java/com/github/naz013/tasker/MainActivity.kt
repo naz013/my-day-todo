@@ -25,6 +25,11 @@ class MainActivity : AppCompatActivity(), NavInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Prefs.getInstance(this).isDarkMode()) {
+            setTheme(R.style.AppTheme_Dark)
+        } else {
+            setTheme(R.style.AppTheme_Light)
+        }
         setContentView(R.layout.activity_main)
 
         supportFragmentManager.addOnBackStackChangedListener { onStackChanged() }

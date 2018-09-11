@@ -1,11 +1,13 @@
 package com.github.naz013.tasker.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.github.naz013.tasker.R
+import com.github.naz013.tasker.SplashScreenActivity
 import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.settings.backup.BackupSettingsFragment
 import com.github.naz013.tasker.settings.groups.GroupsFragment
@@ -61,6 +63,8 @@ class SettingsFragment : NestedFragment() {
         notificationButton.onClick { changeNotification() }
         notificationButton.onLongClick { openExtraSettings(getString(R.string.notification_on_boot), Prefs.BOOT_NOTIFICATION, Prefs.BOOT_IDS) }
 
+        darkModeButton.onClick { changeTheme() }
+
         fontButton.onClick { navInterface?.openFragment(FontSizeSettingsFragment.newInstance(), FontSizeSettingsFragment.TAG) }
         groupButton.onClick { navInterface?.openFragment(GroupsFragment.newInstance(), GroupsFragment.TAG) }
         backupButton.onClick { navInterface?.openFragment(BackupSettingsFragment.newInstance(), BackupSettingsFragment.TAG) }
@@ -73,6 +77,7 @@ class SettingsFragment : NestedFragment() {
         initValue(dayIcon, prefs.getClearOnDay())
         initValue(uncheckIcon, prefs.getClearChecks())
         initValue(notificationIcon, prefs.getBootNotification())
+        initTheme(darkModeIcon, prefs.getAppStyle())
         initBackupValue()
     }
 
@@ -105,6 +110,26 @@ class SettingsFragment : NestedFragment() {
             Prefs.DISABLED -> imageView.setBackgroundResource(R.drawable.round_red)
             else -> imageView.setBackgroundResource(R.drawable.round_orange)
         }
+    }
+
+    private fun initTheme(imageView: ImageView, value: Int) {
+        when (value) {
+            Prefs.DARK -> imageView.setBackgroundResource(R.drawable.round_green)
+            else -> imageView.setBackgroundResource(R.drawable.round_red)
+        }
+    }
+
+    private fun changeTheme() {
+        val prefs = Prefs.getInstance(context!!)
+        val value = prefs.getAppStyle()
+        if (value == Prefs.DARK) {
+            prefs.setAppStyle(Prefs.LIGHT)
+        } else {
+            prefs.setAppStyle(Prefs.DARK)
+        }
+        initTheme(darkModeIcon, prefs.getAppStyle())
+        startActivity(Intent(activity!!, SplashScreenActivity::class.java))
+        activity?.finishAffinity()
     }
 
     private fun changeNotification() {

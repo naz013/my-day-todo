@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:maxLines="2"
             android:text="Hello"
-            android:textColor="@color/colorAccent"
+            android:textColor="?colorAccent"
             android:textSize="18sp" />
 
     </LinearLayout>

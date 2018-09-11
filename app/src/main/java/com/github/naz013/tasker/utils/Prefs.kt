@@ -25,6 +25,10 @@ open class Prefs private constructor(context: Context) {
         const val DISABLED = 0
         const val ENABLED = 1
         const val CUSTOM = 2
+
+        const val LIGHT = 0
+        const val DARK = 1
+
         private const val PREFS_NAME = "my_day"
         const val IMPORTANT_FIRST = "important_first"
         const val IMPORTANT_FIRST_IDS = "important_first_ids"
@@ -34,6 +38,7 @@ open class Prefs private constructor(context: Context) {
         const val CLEAR_CHECKS_IDS = "clear_checks_ids"
         const val BOOT_IDS = "boot_ids"
         private const val FONT_SIZE = "font_size"
+        private const val APP_STYLE = "app_style"
         private const val CREATE_BANNER_SHOWN = "create_banner_shown"
         private const val GROUP_BANNER_SHOWN = "group_banner_shown"
         private const val LAST_LAUNCH = "last_launch"
@@ -60,6 +65,16 @@ open class Prefs private constructor(context: Context) {
     }
 
     private var prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+
+    fun isDarkMode(): Boolean {
+        return getAppStyle() == DARK
+    }
+
+    fun setAppStyle(value: Int) {
+        putInt(APP_STYLE, value)
+    }
+
+    fun getAppStyle(): Int = getInt(APP_STYLE, LIGHT)
 
     fun setBootNotification(value: Int) {
         putInt(BOOT_NOTIFICATION, value)

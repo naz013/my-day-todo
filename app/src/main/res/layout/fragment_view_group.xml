@@ -4,7 +4,7 @@
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="?colorPrimary"
     android:orientation="vertical">
 
     <TextView
@@ -16,7 +16,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/new_task"
-        android:textColor="@color/colorAccent"
+        android:textColor="?colorAccent"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
                 android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="@string/you_complete_all_your_tasks"
-                android:textColor="@color/colorAccent"
+                android:textColor="?colorAccent"
                 android:textSize="24sp" />
 
         </LinearLayout>
@@ -76,6 +76,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="128dp"
         android:layout_toStartOf="@+id/fab"
+        android:tint="?colorPrimary"
         app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_alarm" />
@@ -88,6 +89,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="72dp"
         android:layout_toStartOf="@+id/fabAdd"
+        android:tint="?colorPrimary"
         app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_arrow_back_white" />
@@ -98,6 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        android:tint="?colorPrimary"
         app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_add_white" />

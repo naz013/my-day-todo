@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="?colorPrimary">
 
     <TextView
         android:id="@+id/titleView"
@@ -14,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/settings"
-        android:textColor="@color/colorAccent"
+        android:textColor="?colorAccent"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -63,7 +63,7 @@
                         android:gravity="center"
                         android:maxLines="2"
                         android:text="@string/groups"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="?colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -92,7 +92,7 @@
                         android:gravity="center"
                         android:maxLines="2"
                         android:text="@string/favorite_first"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="?colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -120,7 +120,7 @@
                         android:gravity="center"
                         android:maxLines="2"
                         android:text="@string/font_size"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="?colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -157,7 +157,7 @@
                         android:gravity="center"
                         android:maxLines="2"
                         android:text="@string/clear_every_day"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="?colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -186,7 +186,7 @@
                         android:gravity="center"
                         android:maxLines="2"
                         android:text="@string/uncheck_tasks_on_new_day"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="?colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -215,7 +215,7 @@
                         android:gravity="center"
                         android:maxLines="2"
                         android:text="@string/backup"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="?colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -252,7 +252,36 @@
                         android:gravity="center"
                         android:maxLines="2"
                         android:text="@string/notification_on_boot"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="?colorAccent"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/darkModeButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/darkModeIcon"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/round_red"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/ic_moon" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="@string/dark_mode"
+                        android:textColor="?colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -280,7 +309,7 @@
                         android:gravity="center"
                         android:maxLines="2"
                         android:text="@string/about"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="?colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -297,6 +326,7 @@
         android:layout_alignParentEnd="true"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        android:tint="?colorPrimary"
         app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_arrow_back_white" />

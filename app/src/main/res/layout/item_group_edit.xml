@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardUseCompatPadding="true">
@@ -16,6 +17,7 @@
             android:id="@+id/handleView"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:tint="?colorAccent"
             app:srcCompat="@drawable/ic_drag" />
 
         <TextView
@@ -27,9 +29,9 @@
             android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:maxLines="2"
-            android:text="Hello"
-            android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:textColor="?colorAccent"
+            android:textSize="18sp"
+            tools:text="Hello" />
 
         <ImageView
             android:id="@+id/deleteView"

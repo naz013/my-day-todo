@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="?colorPrimary">
 
     <TextView
         android:id="@+id/titleView"
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@string/app_name"
-        android:textColor="@color/colorAccent"
+        android:textColor="?colorAccent"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -23,26 +23,26 @@
 
         <LinearLayout
             android:id="@+id/emptyView"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="72dp"
-                app:srcCompat="@drawable/ic_empty_folder"
-                android:layout_height="72dp" />
+                android:layout_height="72dp"
+                app:srcCompat="@drawable/ic_empty_folder" />
 
             <TextView
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                android:textColor="@color/colorAccent"
-                android:textSize="24sp"
                 android:gravity="center"
                 android:text="@string/there_is_no_groups_go_to_settings_to_add_one"
-                android:layout_marginStart="24dp"
-                android:layout_height="wrap_content" />
+                android:textColor="?colorAccent"
+                android:textSize="24sp" />
 
         </LinearLayout>
 
@@ -63,6 +63,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
+        android:tint="?colorPrimary"
         app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_menu_white" />

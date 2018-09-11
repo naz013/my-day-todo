@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="?colorPrimary">
 
     <TextView
         android:id="@+id/titleView"
@@ -14,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/backup"
-        android:textColor="@color/colorAccent"
+        android:textColor="?colorAccent"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -48,9 +48,9 @@
                     android:id="@+id/localButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
                     android:background="@drawable/button_rounded_red"
-                    android:text="@string/disabled" />
+                    android:text="@string/disabled"
+                    android:textColor="#ffffff" />
 
             </LinearLayout>
 
@@ -59,8 +59,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginStart="16dp"
-                android:gravity="center_vertical"
                 android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
@@ -75,9 +75,9 @@
                     android:id="@+id/googleButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
                     android:background="@drawable/button_rounded_red"
-                    android:text="@string/disabled" />
+                    android:text="@string/disabled"
+                    android:textColor="#ffffff" />
 
             </LinearLayout>
 
@@ -93,6 +93,7 @@
         android:layout_alignParentEnd="true"
         android:layout_gravity="bottom"
         android:layout_margin="16dp"
+        android:tint="?colorPrimary"
         app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_arrow_back_white" />

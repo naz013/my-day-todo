@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="?colorPrimary">
 
     <TextView
         android:id="@+id/titleView"
@@ -15,7 +15,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/about"
-        android:textColor="@color/colorAccent"
+        android:textColor="?colorAccent"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/app_name"
-                android:textColor="@color/colorAccent"
+                android:textColor="?colorAccent"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/colorAccent"
+                android:textColor="?colorAccent"
                 android:textSize="18sp"
                 tools:text="1.0.2" />
 
@@ -61,7 +61,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:text="@string/copyright"
-                android:textColor="@color/colorAccent"
+                android:textColor="?colorAccent"
                 android:textSize="18sp" />
 
             <TextView
@@ -70,7 +70,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:text="@string/design_by_johnyvino_uplabs"
-                android:textColor="@color/colorAccent"
+                android:textColor="?colorAccent"
                 android:textSize="18sp" />
 
             <TextView
@@ -79,7 +79,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:text="@string/icons_from_flaticon_com"
-                android:textColor="@color/colorAccent"
+                android:textColor="?colorAccent"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -114,7 +114,7 @@
                         android:gravity="center"
                         android:maxLines="2"
                         android:text="@string/rate_app"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="?colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -142,7 +142,7 @@
                         android:gravity="center"
                         android:maxLines="2"
                         android:text="@string/send_feedback"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="?colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -170,7 +170,7 @@
                         android:gravity="center"
                         android:maxLines="2"
                         android:text="@string/source_code"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="?colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -208,7 +208,7 @@
                         android:gravity="center"
                         android:maxLines="2"
                         android:text="@string/more_apps"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="?colorAccent"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -225,6 +225,7 @@
         android:layout_alignParentEnd="true"
         android:layout_gravity="bottom"
         android:layout_margin="16dp"
+        android:tint="?colorPrimary"
         app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_arrow_back_white" />

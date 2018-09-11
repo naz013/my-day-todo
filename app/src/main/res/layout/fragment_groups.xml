@@ -4,7 +4,7 @@
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="?colorPrimary">
 
     <TextView
         android:id="@+id/titleView"
@@ -15,7 +15,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/groups"
-        android:textColor="@color/colorAccent"
+        android:textColor="?colorAccent"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -49,7 +49,7 @@
                 android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="@string/use_button_to_create_new_group"
-                android:textColor="@color/colorAccent"
+                android:textColor="?colorAccent"
                 android:textSize="24sp" />
 
         </LinearLayout>
@@ -72,6 +72,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="72dp"
         android:layout_toStartOf="@+id/fabAdd"
+        android:tint="?colorPrimary"
         app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:layout_anchor="@id/fabAdd"
@@ -83,6 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        android:tint="?colorPrimary"
         app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_add_white" />

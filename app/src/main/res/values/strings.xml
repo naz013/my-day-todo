@@ -41,4 +41,5 @@
     <string name="aa">Aa</string>
     <string name="no_tasks">No tasks</string>
     <string name="notification_on_boot">Notification On Boot</string>
+    <string name="dark_mode">Dark Mode</string>
 </resources>

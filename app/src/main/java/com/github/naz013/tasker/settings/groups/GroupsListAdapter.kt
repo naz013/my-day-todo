@@ -102,12 +102,12 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>(), Item
         init {
             itemView.onClick { edit(adapterPosition) }
             itemView.deleteView.onClick { deleteCallback?.invoke(adapterPosition) }
-            itemView.handleView.setOnTouchListener({ _, event ->
+            itemView.handleView.setOnTouchListener { _, event ->
                 if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
                     mDragStartListener?.onStartDrag(this)
                 }
                 false
-            })
+            }
         }
     }
 
