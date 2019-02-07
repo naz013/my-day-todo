@@ -1,11 +1,10 @@
 package com.github.naz013.tasker.group.view
 
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.data.Task
 import com.github.naz013.tasker.utils.Prefs
@@ -28,14 +27,14 @@ import kotlinx.android.synthetic.main.item_task.view.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class TasksListAdapter : RecyclerView.Adapter<TasksListAdapter.Holder>() {
+class TasksListAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<TasksListAdapter.Holder>() {
 
     private val items: MutableList<Task> = mutableListOf()
     var callback: ((List<Task>) -> Unit)? = null
     var deleteCallback: ((Int) -> Unit)? = null
 
     init {
-        registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+        registerAdapterDataObserver(object : androidx.recyclerview.widget.RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
                 if (itemCount > positionStart + 1) {
@@ -78,7 +77,7 @@ class TasksListAdapter : RecyclerView.Adapter<TasksListAdapter.Holder>() {
         holder.bind(items[position])
     }
 
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class Holder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         fun bind(task: Task) {
             itemView.summaryView.text = task.summary

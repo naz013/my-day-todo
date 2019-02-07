@@ -1,16 +1,13 @@
 package com.github.naz013.tasker.settings.groups
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.arch.OnStartDragListener
@@ -18,10 +15,10 @@ import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.group.AddGroupFragment
 import com.github.naz013.tasker.utils.GoogleDrive
 import com.github.naz013.tasker.utils.LocalDrive
+import com.github.naz013.tasker.utils.launchDefault
+import com.google.android.material.snackbar.Snackbar
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_groups.*
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.launch
 
 
 /**
@@ -66,7 +63,7 @@ class GroupsFragment : NestedFragment(), OnStartDragListener {
         mAdapter.callback = { position, action -> performAction(position, action) }
         mAdapter.deleteCallback = { position -> showSnackbar(position) }
 
-        tasksList.layoutManager = LinearLayoutManager(context)
+        tasksList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         tasksList.adapter = mAdapter
 
         val callback = SimpleItemTouchHelperCallback(mAdapter)
@@ -122,7 +119,7 @@ class GroupsFragment : NestedFragment(), OnStartDragListener {
         updateEmpty()
     }
 
-    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
+    override fun onStartDrag(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder) {
         mItemTouchHelper?.startDrag(viewHolder)
     }
 
@@ -134,7 +131,7 @@ class GroupsFragment : NestedFragment(), OnStartDragListener {
 
     private fun backupData() {
         val app = activity?.application ?: return
-        launch(CommonPool) {
+        launchDefault {
             val googleDrive = GoogleDrive(app)
             val localDrive = LocalDrive(app)
             googleDrive.saveToDrive()

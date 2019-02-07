@@ -1,7 +1,7 @@
 package com.github.naz013.tasker.arch
 
 import android.content.Context
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
 /**
  * Copyright 2018 Nazar Suhovich

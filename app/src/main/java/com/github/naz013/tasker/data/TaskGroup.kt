@@ -1,6 +1,6 @@
 package com.github.naz013.tasker.data
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 /**
  * Copyright 2018 Nazar Suhovich

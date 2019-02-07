@@ -1,7 +1,7 @@
 package com.github.naz013.tasker.group
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -97,7 +97,7 @@ class AddGroupFragment : NestedFragment() {
         super.onStop()
         val summary = nameView.text.toString().trim()
         var group = mGroup
-        if (!TextUtils.isEmpty(summary)) {
+        if (!TextUtils.isEmpty(summary) && isRemoving) {
             if (group == null) {
                 group = TaskGroup().apply {
                     position = 100

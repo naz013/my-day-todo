@@ -1,6 +1,6 @@
 package com.github.naz013.tasker.settings.groups
 
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 import com.github.naz013.tasker.data.TaskGroup
 
 /**

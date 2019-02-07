@@ -1,13 +1,6 @@
 package com.github.naz013.tasker.arch
 
 import android.app.Application
-import android.util.Log
-import com.github.naz013.tasker.data.AppDb
-import com.github.naz013.tasker.data.TaskGroup
-import com.github.naz013.tasker.utils.Prefs
-import com.github.naz013.tasker.utils.TimeUtils
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.async
 
 /**
  * Copyright 2018 Nazar Suhovich

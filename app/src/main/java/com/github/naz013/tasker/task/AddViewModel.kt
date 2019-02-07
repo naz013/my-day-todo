@@ -1,20 +1,14 @@
 package com.github.naz013.tasker.task
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.data.Task
 import com.github.naz013.tasker.data.TaskGroup
-import com.github.naz013.tasker.utils.GoogleDrive
-import com.github.naz013.tasker.utils.LocalDrive
-import com.github.naz013.tasker.utils.Notifier
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.withContext
+import com.github.naz013.tasker.utils.*
 import java.util.*
 
 /**
@@ -38,7 +32,7 @@ class AddViewModel(application: Application, val id: Int) : AndroidViewModel(app
     val data: LiveData<TaskGroup?> = mDb.groupDao().loadById(id)
 
     fun saveTask(summary: String, group: TaskGroup, important: Boolean) {
-        launch(CommonPool) {
+        launchDefault {
             group.tasks.add(Task((UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE).toInt(), false, summary, group.id, important, "", ""))
             mDb.groupDao().insert(group)
             val googleDrive = GoogleDrive(getApplication())
@@ -49,10 +43,10 @@ class AddViewModel(application: Application, val id: Int) : AndroidViewModel(app
     }
 
     fun saveGroup(group: TaskGroup) {
-        launch(CommonPool) {
+        launchDefault {
             mDb.groupDao().insert(group)
             if (group.notificationEnabled) {
-                withContext(UI) {
+                withUIContext {
                     Notifier(getApplication()).showNotification(group)
                 }
             }

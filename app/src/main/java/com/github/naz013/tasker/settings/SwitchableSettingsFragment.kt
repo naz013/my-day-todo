@@ -1,12 +1,11 @@
 package com.github.naz013.tasker.settings
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.settings.groups.GroupsViewModel
@@ -72,7 +71,7 @@ class SwitchableSettingsFragment : NestedFragment() {
         titleView.text = mTitle
         fab.onClick { navInterface?.moveBack() }
 
-        groupsList.layoutManager = LinearLayoutManager(context)
+        groupsList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         mAdapter = CheckableGroupsListAdapter()
         mAdapter.ids = Prefs.getInstance(context!!).getStringList(mKeyList!!)
         groupsList.adapter = mAdapter

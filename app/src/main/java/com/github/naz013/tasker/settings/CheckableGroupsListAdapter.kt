@@ -1,6 +1,5 @@
 package com.github.naz013.tasker.settings
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +24,7 @@ import kotlinx.android.synthetic.main.item_group_check.view.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class CheckableGroupsListAdapter : RecyclerView.Adapter<CheckableGroupsListAdapter.Holder>() {
+class CheckableGroupsListAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<CheckableGroupsListAdapter.Holder>() {
 
     private val items: MutableList<TaskGroup> = mutableListOf()
     var ids: Set<String> = setOf()
@@ -54,7 +53,7 @@ class CheckableGroupsListAdapter : RecyclerView.Adapter<CheckableGroupsListAdapt
         holder.bind(items[position])
     }
 
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class Holder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         fun bind(task: TaskGroup) {
             itemView.summaryView.text = task.name

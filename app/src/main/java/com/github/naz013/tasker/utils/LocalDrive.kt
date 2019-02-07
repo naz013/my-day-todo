@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Environment
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.util.Log
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.data.TaskGroup
@@ -137,7 +137,7 @@ class LocalDrive(val context: Context) {
     private fun getDir(): java.io.File? {
         return if (isSdPresent()) {
             val sdPath = Environment.getExternalStorageDirectory()
-            val dir = java.io.File(sdPath.toString() + "/MyDay")
+            val dir = java.io.File("$sdPath/MyDay")
             if (!dir.exists() && dir.mkdirs()) {
                 dir
             } else dir

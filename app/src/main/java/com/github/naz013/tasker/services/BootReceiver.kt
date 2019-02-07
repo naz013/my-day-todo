@@ -6,10 +6,8 @@ import android.content.Intent
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.utils.Notifier
 import com.github.naz013.tasker.utils.Prefs
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.withContext
+import com.github.naz013.tasker.utils.launchDefault
+import com.github.naz013.tasker.utils.withUIContext
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -33,10 +31,10 @@ class BootReceiver : BroadcastReceiver() {
         val prefs = Prefs.getInstance(context)
         val boot = prefs.getBootNotification()
         if (boot == Prefs.ENABLED) {
-            launch(CommonPool) {
+            launchDefault {
                 val db = AppDb.getInMemoryDatabase(context)
                 val groups = db.groupDao().getAll()
-                withContext(UI) {
+                withUIContext {
                     val notifier = Notifier(context)
                     groups.forEach {
                         if (it.notificationEnabled) notifier.showNotification(it)
@@ -47,10 +45,10 @@ class BootReceiver : BroadcastReceiver() {
         } else if (boot == Prefs.CUSTOM) {
             val ids = prefs.getStringList(Prefs.BOOT_IDS)
             if (!ids.isEmpty()) {
-                launch(CommonPool) {
+                launchDefault {
                     val db = AppDb.getInMemoryDatabase(context)
                     val groups = db.groupDao().getAll()
-                    withContext(UI) {
+                    withUIContext {
                         val notifier = Notifier(context)
                         groups.filter { ids.contains(it.id.toString()) }.forEach {
                             if (it.notificationEnabled) notifier.showNotification(it)

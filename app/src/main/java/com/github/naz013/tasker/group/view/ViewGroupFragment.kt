@@ -1,28 +1,22 @@
 package com.github.naz013.tasker.group.view
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.data.Task
 import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.task.AddTaskFragment
 import com.github.naz013.tasker.task.AddViewModel
-import com.github.naz013.tasker.utils.GoogleDrive
-import com.github.naz013.tasker.utils.LocalDrive
-import com.github.naz013.tasker.utils.Notifier
-import com.github.naz013.tasker.utils.Prefs
+import com.github.naz013.tasker.utils.*
+import com.google.android.material.snackbar.Snackbar
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_view_group.*
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.launch
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -76,7 +70,7 @@ class ViewGroupFragment : NestedFragment() {
         fabAdd.onClick { navInterface?.openFragment(AddTaskFragment.newInstance(mGroupId), AddTaskFragment.TAG) }
         fabNotification.onClick { showNotification() }
 
-        tasksList.layoutManager = LinearLayoutManager(context)
+        tasksList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
 
         mAdapter.callback = { list -> saveUpdates(list) }
         mAdapter.deleteCallback = { position -> showSnackbar(position) }
@@ -150,7 +144,7 @@ class ViewGroupFragment : NestedFragment() {
 
     private fun backupData() {
         val app = activity?.application ?: return
-        launch(CommonPool) {
+        launchIo {
             val googleDrive = GoogleDrive(app)
             val localDrive = LocalDrive(app)
             googleDrive.saveToDrive()

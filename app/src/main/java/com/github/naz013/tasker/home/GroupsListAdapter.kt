@@ -2,8 +2,8 @@ package com.github.naz013.tasker.home
 
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -45,7 +45,7 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>() {
     var callback: ((TaskGroup, Int) -> Unit)? = null
 
     init {
-        registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+        registerAdapterDataObserver(object : androidx.recyclerview.widget.RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
                 if (itemCount > positionStart + 1) {
@@ -88,7 +88,7 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>() {
         holder.bind(items[position])
     }
 
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class Holder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         fun bind(taskGroup: TaskGroup) {
             Log.d("GroupsListAdapter", "bind: $taskGroup")

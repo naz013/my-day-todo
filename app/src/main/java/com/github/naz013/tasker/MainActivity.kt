@@ -2,10 +2,10 @@ package com.github.naz013.tasker
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.FragmentTransaction
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.arch.NavInterface
 import com.github.naz013.tasker.arch.NestedFragment
@@ -35,11 +35,6 @@ class MainActivity : AppCompatActivity(), NavInterface {
         supportFragmentManager.addOnBackStackChangedListener { onStackChanged() }
 
         openFragment(HomeFragment.newInstance(), HomeFragment.TAG)
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-
     }
 
     private fun onStackChanged() {

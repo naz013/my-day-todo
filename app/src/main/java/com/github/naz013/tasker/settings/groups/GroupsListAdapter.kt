@@ -1,12 +1,11 @@
 package com.github.naz013.tasker.settings.groups
 
-import android.support.v4.view.MotionEventCompat
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MotionEventCompat
+import androidx.recyclerview.widget.DiffUtil
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.ItemTouchHelperAdapter
 import com.github.naz013.tasker.arch.OnStartDragListener
@@ -31,7 +30,7 @@ import java.util.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>(), ItemTouchHelperAdapter {
+class GroupsListAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<GroupsListAdapter.Holder>(), ItemTouchHelperAdapter {
 
     companion object {
         const val DELETE = 0
@@ -44,7 +43,7 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>(), Item
     var deleteCallback: ((Int) -> Unit)? = null
 
     init {
-        registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+        registerAdapterDataObserver(object : androidx.recyclerview.widget.RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
                 if (itemCount > positionStart + 1) {
@@ -93,7 +92,7 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>(), Item
         holder.bind(items[position])
     }
 
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class Holder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         fun bind(task: TaskGroup) {
             itemView.summaryView.text = task.name

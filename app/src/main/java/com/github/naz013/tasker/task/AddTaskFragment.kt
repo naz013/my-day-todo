@@ -1,7 +1,7 @@
 package com.github.naz013.tasker.task
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -93,7 +93,7 @@ class AddTaskFragment : NestedFragment() {
         super.onStop()
         val summary = summaryView.text.toString().trim()
         val group = mGroup
-        if (!TextUtils.isEmpty(summary) && group != null) {
+        if (!TextUtils.isEmpty(summary) && group != null && isRemoving) {
             viewModel.saveTask(summary, group, favouriteView.isChecked)
         }
     }

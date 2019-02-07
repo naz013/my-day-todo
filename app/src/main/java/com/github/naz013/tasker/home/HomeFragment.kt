@@ -1,12 +1,11 @@
 package com.github.naz013.tasker.home
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.data.TaskGroup
@@ -55,7 +54,7 @@ class HomeFragment : BaseFragment() {
             performAction(position, action)
         }
 
-        tasksList.layoutManager = LinearLayoutManager(context)
+        tasksList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         tasksList.adapter = mAdapter
         updateEmpty()
 

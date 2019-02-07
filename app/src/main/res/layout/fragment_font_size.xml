@@ -39,7 +39,7 @@
         android:layout_marginBottom="56dp"
         android:layout_marginTop="56dp"
         app:backgroundColor="?colorAccent"
-        app:cornerRadius="20"
+        app:cornerRadiusSb="20"
         app:defaultValue="11"
         app:imageEnabled="false"
         app:max="30"
@@ -51,7 +51,7 @@
         app:textSize="20sp"
         app:touchDisabled="true" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

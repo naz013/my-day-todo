@@ -1,15 +1,15 @@
 <resources>
 
-    <style name="BaseLight" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="BaseLight" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSecondary">@color/colorAccent</item>
     </style>
 
-    <style name="BaseDark" parent="Theme.AppCompat.NoActionBar">
+    <style name="BaseDark" parent="@style/Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@color/colorDarkPrimary</item>
         <item name="colorPrimaryDark">@color/colorDarkPrimaryDark</item>
-        <item name="colorAccent">@color/colorDarkAccent</item>
+        <item name="colorSecondary">@color/colorDarkAccent</item>
     </style>
 
     <style name="AppTheme.Light" parent="BaseLight">

@@ -6,10 +6,8 @@ import android.content.Intent
 import android.util.Log
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.utils.Notifier
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.withContext
+import com.github.naz013.tasker.utils.launchIo
+import com.github.naz013.tasker.utils.withUIContext
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -45,16 +43,14 @@ class ActionsReceiver : BroadcastReceiver() {
 
     private fun cancelNotification(context: Context, id: Int) {
         if (id == 0) return
-        launch(CommonPool) {
+        launchIo {
             val appDb = AppDb.getInMemoryDatabase(context)
             val notifier = Notifier(context)
             val group = appDb.groupDao().getById(id)
             if (group != null) {
                 group.notificationEnabled = false
                 appDb.groupDao().insert(group)
-                withContext(UI) {
-                    notifier.hideNotification(group)
-                }
+                withUIContext { notifier.hideNotification(group) }
             }
         }
     }

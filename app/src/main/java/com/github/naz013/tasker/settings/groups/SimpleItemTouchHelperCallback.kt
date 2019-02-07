@@ -1,8 +1,8 @@
 package com.github.naz013.tasker.settings.groups
 
 import android.graphics.Canvas
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.github.naz013.tasker.arch.ItemTouchHelperAdapter
 import com.github.naz013.tasker.arch.ItemTouchHelperViewHolder
 
@@ -22,7 +22,7 @@ import com.github.naz013.tasker.arch.ItemTouchHelperViewHolder
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class SimpleItemTouchHelperCallback(val mAdapter: ItemTouchHelperAdapter) : ItemTouchHelper.Callback() {
+class SimpleItemTouchHelperCallback(private val mAdapter: ItemTouchHelperAdapter) : ItemTouchHelper.Callback() {
 
     override fun isLongPressDragEnabled(): Boolean {
         return true
@@ -79,7 +79,7 @@ class SimpleItemTouchHelperCallback(val mAdapter: ItemTouchHelperAdapter) : Item
         super.onSelectedChanged(viewHolder, actionState)
     }
 
-    override fun clearView(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder) {
+    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
 
         viewHolder.itemView.alpha = 1.0f

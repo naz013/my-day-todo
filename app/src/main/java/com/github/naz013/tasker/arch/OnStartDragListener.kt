@@ -1,6 +1,6 @@
 package com.github.naz013.tasker.arch
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -18,5 +18,5 @@ import android.support.v7.widget.RecyclerView
  * limitations under the License.
  */
 interface OnStartDragListener {
-    fun onStartDrag(viewHolder: RecyclerView.ViewHolder)
+    fun onStartDrag(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder)
 }

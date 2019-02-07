@@ -1,8 +1,8 @@
 package com.github.naz013.tasker.data
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Ignore
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import com.github.naz013.tasker.utils.TimeUtils
 import java.util.*
 

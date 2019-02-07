@@ -1,44 +1,30 @@
 package com.github.naz013.tasker.settings.backup
 
 import android.Manifest
-import android.accounts.Account
-import android.accounts.AccountManager
 import android.app.Activity.RESULT_OK
 import android.app.ProgressDialog
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.NestedFragment
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.data.TaskGroup
-import com.github.naz013.tasker.utils.GoogleDrive
-import com.github.naz013.tasker.utils.LocalDrive
-import com.github.naz013.tasker.utils.Prefs
-import com.google.android.gms.auth.GoogleAuthException
-import com.google.android.gms.auth.GoogleAuthUtil
-import com.google.android.gms.auth.UserRecoverableAuthException
-import com.google.android.gms.common.AccountPicker
-import com.google.api.client.googleapis.extensions.android.accounts.GoogleAccountManager
+import com.github.naz013.tasker.utils.*
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.Scope
 import com.google.api.services.drive.DriveScopes
 import com.mcxiaoke.koi.ext.onClick
 import com.mcxiaoke.koi.ext.toast
 import kotlinx.android.synthetic.main.fragment_backup_settings.*
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.withContext
-import java.io.IOException
-
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -59,19 +45,15 @@ class BackupSettingsFragment : NestedFragment() {
 
     companion object {
         const val TAG = "BackupSettingsFragment"
-        private const val REQUEST_AUTHORIZATION = 1
-        private const val REQUEST_ACCOUNT_PICKER = 3
+        private const val REQUEST_CODE_SIGN_IN = 4
         private const val PERMISSION_LOCAL = 1425
         private const val PERMISSION_ACCOUNTS = 1426
-        private const val RT_CODE = "rt"
 
         fun newInstance(): BackupSettingsFragment {
             return BackupSettingsFragment()
         }
     }
 
-    private var mAccountName: String? = null
-    private var rtIntent: Intent? = null
     private var mProgress: ProgressDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -116,33 +98,31 @@ class BackupSettingsFragment : NestedFragment() {
     }
 
     private fun startLocalSync() {
-        launch(UI) {
-            showProgress()
-            withContext(CommonPool) {
-                val appDb = AppDb.getInMemoryDatabase(activity!!)
-                val drive = LocalDrive(activity!!)
-                val oldList = appDb.groupDao().getAll()
-                val cloudList = drive.restoreFromDrive()
-                Log.d("BackupSettingsFragment", "startGoogleSync: " + oldList.size + ", " + cloudList.size)
-                if (!cloudList.isEmpty() && !oldList.isEmpty()) {
-                    Log.d("BackupSettingsFragment", "startGoogleSync: merge")
-                    withContext(UI) {
-                        hideProgress()
-                        showMergeDialog(oldList, cloudList, "SD Card")
-                    }
-                } else if (!cloudList.isEmpty()) {
-                    Log.d("BackupSettingsFragment", "startGoogleSync: local")
-                    appDb.groupDao().insert(cloudList)
-                    withContext(UI) {
-                        hideProgress()
-                        toast("Found ${cloudList.size} groups")
-                    }
-                } else {
-                    Log.d("BackupSettingsFragment", "startGoogleSync: nothing")
-                    withContext(UI) {
-                        hideProgress()
-                        toast("Nothing restored")
-                    }
+        showProgress()
+        launchDefault {
+            val appDb = AppDb.getInMemoryDatabase(activity!!)
+            val drive = LocalDrive(activity!!)
+            val oldList = appDb.groupDao().getAll()
+            val cloudList = drive.restoreFromDrive()
+            Log.d("BackupSettingsFragment", "startGoogleSync: " + oldList.size + ", " + cloudList.size)
+            if (!cloudList.isEmpty() && !oldList.isEmpty()) {
+                Log.d("BackupSettingsFragment", "startGoogleSync: merge")
+                withUIContext {
+                    hideProgress()
+                    showMergeDialog(oldList, cloudList, "SD Card")
+                }
+            } else if (!cloudList.isEmpty()) {
+                Log.d("BackupSettingsFragment", "startGoogleSync: local")
+                appDb.groupDao().insert(cloudList)
+                withUIContext {
+                    hideProgress()
+                    toast("Found ${cloudList.size} groups")
+                }
+            } else {
+                Log.d("BackupSettingsFragment", "startGoogleSync: nothing")
+                withUIContext {
+                    hideProgress()
+                    toast("Nothing restored")
                 }
             }
         }
@@ -176,9 +156,12 @@ class BackupSettingsFragment : NestedFragment() {
 
     private fun askAccount() {
         Log.d("BackupSettingsFragment", "askAccount: ")
-        val intent = AccountPicker.newChooseAccountIntent(null, null,
-                arrayOf("com.google"), true, null, null, null, null)
-        activity!!.startActivityForResult(intent, REQUEST_AUTHORIZATION)
+        val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestScopes(Scope(DriveScopes.DRIVE_APPDATA))
+                .requestEmail()
+                .build()
+        val client = GoogleSignIn.getClient(activity!!, signInOptions)
+        activity?.startActivityForResult(client.signInIntent, REQUEST_CODE_SIGN_IN)
     }
 
     private fun initGoogleButton() {
@@ -200,32 +183,14 @@ class BackupSettingsFragment : NestedFragment() {
 
     private fun logOut() {
         Log.d("BackupSettingsFragment", "logOut: ")
-        Prefs.getInstance(activity!!).setGoogleEmail("")
-        initGoogleButton()
-    }
-
-    private fun getAndUseAuthTokenInAsyncTask(account: Account) {
-        launch(UI) {
-            showProgress()
-            withContext(CommonPool) {
-                val token = getAccessToken(account)
-                withContext(UI) {
-                    hideProgress()
-                    if (token != null) {
-                        if (token == RT_CODE) {
-                            if (rtIntent != null) {
-                                activity!!.startActivityForResult(rtIntent, REQUEST_ACCOUNT_PICKER)
-                            } else {
-                                toast(getString(R.string.failed_to_login_to_drive))
-                            }
-                        } else {
-                            finishLogin()
-                        }
-                    } else {
-                        toast(getString(R.string.failed_to_login_to_drive))
-                    }
-                }
-            }
+        val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestScopes(Scope(DriveScopes.DRIVE_APPDATA))
+                .requestEmail()
+                .build()
+        val client = GoogleSignIn.getClient(activity!!, signInOptions)
+        client.signOut().addOnSuccessListener {
+            Prefs.getInstance(activity!!).setGoogleEmail("")
+            initGoogleButton()
         }
     }
 
@@ -251,74 +216,49 @@ class BackupSettingsFragment : NestedFragment() {
         this.mProgress = mProgress
     }
 
-    private fun getAccessToken(account: Account): String? {
-        return try {
-            val scope = "oauth2:" + DriveScopes.DRIVE_APPDATA
-            GoogleAuthUtil.getToken(activity, account, scope)
-        } catch (e: UserRecoverableAuthException) {
-            rtIntent = e.intent
-            RT_CODE
-        } catch (e: ActivityNotFoundException) {
-            null
-        } catch (e: GoogleAuthException) {
-            null
-        } catch (e: IOException) {
-            null
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_AUTHORIZATION && resultCode == RESULT_OK) {
-            mAccountName = data!!.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
-            val gam = GoogleAccountManager(activity)
-            getAndUseAuthTokenInAsyncTask(gam.getAccountByName(mAccountName))
-        } else if (requestCode == REQUEST_ACCOUNT_PICKER && resultCode == RESULT_OK) {
-            mAccountName = data!!.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
-            finishLogin()
-            initGoogleButton()
+        if (requestCode == REQUEST_CODE_SIGN_IN && resultCode == RESULT_OK) {
+            handleSignInResult(data)
         } else {
             toast(getString(R.string.failed_to_login_to_drive))
         }
     }
 
-    private fun finishLogin() {
-        val account = mAccountName
-        if (account != null) {
-            Prefs.getInstance(activity!!).setGoogleEmail(account)
+    private fun finishLogin(email: String?) {
+        if (email != null) {
+            Prefs.getInstance(activity!!).setGoogleEmail(email)
             initGoogleButton()
             startGoogleSync()
         }
     }
 
     private fun startGoogleSync() {
-        launch(UI) {
-            showProgress()
-            withContext(CommonPool) {
-                val appDb = AppDb.getInMemoryDatabase(activity!!)
-                val drive = GoogleDrive(activity!!)
-                val oldList = appDb.groupDao().getAll()
-                val cloudList = drive.restoreFromDrive()
-                Log.d("BackupSettingsFragment", "startGoogleSync: " + oldList.size + ", " + cloudList.size)
-                if (!cloudList.isEmpty() && !oldList.isEmpty()) {
-                    Log.d("BackupSettingsFragment", "startGoogleSync: merge")
-                    withContext(UI) {
-                        hideProgress()
-                        showMergeDialog(oldList, cloudList, "Google Drive")
-                    }
-                } else if (!cloudList.isEmpty()) {
-                    Log.d("BackupSettingsFragment", "startGoogleSync: local")
-                    appDb.groupDao().insert(cloudList)
-                    withContext(UI) {
-                        hideProgress()
-                        toast("Found ${cloudList.size} groups")
-                    }
-                } else {
-                    Log.d("BackupSettingsFragment", "startGoogleSync: nothing")
-                    withContext(UI) {
-                        hideProgress()
-                        toast("Nothing restored")
-                    }
+        showProgress()
+        launchDefault {
+            val appDb = AppDb.getInMemoryDatabase(activity!!)
+            val drive = GoogleDrive(activity!!)
+            val oldList = appDb.groupDao().getAll()
+            val cloudList = drive.restoreFromDrive()
+            Log.d("BackupSettingsFragment", "startGoogleSync: " + oldList.size + ", " + cloudList.size)
+            if (!cloudList.isEmpty() && !oldList.isEmpty()) {
+                Log.d("BackupSettingsFragment", "startGoogleSync: merge")
+                withUIContext {
+                    hideProgress()
+                    showMergeDialog(oldList, cloudList, "Google Drive")
+                }
+            } else if (!cloudList.isEmpty()) {
+                Log.d("BackupSettingsFragment", "startGoogleSync: local")
+                appDb.groupDao().insert(cloudList)
+                withUIContext {
+                    hideProgress()
+                    toast("Found ${cloudList.size} groups")
+                }
+            } else {
+                Log.d("BackupSettingsFragment", "startGoogleSync: nothing")
+                withUIContext {
+                    hideProgress()
+                    toast("Nothing restored")
                 }
             }
         }
@@ -342,10 +282,23 @@ class BackupSettingsFragment : NestedFragment() {
 
     private fun saveList(list: List<TaskGroup>) {
         val appDb = AppDb.getInMemoryDatabase(context!!)
-        async(CommonPool) {
+        launchDefault {
             appDb.groupDao().deleteAll()
             appDb.groupDao().insert(list)
         }
+    }
+
+    private fun handleSignInResult(result: Intent?) {
+        GoogleSignIn.getSignedInAccountFromIntent(result)
+                .addOnSuccessListener { googleAccount ->
+                    Log.d(TAG, "handleSignInResult: ${googleAccount.email}")
+                    finishLogin(googleAccount.account?.name ?: "")
+                    initGoogleButton()
+                }
+                .addOnFailureListener {
+                    Log.d(TAG, "handleSignInResult: ${it.message}")
+                    toast(getString(R.string.failed_to_login_to_drive))
+                }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

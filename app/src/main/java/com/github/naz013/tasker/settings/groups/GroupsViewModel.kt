@@ -1,13 +1,12 @@
 package com.github.naz013.tasker.settings.groups
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.utils.Notifier
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.launch
+import com.github.naz013.tasker.utils.launchDefault
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -31,14 +30,14 @@ class GroupsViewModel(application: Application) : AndroidViewModel(application) 
 
     fun deleteGroup(group: TaskGroup) {
         if (group.notificationEnabled) Notifier(getApplication()).hideNotification(group)
-        launch(CommonPool) {
+        launchDefault {
             mDb.groupDao().delete(group)
         }
     }
 
     fun saveGroups(items: MutableList<TaskGroup>?) {
         if (items != null) {
-            launch(CommonPool) {
+            launchDefault {
                 val newList = mutableListOf<TaskGroup>()
                 for (i in 0 until items.size) {
                     newList.add(items[i].apply {
