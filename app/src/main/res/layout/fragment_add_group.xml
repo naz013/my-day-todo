@@ -15,39 +15,33 @@
             android:id="@+id/titleView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="24dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/new_group"
             android:textColor="?colorAccent"
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
+            android:id="@+id/nameView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nameView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:gravity="start"
-                android:hint="@string/name"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:maxLength="32"
-                android:maxLines="1"
-                android:padding="8dp"
-                android:textColor="@color/colorGreyLight"
-                android:textColorHint="@color/colorGreyLight"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:background="@null"
+            android:gravity="start"
+            android:hint="@string/name"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLength="32"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:textColor="@color/colorGreyLight"
+            android:textColorHint="@color/colorGreyLight"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -65,9 +59,9 @@
             android:id="@+id/bannerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/group_banner_bg"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -99,8 +93,8 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:tint="?colorPrimary"

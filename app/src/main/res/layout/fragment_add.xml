@@ -33,25 +33,19 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <EditText
+                android:id="@+id/summaryView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/summaryView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:gravity="start"
-                    android:hint="@string/summary"
-                    android:inputType="textMultiLine"
-                    android:maxLines="10"
-                    android:padding="8dp"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="start"
+                android:hint="@string/summary"
+                android:inputType="textMultiLine"
+                android:maxLines="10"
+                android:padding="8dp"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/favouriteView"

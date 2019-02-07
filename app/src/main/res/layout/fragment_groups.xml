@@ -69,7 +69,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="16dp"
         android:layout_marginEnd="72dp"
         android:layout_toStartOf="@+id/fabAdd"
         android:tint="?colorPrimary"
@@ -82,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
+        android:layout_margin="20dp"
         android:tint="?colorPrimary"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_add_white" />

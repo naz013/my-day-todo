@@ -4,12 +4,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorOnSecondary">@color/colorPrimary</item>
     </style>
 
     <style name="BaseDark" parent="@style/Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@color/colorDarkPrimary</item>
         <item name="colorPrimaryDark">@color/colorDarkPrimaryDark</item>
         <item name="colorSecondary">@color/colorDarkAccent</item>
+        <item name="colorOnSecondary">@color/black</item>
     </style>
 
     <style name="AppTheme.Light" parent="BaseLight">
