@@ -64,7 +64,6 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
         android:tint="?colorPrimary"
-        app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_menu_white" />
 

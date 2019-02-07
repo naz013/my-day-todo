@@ -44,13 +44,11 @@
                     android:text="@string/local"
                     android:textSize="20sp" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/localButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button_rounded_red"
-                    android:text="@string/disabled"
-                    android:textColor="#ffffff" />
+                    android:text="@string/disabled" />
 
             </LinearLayout>
 
@@ -71,13 +69,11 @@
                     android:text="@string/google_drive"
                     android:textSize="20sp" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/googleButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button_rounded_red"
-                    android:text="@string/disabled"
-                    android:textColor="#ffffff" />
+                    android:text="@string/disabled" />
 
             </LinearLayout>
 
@@ -94,7 +90,6 @@
         android:layout_gravity="bottom"
         android:layout_margin="16dp"
         android:tint="?colorPrimary"
-        app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_arrow_back_white" />
 

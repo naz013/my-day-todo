@@ -73,7 +73,6 @@
         android:layout_marginEnd="72dp"
         android:layout_toStartOf="@+id/fabAdd"
         android:tint="?colorPrimary"
-        app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:layout_anchor="@id/fabAdd"
         app:srcCompat="@drawable/ic_arrow_back_white" />
@@ -85,7 +84,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:tint="?colorPrimary"
-        app:backgroundTint="?colorAccent"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_add_white" />
 

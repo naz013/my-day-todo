@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +25,7 @@ import com.google.api.services.drive.DriveScopes
 import com.mcxiaoke.koi.ext.onClick
 import com.mcxiaoke.koi.ext.toast
 import kotlinx.android.synthetic.main.fragment_backup_settings.*
+import timber.log.Timber
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -45,7 +45,6 @@ import kotlinx.android.synthetic.main.fragment_backup_settings.*
 class BackupSettingsFragment : BaseFragment() {
 
     companion object {
-        const val TAG = "BackupSettingsFragment"
         private const val REQUEST_CODE_SIGN_IN = 4
         private const val PERMISSION_LOCAL = 1425
         private const val PERMISSION_ACCOUNTS = 1426
@@ -102,22 +101,22 @@ class BackupSettingsFragment : BaseFragment() {
             val drive = LocalDrive(activity!!)
             val oldList = appDb.groupDao().getAll()
             val cloudList = drive.restoreFromDrive()
-            Log.d("BackupSettingsFragment", "startGoogleSync: " + oldList.size + ", " + cloudList.size)
+            Timber.d("startGoogleSync: ${oldList.size}, ${cloudList.size}")
             if (!cloudList.isEmpty() && !oldList.isEmpty()) {
-                Log.d("BackupSettingsFragment", "startGoogleSync: merge")
+                Timber.d("startGoogleSync: merge")
                 withUIContext {
                     hideProgress()
                     showMergeDialog(oldList, cloudList, "SD Card")
                 }
             } else if (!cloudList.isEmpty()) {
-                Log.d("BackupSettingsFragment", "startGoogleSync: local")
+                Timber.d("startGoogleSync: local")
                 appDb.groupDao().insert(cloudList)
                 withUIContext {
                     hideProgress()
                     toast("Found ${cloudList.size} groups")
                 }
             } else {
-                Log.d("BackupSettingsFragment", "startGoogleSync: nothing")
+                Timber.d("startGoogleSync: nothing")
                 withUIContext {
                     hideProgress()
                     toast("Nothing restored")
@@ -129,10 +128,8 @@ class BackupSettingsFragment : BaseFragment() {
     private fun initLocalButton() {
         if (Prefs.getInstance(context!!).isLocalBackupEnabled()) {
             localButton.text = getString(R.string.enabled)
-            localButton.setBackgroundResource(R.drawable.button_rounded_green)
         } else {
             localButton.text = getString(R.string.disabled)
-            localButton.setBackgroundResource(R.drawable.button_rounded_red)
         }
     }
 
@@ -142,7 +139,7 @@ class BackupSettingsFragment : BaseFragment() {
     }
 
     private fun logIn() {
-        Log.d("BackupSettingsFragment", "logIn: ")
+        Timber.d("logIn: ")
         if (hasPermission(Manifest.permission.GET_ACCOUNTS)) {
             askAccount()
         } else {
@@ -153,7 +150,7 @@ class BackupSettingsFragment : BaseFragment() {
     }
 
     private fun askAccount() {
-        Log.d("BackupSettingsFragment", "askAccount: ")
+        Timber.d("askAccount: ")
         val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(Scope(DriveScopes.DRIVE_APPDATA))
                 .requestEmail()
@@ -165,22 +162,20 @@ class BackupSettingsFragment : BaseFragment() {
     private fun initGoogleButton() {
         if (isLogged()) {
             googleButton.text = getString(R.string.enabled)
-            googleButton.setBackgroundResource(R.drawable.button_rounded_green)
         } else {
             googleButton.text = getString(R.string.disabled)
-            googleButton.setBackgroundResource(R.drawable.button_rounded_red)
         }
     }
 
     private fun isLogged(): Boolean {
         val email = Prefs.getInstance(context!!).getGoogleEmail()
         val res = email.matches(".*@.*".toRegex())
-        Log.d("BackupSettingsFragment", "isLogged: $res")
+        Timber.d("isLogged: $res")
         return res
     }
 
     private fun logOut() {
-        Log.d("BackupSettingsFragment", "logOut: ")
+        Timber.d("logOut: ")
         val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(Scope(DriveScopes.DRIVE_APPDATA))
                 .requestEmail()
@@ -238,22 +233,22 @@ class BackupSettingsFragment : BaseFragment() {
             val drive = GoogleDrive(activity!!)
             val oldList = appDb.groupDao().getAll()
             val cloudList = drive.restoreFromDrive()
-            Log.d("BackupSettingsFragment", "startGoogleSync: " + oldList.size + ", " + cloudList.size)
+            Timber.d("startGoogleSync: ${oldList.size}, ${cloudList.size}")
             if (!cloudList.isEmpty() && !oldList.isEmpty()) {
-                Log.d("BackupSettingsFragment", "startGoogleSync: merge")
+                Timber.d("startGoogleSync: merge")
                 withUIContext {
                     hideProgress()
                     showMergeDialog(oldList, cloudList, "Google Drive")
                 }
             } else if (!cloudList.isEmpty()) {
-                Log.d("BackupSettingsFragment", "startGoogleSync: local")
+                Timber.d("startGoogleSync: local")
                 appDb.groupDao().insert(cloudList)
                 withUIContext {
                     hideProgress()
                     toast("Found ${cloudList.size} groups")
                 }
             } else {
-                Log.d("BackupSettingsFragment", "startGoogleSync: nothing")
+                Timber.d("startGoogleSync: nothing")
                 withUIContext {
                     hideProgress()
                     toast("Nothing restored")
@@ -289,12 +284,12 @@ class BackupSettingsFragment : BaseFragment() {
     private fun handleSignInResult(result: Intent?) {
         GoogleSignIn.getSignedInAccountFromIntent(result)
                 .addOnSuccessListener { googleAccount ->
-                    Log.d(TAG, "handleSignInResult: ${googleAccount.email}")
+                    Timber.d("handleSignInResult: ${googleAccount.email}")
                     finishLogin(googleAccount.account?.name ?: "")
                     initGoogleButton()
                 }
                 .addOnFailureListener {
-                    Log.d(TAG, "handleSignInResult: ${it.message}")
+                    Timber.d("handleSignInResult: ${it.message}")
                     toast(getString(R.string.failed_to_login_to_drive))
                 }
     }
