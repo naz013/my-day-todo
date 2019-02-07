@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.github.naz013.tasker.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_homeFragment_to_viewGroupFragment"
+            app:destination="@id/viewGroupFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_homeFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.github.naz013.tasker.settings.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_settingsFragment_to_backupSettingsFragment"
+            app:destination="@id/backupSettingsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_settingsFragment_to_fontSizeSettingsFragment"
+            app:destination="@id/fontSizeSettingsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_settingsFragment_to_switchableSettingsFragment"
+            app:destination="@+id/switchableSettingsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_settingsFragment_to_groupsFragment"
+            app:destination="@id/groupsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.github.naz013.tasker.settings.AboutFragment"
+        android:label="AboutFragment"
+        tools:layout="@layout/fragment_info" />
+    <fragment
+        android:id="@+id/backupSettingsFragment"
+        android:name="com.github.naz013.tasker.settings.backup.BackupSettingsFragment"
+        android:label="BackupSettingsFragment"
+        tools:layout="@layout/fragment_backup_settings" />
+    <fragment
+        android:id="@+id/fontSizeSettingsFragment"
+        android:name="com.github.naz013.tasker.settings.FontSizeSettingsFragment"
+        android:label="FontSizeSettingsFragment"
+        tools:layout="@layout/fragment_font_size" />
+    <fragment
+        android:id="@+id/switchableSettingsFragment"
+        android:name="com.github.naz013.tasker.settings.SwitchableSettingsFragment"
+        android:label="SwitchableSettingsFragment"
+        tools:layout="@layout/fragment_extra_settings">
+        <argument
+            android:name="arg_title"
+            app:argType="string" />
+        <argument
+            android:name="arg_key"
+            app:argType="string" />
+        <argument
+            android:name="arg_key_list"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupsFragment"
+        android:name="com.github.naz013.tasker.settings.groups.GroupsFragment"
+        android:label="GroupsFragment"
+        tools:layout="@layout/fragment_groups">
+        <action
+            android:id="@+id/action_groupsFragment_to_addGroupFragment"
+            app:destination="@id/addGroupFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGroupFragment"
+        android:name="com.github.naz013.tasker.group.AddGroupFragment"
+        android:label="AddGroupFragment"
+        tools:layout="@layout/fragment_add_group">
+        <argument
+            android:name="arg_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewGroupFragment"
+        android:name="com.github.naz013.tasker.group.view.ViewGroupFragment"
+        android:label="ViewGroupFragment"
+        tools:layout="@layout/fragment_view_group">
+        <argument
+            android:name="arg_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_viewGroupFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTaskFragment"
+        android:name="com.github.naz013.tasker.task.AddTaskFragment"
+        android:label="AddTaskFragment"
+        tools:layout="@layout/fragment_add">
+        <argument
+            android:name="arg_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+</navigation>

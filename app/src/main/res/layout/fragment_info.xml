@@ -213,6 +213,34 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/webButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/round_green_blue"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/ic_earth_grid" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="@string/web_site"
+                        android:textColor="?colorAccent"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

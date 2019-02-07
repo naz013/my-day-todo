@@ -6,11 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.navigation.fragment.findNavController
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.SplashScreenActivity
-import com.github.naz013.tasker.arch.NestedFragment
-import com.github.naz013.tasker.settings.backup.BackupSettingsFragment
-import com.github.naz013.tasker.settings.groups.GroupsFragment
+import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
 import com.mcxiaoke.koi.ext.onLongClick
@@ -31,14 +30,7 @@ import kotlinx.android.synthetic.main.fragment_settings.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class SettingsFragment : NestedFragment() {
-
-    companion object {
-        const val TAG = "SettingsFragment"
-        fun newInstance(): SettingsFragment {
-            return SettingsFragment()
-        }
-    }
+class SettingsFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_settings, container, false)
@@ -47,9 +39,9 @@ class SettingsFragment : NestedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fab.onClick { navInterface?.moveBack() }
+        fab.onClick { findNavController().navigateUp() }
 
-        infoButton.onClick { navInterface?.openFragment(AboutFragment.newInstance(), AboutFragment.TAG) }
+        infoButton.onClick { findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToAboutFragment()) }
 
         favButton.onClick { changeFav() }
         favButton.onLongClick { openExtraSettings(getString(R.string.favorite_first), Prefs.IMPORTANT_FIRST, Prefs.IMPORTANT_FIRST_IDS) }
@@ -65,13 +57,17 @@ class SettingsFragment : NestedFragment() {
 
         darkModeButton.onClick { changeTheme() }
 
-        fontButton.onClick { navInterface?.openFragment(FontSizeSettingsFragment.newInstance(), FontSizeSettingsFragment.TAG) }
-        groupButton.onClick { navInterface?.openFragment(GroupsFragment.newInstance(), GroupsFragment.TAG) }
-        backupButton.onClick { navInterface?.openFragment(BackupSettingsFragment.newInstance(), BackupSettingsFragment.TAG) }
+        fontButton.onClick { findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToFontSizeSettingsFragment()) }
+        groupButton.onClick { findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToGroupsFragment()) }
+        backupButton.onClick { findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToBackupSettingsFragment()) }
     }
 
-    override fun onBackStackResume() {
-        super.onBackStackResume()
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        initValues()
+    }
+
+    private fun initValues() {
         val prefs = Prefs.getInstance(context!!)
         initValue(favIcon, prefs.getImportant())
         initValue(dayIcon, prefs.getClearOnDay())
@@ -100,7 +96,8 @@ class SettingsFragment : NestedFragment() {
     }
 
     private fun openExtraSettings(title: String, key: String, keyList: String): Boolean {
-        navInterface?.openFragment(SwitchableSettingsFragment.newInstance(title, key, keyList), SwitchableSettingsFragment.TAG)
+        val direction = SettingsFragmentDirections.actionSettingsFragmentToSwitchableSettingsFragment(title, key, keyList)
+        findNavController().navigate(direction)
         return true
     }
 

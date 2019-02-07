@@ -13,8 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.github.naz013.tasker.R
-import com.github.naz013.tasker.arch.NestedFragment
+import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.utils.*
@@ -41,7 +42,7 @@ import kotlinx.android.synthetic.main.fragment_backup_settings.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class BackupSettingsFragment : NestedFragment() {
+class BackupSettingsFragment : BaseFragment() {
 
     companion object {
         const val TAG = "BackupSettingsFragment"
@@ -49,9 +50,6 @@ class BackupSettingsFragment : NestedFragment() {
         private const val PERMISSION_LOCAL = 1425
         private const val PERMISSION_ACCOUNTS = 1426
 
-        fun newInstance(): BackupSettingsFragment {
-            return BackupSettingsFragment()
-        }
     }
 
     private var mProgress: ProgressDialog? = null
@@ -63,7 +61,7 @@ class BackupSettingsFragment : NestedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fab.onClick { navInterface?.moveBack() }
+        fab.onClick { findNavController().navigateUp() }
         googleButton.onClick { googleClick() }
         localButton.onClick { localClick() }
 

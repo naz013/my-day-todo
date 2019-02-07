@@ -9,11 +9,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.github.naz013.tasker.R
-import com.github.naz013.tasker.arch.NestedFragment
+import com.github.naz013.tasker.arch.BaseFragment
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_info.*
-
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -30,14 +30,7 @@ import kotlinx.android.synthetic.main.fragment_info.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class AboutFragment : NestedFragment() {
-
-    companion object {
-        const val TAG = "AboutFragment"
-        fun newInstance(): AboutFragment {
-            return AboutFragment()
-        }
-    }
+class AboutFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_info, container, false)
@@ -46,10 +39,11 @@ class AboutFragment : NestedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fab.onClick { navInterface?.moveBack() }
+        fab.onClick { findNavController().navigateUp() }
         rateButton.onClick { openAppScreen() }
         moreButton.onClick { openAuthorScreen() }
         gitButton.onClick { openSourceScreen() }
+        webButton.onClick { openHomeScreen() }
         feedbackButton.onClick { openFeedbackScreen() }
 
         showVersion()
@@ -72,6 +66,11 @@ class AboutFragment : NestedFragment() {
         emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf("feedback.cray@gmail.com"))
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
         activity!!.startActivity(Intent.createChooser(emailIntent, "Send mail..."))
+    }
+
+    private fun openHomeScreen() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.hummingbirdrr.com/apps/my-day-todo-app/"))
+        startActivity(intent)
     }
 
     private fun openSourceScreen() {

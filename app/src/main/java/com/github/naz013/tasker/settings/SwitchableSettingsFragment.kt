@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.github.naz013.tasker.R
-import com.github.naz013.tasker.arch.NestedFragment
+import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.settings.groups.GroupsViewModel
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
@@ -28,24 +29,7 @@ import kotlinx.android.synthetic.main.fragment_extra_settings.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class SwitchableSettingsFragment : NestedFragment() {
-
-    companion object {
-        const val TAG = "SwitchableSettingsFragment"
-        private const val ARG_TITLE = "arg_title"
-        private const val ARG_KEY = "arg_key"
-        private const val ARG_KEY_LIST = "arg_key_list"
-
-        fun newInstance(title: String, key: String, keyList: String): SwitchableSettingsFragment {
-            val fragment = SwitchableSettingsFragment()
-            val bundle = Bundle()
-            bundle.putString(ARG_TITLE, title)
-            bundle.putString(ARG_KEY, key)
-            bundle.putString(ARG_KEY_LIST, keyList)
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
+class SwitchableSettingsFragment : BaseFragment() {
 
     private var mTitle: String? = null
     private var mKey: String? = null
@@ -55,10 +39,11 @@ class SwitchableSettingsFragment : NestedFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            mTitle = arguments?.getString(ARG_TITLE)
-            mKey = arguments?.getString(ARG_KEY)
-            mKeyList = arguments?.getString(ARG_KEY_LIST)
+        arguments?.let {
+            val safeArgs = SwitchableSettingsFragmentArgs.fromBundle(it)
+            mTitle = safeArgs.argTitle
+            mKey = safeArgs.argKey
+            mKeyList = safeArgs.argKeyList
         }
     }
 
@@ -69,7 +54,7 @@ class SwitchableSettingsFragment : NestedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         titleView.text = mTitle
-        fab.onClick { navInterface?.moveBack() }
+        fab.onClick { findNavController().navigateUp() }
 
         groupsList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         mAdapter = CheckableGroupsListAdapter()

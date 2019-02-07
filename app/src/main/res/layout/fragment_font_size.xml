@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?colorPrimary">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?colorPrimary"
+    tools:context="com.github.naz013.tasker.settings.FontSizeSettingsFragment">
 
     <TextView
         android:id="@+id/titleView"

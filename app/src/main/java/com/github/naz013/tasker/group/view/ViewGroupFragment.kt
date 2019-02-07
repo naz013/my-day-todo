@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.github.naz013.tasker.R
-import com.github.naz013.tasker.arch.NestedFragment
+import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.data.Task
 import com.github.naz013.tasker.data.TaskGroup
-import com.github.naz013.tasker.task.AddTaskFragment
 import com.github.naz013.tasker.task.AddViewModel
 import com.github.naz013.tasker.utils.*
 import com.google.android.material.snackbar.Snackbar
@@ -33,19 +33,7 @@ import kotlinx.android.synthetic.main.fragment_view_group.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class ViewGroupFragment : NestedFragment() {
-
-    companion object {
-        const val TAG = "ViewGroupFragment"
-        private const val ARG_ID = "arg_id"
-        fun newInstance(id: Int): ViewGroupFragment {
-            val fragment = ViewGroupFragment()
-            val bundle = Bundle()
-            bundle.putInt(ARG_ID, id)
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
+class ViewGroupFragment : BaseFragment() {
 
     private var mGroupId: Int = 0
     private var mGroup: TaskGroup? = null
@@ -54,8 +42,9 @@ class ViewGroupFragment : NestedFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            mGroupId = arguments?.getInt(ARG_ID)!!
+        arguments?.let {
+            val safeArgs = ViewGroupFragmentArgs.fromBundle(it)
+            mGroupId = safeArgs.argId
         }
     }
 
@@ -65,9 +54,12 @@ class ViewGroupFragment : NestedFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        fab.onClick { navInterface?.moveBack() }
-        fabAdd.onClick { navInterface?.openFragment(AddTaskFragment.newInstance(mGroupId), AddTaskFragment.TAG) }
+        fab.onClick { findNavController().navigateUp() }
+        fabAdd.onClick {
+            val direction = ViewGroupFragmentDirections.actionViewGroupFragmentToAddTaskFragment()
+            direction.argId = mGroupId
+            findNavController().navigate(direction)
+        }
         fabNotification.onClick { showNotification() }
 
         tasksList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)

@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.data.TaskGroup
-import com.github.naz013.tasker.group.view.ViewGroupFragment
-import com.github.naz013.tasker.settings.SettingsFragment
-import com.github.naz013.tasker.task.AddTaskFragment
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -32,13 +31,6 @@ import kotlinx.android.synthetic.main.fragment_home.*
  */
 class HomeFragment : BaseFragment() {
 
-    companion object {
-        const val TAG = "HomeFragment"
-        fun newInstance(): HomeFragment {
-            return HomeFragment()
-        }
-    }
-
     private var mAdapter: GroupsListAdapter = GroupsListAdapter()
     private lateinit var viewModel: HomeViewModel
 
@@ -54,7 +46,7 @@ class HomeFragment : BaseFragment() {
             performAction(position, action)
         }
 
-        tasksList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        tasksList.layoutManager = LinearLayoutManager(context)
         tasksList.adapter = mAdapter
         updateEmpty()
 
@@ -69,11 +61,15 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun openAddScreen(group: TaskGroup) {
-        navInterface?.openFragment(AddTaskFragment.newInstance(group.id), AddTaskFragment.TAG)
+        val direction = HomeFragmentDirections.actionHomeFragmentToAddTaskFragment()
+        direction.argId = group.id
+        findNavController().navigate(direction)
     }
 
     private fun openGroup(group: TaskGroup) {
-        navInterface?.openFragment(ViewGroupFragment.newInstance(group.id), ViewGroupFragment.TAG)
+        val direction = HomeFragmentDirections.actionHomeFragmentToViewGroupFragment()
+        direction.argId = group.id
+        findNavController().navigate(direction)
     }
 
     private fun initViewModel() {
@@ -93,12 +89,6 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun openSettings() {
-        navInterface?.openFragment(SettingsFragment.newInstance(), SettingsFragment.TAG)
-    }
-
-    override fun onBackStackResume() {
-        super.onBackStackResume()
-        mAdapter.notifyDataSetChanged()
-        updateEmpty()
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())
     }
 }

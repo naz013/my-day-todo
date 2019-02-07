@@ -1,6 +1,5 @@
 package com.github.naz013.tasker.arch
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 
 /**
@@ -18,29 +17,4 @@ import androidx.fragment.app.Fragment
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-abstract class BaseFragment : Fragment() {
-
-    protected var navInterface: NavInterface? = null
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        if (navInterface == null) {
-            navInterface = context as NavInterface?
-        }
-    }
-
-    protected fun moveBack() {
-        activity?.onBackPressed()
-    }
-
-    open fun canGoBack(): Boolean = true
-
-    open fun onBackStackResume() {
-        navInterface?.onFragmentSelect(this)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        onBackStackResume()
-    }
-}
+abstract class BaseFragment : Fragment()

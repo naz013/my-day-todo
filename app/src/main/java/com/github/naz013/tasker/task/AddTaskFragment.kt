@@ -1,7 +1,5 @@
 package com.github.naz013.tasker.task
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -9,8 +7,11 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.github.naz013.tasker.R
-import com.github.naz013.tasker.arch.NestedFragment
+import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
@@ -31,19 +32,7 @@ import kotlinx.android.synthetic.main.fragment_add.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class AddTaskFragment : NestedFragment() {
-
-    companion object {
-        const val TAG = "AddTaskFragment"
-        private const val ARG_ID = "arg_id"
-        fun newInstance(id: Int): AddTaskFragment {
-            val fragment = AddTaskFragment()
-            val bundle = Bundle()
-            bundle.putInt(ARG_ID, id)
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
+class AddTaskFragment : BaseFragment() {
 
     private var mGroupId: Int = 0
     private var mGroup: TaskGroup? = null
@@ -51,8 +40,9 @@ class AddTaskFragment : NestedFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            mGroupId = arguments?.getInt(ARG_ID)!!
+        arguments?.let {
+            val safeArgs = AddTaskFragmentArgs.fromBundle(it)
+            mGroupId = safeArgs.argId
         }
     }
 
@@ -62,7 +52,7 @@ class AddTaskFragment : NestedFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fab.onClick { navInterface?.moveBack() }
+        fab.onClick { findNavController().navigateUp() }
 
         initViewModel()
 

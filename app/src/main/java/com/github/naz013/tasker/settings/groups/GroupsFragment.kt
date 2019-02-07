@@ -7,19 +7,18 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.github.naz013.tasker.R
-import com.github.naz013.tasker.arch.NestedFragment
+import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.arch.OnStartDragListener
 import com.github.naz013.tasker.data.TaskGroup
-import com.github.naz013.tasker.group.AddGroupFragment
 import com.github.naz013.tasker.utils.GoogleDrive
 import com.github.naz013.tasker.utils.LocalDrive
 import com.github.naz013.tasker.utils.launchDefault
 import com.google.android.material.snackbar.Snackbar
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_groups.*
-
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -36,14 +35,7 @@ import kotlinx.android.synthetic.main.fragment_groups.*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class GroupsFragment : NestedFragment(), OnStartDragListener {
-
-    companion object {
-        const val TAG = "GroupsFragment"
-        fun newInstance(): GroupsFragment {
-            return GroupsFragment()
-        }
-    }
+class GroupsFragment : BaseFragment(), OnStartDragListener {
 
     private var mItemTouchHelper: ItemTouchHelper? = null
     private var mAdapter: GroupsListAdapter = GroupsListAdapter()
@@ -55,7 +47,7 @@ class GroupsFragment : NestedFragment(), OnStartDragListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fab.onClick { moveBack() }
+        fab.onClick { findNavController().navigateUp() }
         fabAdd.onClick { openAddScreen() }
 
         mAdapter = GroupsListAdapter()
@@ -102,11 +94,13 @@ class GroupsFragment : NestedFragment(), OnStartDragListener {
     }
 
     private fun openAddScreen() {
-        navInterface?.openFragment(AddGroupFragment.newInstance(0), AddGroupFragment.TAG)
+        findNavController().navigate(GroupsFragmentDirections.actionGroupsFragmentToAddGroupFragment())
     }
 
     private fun openGroup(group: TaskGroup) {
-        navInterface?.openFragment(AddGroupFragment.newInstance(group.id), AddGroupFragment.TAG)
+        val directions = GroupsFragmentDirections.actionGroupsFragmentToAddGroupFragment()
+        directions.argId = group.id
+        findNavController().navigate(directions)
     }
 
     private fun initViewModel() {
