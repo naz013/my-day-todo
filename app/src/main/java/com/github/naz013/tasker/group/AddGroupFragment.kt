@@ -88,6 +88,7 @@ class AddGroupFragment : BaseFragment() {
         val summary = nameView.text.toString().trim()
         var group = mGroup
         if (!TextUtils.isEmpty(summary) && isRemoving) {
+            hideKeyboard(nameView)
             if (group == null) {
                 group = TaskGroup().apply {
                     position = 100

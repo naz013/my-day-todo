@@ -84,6 +84,7 @@ class AddTaskFragment : BaseFragment() {
         val summary = summaryView.text.toString().trim()
         val group = mGroup
         if (!TextUtils.isEmpty(summary) && group != null && isRemoving) {
+            hideKeyboard(summaryView)
             viewModel.saveTask(summary, group, favouriteView.isChecked)
         }
     }
