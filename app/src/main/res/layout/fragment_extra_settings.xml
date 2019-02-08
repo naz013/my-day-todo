@@ -9,10 +9,11 @@
         android:id="@+id/titleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="24dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/oswald_bold"
         android:textColor="?colorAccent"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -27,23 +28,24 @@
             android:id="@+id/switchButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:padding="8dp"
             app:selectedColor="#1DE9B6"
             app:selectedTab="0"
             app:strokeRadius="4dp"
             app:strokeWidth="2dp"
             app:switchTabs="@array/switch_states"
-            app:textSize="16sp" />
+            app:textSize="16sp"
+            app:typeface="oswald_light.ttf" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/groupsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp" />
+            android:layout_marginStart="@dimen/material_margin"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="@dimen/material_margin" />
 
     </LinearLayout>
 
@@ -51,8 +53,8 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:tint="?colorPrimary"

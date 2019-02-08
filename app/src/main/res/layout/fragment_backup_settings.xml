@@ -13,6 +13,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
+        android:fontFamily="@font/oswald_bold"
         android:text="@string/backup"
         android:textColor="?colorAccent"
         android:textSize="24sp"
@@ -41,6 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/oswald_regular"
                     android:text="@string/local"
                     android:textSize="20sp" />
 
@@ -48,6 +50,7 @@
                     android:id="@+id/localButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/oswald_regular"
                     android:text="@string/disabled"
                     android:textColor="?colorOnSecondary"
                     app:backgroundTint="?colorSecondary" />
@@ -68,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/oswald_regular"
                     android:text="@string/google_drive"
                     android:textSize="20sp" />
 
@@ -75,14 +79,13 @@
                     android:id="@+id/googleButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/oswald_regular"
                     android:text="@string/disabled"
                     android:textColor="?colorOnSecondary"
                     app:backgroundTint="?colorSecondary" />
 
             </LinearLayout>
-
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

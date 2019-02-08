@@ -282,6 +282,7 @@ class BackupSettingsFragment : BaseFragment() {
     }
 
     private fun handleSignInResult(result: Intent?) {
+        Timber.d("handleSignInResult: $result")
         GoogleSignIn.getSignedInAccountFromIntent(result)
                 .addOnSuccessListener { googleAccount ->
                     Timber.d("handleSignInResult: ${googleAccount.email}")
