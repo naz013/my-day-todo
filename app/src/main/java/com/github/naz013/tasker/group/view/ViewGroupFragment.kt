@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.data.Task
@@ -62,7 +64,11 @@ class ViewGroupFragment : BaseFragment() {
         }
         fabNotification.onClick { showNotification() }
 
-        tasksList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        if (isTablet() && isHorizontal()) {
+            tasksList.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        } else {
+            tasksList.layoutManager = LinearLayoutManager(context)
+        }
 
         mAdapter.callback = { list -> saveUpdates(list) }
         mAdapter.deleteCallback = { position -> showSnackbar(position) }

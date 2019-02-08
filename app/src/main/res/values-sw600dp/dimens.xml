@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="list_margin">112dp</dimen>
+    <dimen name="material_margin">112dp</dimen>
+    <bool name="is_tablet">true</bool>
+</resources>

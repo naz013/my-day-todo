@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.data.TaskGroup
@@ -46,7 +47,11 @@ class HomeFragment : BaseFragment() {
             performAction(position, action)
         }
 
-        tasksList.layoutManager = LinearLayoutManager(context)
+        if (isTablet() && isHorizontal()) {
+            tasksList.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        } else {
+            tasksList.layoutManager = LinearLayoutManager(context)
+        }
         tasksList.adapter = mAdapter
         updateEmpty()
 

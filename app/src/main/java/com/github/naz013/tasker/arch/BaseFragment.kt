@@ -1,9 +1,11 @@
 package com.github.naz013.tasker.arch
 
 import android.content.Context
+import android.content.res.Configuration
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import com.github.naz013.tasker.R
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -21,6 +23,16 @@ import androidx.fragment.app.Fragment
  * limitations under the License.
  */
 abstract class BaseFragment : Fragment() {
+
+    fun isHorizontal(): Boolean {
+        return context?.resources?.configuration?.orientation ?: 0 == Configuration.ORIENTATION_LANDSCAPE
+    }
+
+    fun isChromeOs(): Boolean {
+        return context?.packageManager?.hasSystemFeature("org.chromium.arc.device_management") ?: false
+    }
+
+    fun isTablet(): Boolean = resources.getBoolean(R.bool.is_tablet)
 
     fun hideKeyboard(view: View? = null) {
         val token = view?.windowToken ?: activity?.window?.currentFocus?.windowToken ?: return

@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.naz013.tasker.R
 import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.arch.OnStartDragListener
@@ -55,7 +56,7 @@ class GroupsFragment : BaseFragment(), OnStartDragListener {
         mAdapter.callback = { position, action -> performAction(position, action) }
         mAdapter.deleteCallback = { position -> showSnackbar(position) }
 
-        tasksList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        tasksList.layoutManager = LinearLayoutManager(context)
         tasksList.adapter = mAdapter
 
         val callback = SimpleItemTouchHelperCallback(mAdapter)

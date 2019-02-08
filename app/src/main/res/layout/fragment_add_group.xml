@@ -28,8 +28,8 @@
             android:id="@+id/nameView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="@dimen/material_margin"
+            android:layout_marginEnd="@dimen/material_margin"
             android:background="@null"
             android:gravity="start"
             android:hint="@string/name"
@@ -37,7 +37,8 @@
             android:inputType="text"
             android:maxLength="32"
             android:maxLines="1"
-            android:padding="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:textColor="@color/colorGreyLight"
             android:textColorHint="@color/colorGreyLight"
             android:textSize="24sp"
@@ -45,7 +46,9 @@
 
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/material_margin"
+            android:layout_marginEnd="@dimen/material_margin">
 
             <LinearLayout
                 android:id="@+id/colorSwitchContainer"
@@ -59,9 +62,9 @@
             android:id="@+id/bannerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="@dimen/material_margin"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="@dimen/material_margin"
             android:background="@drawable/group_banner_bg"
             android:gravity="center_vertical"
             android:orientation="horizontal"
