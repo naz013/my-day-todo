@@ -47,9 +47,6 @@ android {
                 }
             }
         }
-        debug {
-            signingConfig signingConfigs.app
-        }
     }
     packagingOptions {
         exclude 'META-INF/LICENSE'

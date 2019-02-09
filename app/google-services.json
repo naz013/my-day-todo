@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "406986457656-e2iasgfp4tcgduh0ofglivuhmds3rsri.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.github.naz013.tasker",
+            "certificate_hash": "48644ccb704a365d07f7fc14d9f56d5921b2970e"
+          }
+        },
+        {
           "client_id": "406986457656-gc7sauor0rje4tnfggi530qekmpj4rcg.apps.googleusercontent.com",
           "client_type": 3
         }
