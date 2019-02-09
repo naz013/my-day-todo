@@ -211,6 +211,7 @@ class BackupSettingsFragment : BaseFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Timber.d("onActivityResult: $resultCode, $data")
         if (requestCode == REQUEST_CODE_SIGN_IN && resultCode == RESULT_OK) {
             handleSignInResult(data)
         } else {

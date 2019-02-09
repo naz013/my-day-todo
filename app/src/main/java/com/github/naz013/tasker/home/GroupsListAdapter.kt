@@ -17,6 +17,7 @@ import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.item_group.view.*
 import kotlinx.android.synthetic.main.item_task.view.*
+import java.lang.Exception
 
 
 /**
@@ -92,8 +93,11 @@ class GroupsListAdapter : RecyclerView.Adapter<GroupsListAdapter.Holder>() {
 
         fun bind(taskGroup: TaskGroup) {
             Log.d("GroupsListAdapter", "bind: $taskGroup")
-            val drawable = itemView.groupTitleView.background as GradientDrawable
-            drawable.setColor(Color.parseColor(taskGroup.color))
+            try {
+                val drawable = itemView.groupTitleView.background as GradientDrawable
+                drawable.setColor(Color.parseColor(taskGroup.color))
+            } catch (e: Exception) {
+            }
 
             itemView.groupTitleView.text = taskGroup.name
 

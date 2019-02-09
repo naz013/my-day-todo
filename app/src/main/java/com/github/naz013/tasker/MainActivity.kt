@@ -1,5 +1,6 @@
 package com.github.naz013.tasker
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.github.naz013.tasker.utils.Prefs
@@ -20,5 +21,13 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         Prefs.getInstance(this).setLastLaunch(TimeUtils.getGmtStamp())
         super.onDestroy()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val navHost = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment)
+        navHost?.let { navFragment ->
+            navFragment.childFragmentManager.primaryNavigationFragment?.onActivityResult(requestCode, resultCode, data)
+        }
     }
 }

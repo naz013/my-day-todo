@@ -16,6 +16,7 @@ import com.github.naz013.tasker.data.TaskGroup
 import com.github.naz013.tasker.utils.Prefs
 import com.mcxiaoke.koi.ext.onClick
 import kotlinx.android.synthetic.main.fragment_add.*
+import java.lang.Exception
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -75,8 +76,11 @@ class AddTaskFragment : BaseFragment() {
     private fun showGroup(group: TaskGroup) {
         mGroup = group
         groupTitleView.text = group.name
-        val drawable = groupTitleView.background as GradientDrawable
-        drawable.setColor(Color.parseColor(group.color))
+        try {
+            val drawable = groupTitleView.background as GradientDrawable
+            drawable.setColor(Color.parseColor(group.color))
+        } catch (e: Exception) {
+        }
     }
 
     override fun onStop() {

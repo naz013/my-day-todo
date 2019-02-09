@@ -15,22 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "406986457656-l571cdvpn81553be26pmlo1ucu76t8h1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.github.naz013.tasker",
-            "certificate_hash": "36808f65aadfe7bdf7b6a6317f0408a4c3bd6844"
-          }
-        },
-        {
-          "client_id": "406986457656-4l1moi0j1jqbbf9oa7s9fmqhb1vrk4ek.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.github.naz013.tasker",
-            "certificate_hash": "8541f7d0156f7e5a81137e351f8eb728f5191e35"
-          }
-        },
-        {
           "client_id": "406986457656-4dsfa4bnvgfdjar930r5s2fa1b4q8561.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
