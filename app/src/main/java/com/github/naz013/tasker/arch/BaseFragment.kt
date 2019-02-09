@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.res.Configuration
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.StyleRes
 import androidx.fragment.app.Fragment
 import com.github.naz013.tasker.R
+import com.github.naz013.tasker.utils.Prefs
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -23,6 +25,15 @@ import com.github.naz013.tasker.R
  * limitations under the License.
  */
 abstract class BaseFragment : Fragment() {
+
+    @StyleRes
+    fun dialogStyle(): Int {
+        return if (Prefs.getInstance(context!!).isDarkMode()) {
+            R.style.Dark_Dialog
+        } else {
+            R.style.Light_Dialog
+        }
+    }
 
     fun isHorizontal(): Boolean {
         return context?.resources?.configuration?.orientation ?: 0 == Configuration.ORIENTATION_LANDSCAPE

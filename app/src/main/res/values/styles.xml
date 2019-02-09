@@ -20,4 +20,30 @@
     <style name="AppTheme.Dark" parent="BaseDark">
     </style>
 
+    <style name="Base.Light.Dialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorAccent</item>
+    </style>
+
+    <style name="Base.Dark.Dialog" parent="Theme.MaterialComponents.Dialog">
+        <item name="colorSecondary">@color/colorDarkAccent</item>
+        <item name="colorPrimary">@color/colorDarkAccent</item>
+    </style>
+
+    <style name="Light.Dialog" parent="Base.Light.Dialog">
+        <item name="colorBackgroundFloating">@color/colorPrimary</item>
+        <item name="scrimBackground">@color/colorPrimary</item>
+        <item name="android:colorBackground">@color/colorPrimary</item>
+        <item name="android:popupBackground">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+    </style>
+
+    <style name="Dark.Dialog" parent="Base.Dark.Dialog">
+        <item name="colorBackgroundFloating">@color/colorDarkPrimary</item>
+        <item name="scrimBackground">@color/colorDarkPrimary</item>
+        <item name="android:colorBackground">@color/colorDarkPrimary</item>
+        <item name="android:popupBackground">@color/colorDarkPrimary</item>
+        <item name="android:windowBackground">@color/colorDarkPrimary</item>
+    </style>
+
 </resources>

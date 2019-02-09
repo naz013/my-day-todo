@@ -258,7 +258,7 @@ class BackupSettingsFragment : BaseFragment() {
     }
 
     private fun showMergeDialog(oldList: List<TaskGroup>, cloudList: List<TaskGroup>, storage: String) {
-        val dialog = AlertDialog.Builder(activity!!)
+        val dialog = AlertDialog.Builder(activity!!, dialogStyle())
         dialog.setMessage("Found ${cloudList.size} groups on $storage and ${oldList.size} in application. " +
                 "What to do?")
         dialog.setPositiveButton("Save only from $storage") { _, _ ->
