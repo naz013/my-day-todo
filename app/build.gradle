@@ -24,12 +24,7 @@ android {
         }
     }
     lintOptions {
-        abortOnError false
-        checkReleaseBuilds false
         disable 'GoogleAppIndexingWarning'
-    }
-    dexOptions {
-        javaMaxHeapSize "4g"
     }
     buildTypes {
         release {
