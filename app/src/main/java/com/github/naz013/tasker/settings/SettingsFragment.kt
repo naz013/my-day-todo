@@ -11,9 +11,13 @@ import com.github.naz013.tasker.R
 import com.github.naz013.tasker.SplashScreenActivity
 import com.github.naz013.tasker.arch.BaseFragment
 import com.github.naz013.tasker.utils.Prefs
+import com.github.naz013.tasker.utils.launchDefault
+import com.github.naz013.tasker.utils.withUIContext
 import com.mcxiaoke.koi.ext.onClick
 import com.mcxiaoke.koi.ext.onLongClick
 import kotlinx.android.synthetic.main.fragment_settings.*
+import kotlinx.coroutines.delay
+import timber.log.Timber
 
 /**
  * Copyright 2018 Nazar Suhovich
@@ -64,7 +68,15 @@ class SettingsFragment : BaseFragment() {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        initValues()
+        Timber.d("onViewStateRestored: ")
+        launchDefault {
+            delay(250)
+            withUIContext {
+                if (!isRemoving) {
+                    initValues()
+                }
+            }
+        }
     }
 
     private fun initValues() {
