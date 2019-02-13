@@ -11,8 +11,8 @@ android {
         applicationId "com.github.naz013.tasker"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 12
-        versionName "1.0.8"
+        versionCode 13
+        versionName "1.0.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -109,8 +109,8 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.0.0'
     implementation project(':BoxedVerticalSeekBarLib')
 
-    implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0-beta01"
-    implementation "android.arch.navigation:navigation-ui-ktx:1.0.0-beta01"
+    implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0-beta02"
+    implementation "android.arch.navigation:navigation-ui-ktx:1.0.0-beta02"
 }
 
 kotlin {
