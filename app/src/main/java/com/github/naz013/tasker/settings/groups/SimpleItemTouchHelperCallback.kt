@@ -5,23 +5,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.github.naz013.tasker.arch.ItemTouchHelperAdapter
 import com.github.naz013.tasker.arch.ItemTouchHelperViewHolder
+import kotlin.math.abs
 
-
-/**
- * Copyright 2018 Nazar Suhovich
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 class SimpleItemTouchHelperCallback(private val mAdapter: ItemTouchHelperAdapter) : ItemTouchHelper.Callback() {
 
     override fun isLongPressDragEnabled(): Boolean {
@@ -33,11 +18,11 @@ class SimpleItemTouchHelperCallback(private val mAdapter: ItemTouchHelperAdapter
     }
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-        if (viewHolder.adapterPosition == 0) {
-            return ItemTouchHelper.Callback.makeMovementFlags(0, 0)
+        return if (viewHolder.adapterPosition == 0) {
+            makeMovementFlags(0, 0)
         } else {
             val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-            return ItemTouchHelper.Callback.makeMovementFlags(dragFlags, 0)
+            makeMovementFlags(dragFlags, 0)
         }
     }
 
@@ -58,7 +43,7 @@ class SimpleItemTouchHelperCallback(private val mAdapter: ItemTouchHelperAdapter
                              dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             // Fade out the view as it is swiped out of the parent's bounds
-            val alpha = 1.0f - Math.abs(dX) / viewHolder.itemView.width.toFloat()
+            val alpha = 1.0f - abs(dX) / viewHolder.itemView.width.toFloat()
             viewHolder.itemView.alpha = alpha
             viewHolder.itemView.translationX = dX
         } else {

@@ -2,7 +2,6 @@ package com.github.naz013.tasker
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.data.TaskGroup
@@ -60,7 +59,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 db.groupDao().insert(groups)
             } else if (clear == Prefs.CUSTOM) {
                 val ids = prefs.getStringList(Prefs.CLEAR_GROUP_IDS)
-                if (!ids.isEmpty()) {
+                if (ids.isNotEmpty()) {
                     groups.filter { ids.contains(it.id.toString()) }.forEach {
                         it.tasks.clear()
                     }
@@ -70,20 +69,17 @@ class SplashScreenActivity : AppCompatActivity() {
 
             groups = db.groupDao().getAll()
             val unCheck = prefs.getClearChecks()
-            Log.d("SplashScreenActivity", "onCreate: $unCheck")
             if (unCheck == Prefs.ENABLED) {
                 groups.forEach { group ->
                     group.tasks.forEach { it.done = false }
                 }
-                Log.d("SplashScreenActivity", "onCreate: $groups")
                 db.groupDao().insert(groups)
             } else if (unCheck == Prefs.CUSTOM) {
                 val ids = prefs.getStringList(Prefs.CLEAR_CHECKS_IDS)
-                if (!ids.isEmpty()) {
+                if (ids.isNotEmpty()) {
                     groups.filter { ids.contains(it.id.toString()) }.forEach { group ->
                         group.tasks.forEach { it.done = false }
                     }
-                    Log.d("SplashScreenActivity", "onCreate: $ids, $groups")
                     db.groupDao().insert(groups)
                 }
             }

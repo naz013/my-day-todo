@@ -27,21 +27,6 @@ import com.mcxiaoke.koi.ext.toast
 import kotlinx.android.synthetic.main.fragment_backup_settings.*
 import timber.log.Timber
 
-/**
- * Copyright 2018 Nazar Suhovich
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 class BackupSettingsFragment : BaseFragment() {
 
     companion object {
@@ -102,13 +87,13 @@ class BackupSettingsFragment : BaseFragment() {
             val oldList = appDb.groupDao().getAll()
             val cloudList = drive.restoreFromDrive()
             Timber.d("startGoogleSync: ${oldList.size}, ${cloudList.size}")
-            if (!cloudList.isEmpty() && !oldList.isEmpty()) {
+            if (cloudList.isNotEmpty() && oldList.isNotEmpty()) {
                 Timber.d("startGoogleSync: merge")
                 withUIContext {
                     hideProgress()
                     showMergeDialog(oldList, cloudList, "SD Card")
                 }
-            } else if (!cloudList.isEmpty()) {
+            } else if (cloudList.isNotEmpty()) {
                 Timber.d("startGoogleSync: local")
                 appDb.groupDao().insert(cloudList)
                 withUIContext {
@@ -235,13 +220,13 @@ class BackupSettingsFragment : BaseFragment() {
             val oldList = appDb.groupDao().getAll()
             val cloudList = drive.restoreFromDrive()
             Timber.d("startGoogleSync: ${oldList.size}, ${cloudList.size}")
-            if (!cloudList.isEmpty() && !oldList.isEmpty()) {
+            if (cloudList.isNotEmpty() && oldList.isNotEmpty()) {
                 Timber.d("startGoogleSync: merge")
                 withUIContext {
                     hideProgress()
                     showMergeDialog(oldList, cloudList, "Google Drive")
                 }
-            } else if (!cloudList.isEmpty()) {
+            } else if (cloudList.isNotEmpty()) {
                 Timber.d("startGoogleSync: local")
                 appDb.groupDao().insert(cloudList)
                 withUIContext {

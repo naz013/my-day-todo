@@ -6,13 +6,13 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.github.naz013.tasker"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 16
-        versionName "1.0.12"
+        targetSdkVersion 29
+        versionCode 17
+        versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -69,26 +69,25 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    kapt 'com.android.tools.build.jetifier:jetifier-core:1.0.0-beta04'
-    annotationProcessor 'com.android.tools.build.jetifier:jetifier-core:1.0.0-beta04'
-    implementation "androidx.appcompat:appcompat:1.0.2"
-    implementation "com.google.android.material:material:1.1.0-alpha05"
-    implementation "androidx.cardview:cardview:1.0.0"
+    kapt 'com.android.tools.build.jetifier:jetifier-core:1.0.0-beta05'
+    annotationProcessor 'com.android.tools.build.jetifier:jetifier-core:1.0.0-beta05'
+    implementation "com.google.android.material:material:1.1.0-alpha07"
     implementation "androidx.recyclerview:recyclerview:1.0.0"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation "androidx.appcompat:appcompat:1.0.2"
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     implementation 'com.mcxiaoke.koi:core:0.5.5'
     implementation 'org.jetbrains.anko:anko-commons:0.10.4'
-    implementation 'androidx.core:core-ktx:1.0.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1'
+    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.room:room-runtime:2.0.0'
+    implementation 'androidx.room:room-runtime:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.0.0'
-    kapt 'androidx.room:room-compiler:2.0.0'
+    kapt 'androidx.room:room-compiler:2.1.0'
     implementation 'lib.kingja.switchbutton:switchbutton:1.1.6'
 
     implementation('com.google.api-client:google-api-client-android:1.23.0') {
@@ -101,12 +100,12 @@ dependencies {
         exclude module: 'httpclient'
     }
 
-    implementation 'com.google.android.gms:play-services-auth:16.0.1'
-    implementation 'com.google.firebase:firebase-core:16.0.7'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
-    kapt 'androidx.room:room-compiler:2.0.0'
+    kapt 'androidx.room:room-compiler:2.1.0'
     implementation project(':BoxedVerticalSeekBarLib')
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0'

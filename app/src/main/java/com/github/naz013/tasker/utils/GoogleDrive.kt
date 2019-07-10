@@ -1,7 +1,6 @@
 package com.github.naz013.tasker.utils
 
 import android.content.Context
-import android.util.Log
 import com.crashlytics.android.Crashlytics
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.data.TaskGroup
@@ -21,22 +20,6 @@ import java.io.InputStream
 import java.nio.charset.StandardCharsets
 import java.util.*
 
-
-/**
- * Copyright 2018 Nazar Suhovich
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 class GoogleDrive(val context: Context) {
 
     companion object {
@@ -48,17 +31,15 @@ class GoogleDrive(val context: Context) {
 
     init {
         val user = Prefs.getInstance(context).getGoogleEmail()
-        Log.d("GoogleDrive", "init: $user")
         if (user.matches(".*@.*".toRegex())) {
             try {
-                val credential = GoogleAccountCredential.usingOAuth2(context, Arrays.asList(DriveScopes.DRIVE_APPDATA))
+                val credential = GoogleAccountCredential.usingOAuth2(context, listOf(DriveScopes.DRIVE_APPDATA))
                 credential.selectedAccountName = user
                 val mJsonFactory = GsonFactory.getDefaultInstance()
                 val mTransport = AndroidHttp.newCompatibleTransport()
                 driveService = Drive.Builder(mTransport, mJsonFactory, credential).setApplicationName(APPLICATION_NAME).build()
             } catch (e: Exception) {
                 Crashlytics.log(e.message)
-                Log.d("GoogleDrive", "init: " + e.message)
             }
         } else {
             Prefs.getInstance(context).setGoogleEmail("")
@@ -78,7 +59,6 @@ class GoogleDrive(val context: Context) {
 
             val groups = AppDb.getInMemoryDatabase(context).groupDao().getAll()
             val data = Gson().toJson(groups)
-            Log.d("GoogleDrive", "saveToDrive: $data")
             val array = data.toByteArray(StandardCharsets.UTF_8)
             val stream = ByteArrayInputStream(array)
             val content = object : AbstractInputStreamContent("application/json") {
@@ -91,7 +71,6 @@ class GoogleDrive(val context: Context) {
             println("File ID: " + file.id)
         } catch (e: Exception) {
             Crashlytics.log(e.message)
-            Log.d("GoogleDrive", "saveToDrive: " + e.message)
         }
     }
 
@@ -105,14 +84,12 @@ class GoogleDrive(val context: Context) {
                     .setPageSize(10)
                     .execute()
             for (file in files.files) {
-                Log.d("GoogleDrive", "deleteDataJson: " + file.name)
                 if (file.name.contains("data")) {
                     service.files().delete(file.id).execute()
                 }
             }
         } catch (e: Exception) {
             Crashlytics.log(e.message)
-            Log.d("GoogleDrive", "deleteDataJson: " + e.message)
         }
     }
 
@@ -126,9 +103,7 @@ class GoogleDrive(val context: Context) {
                     .setFields("nextPageToken, files(id, name)")
                     .setPageSize(10)
                     .execute()
-            Log.d("GoogleDrive", "restoreFromDrive: start")
             for (file in files.files) {
-                Log.d("GoogleDrive", "restoreFromDrive: " + file.name)
                 if (file.name == FILE_NAME) {
                     val outputStream = ByteArrayOutputStream()
                     service.files().get(file.id).executeMediaAndDownloadTo(outputStream)
@@ -138,7 +113,6 @@ class GoogleDrive(val context: Context) {
             }
         } catch (e: Exception) {
             Crashlytics.log(e.message)
-            Log.d("GoogleDrive", "restoreFromDrive: " + e.message)
         }
         return listOf()
     }

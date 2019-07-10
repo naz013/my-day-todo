@@ -5,29 +5,12 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Environment
 import androidx.core.content.ContextCompat
-import android.util.Log
 import com.github.naz013.tasker.data.AppDb
 import com.github.naz013.tasker.data.TaskGroup
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.*
 
-
-/**
- * Copyright 2018 Nazar Suhovich
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 class LocalDrive(val context: Context) {
 
     companion object {
@@ -38,7 +21,6 @@ class LocalDrive(val context: Context) {
         if (!isAllowed()) return
         val dir = getDir() ?: return
         deleteDataJson()
-        Log.d("LocalDrive", "saveToDrive: ")
         try {
             val groups = AppDb.getInMemoryDatabase(context).groupDao().getAll()
             val data = Gson().toJson(groups)
@@ -63,7 +45,6 @@ class LocalDrive(val context: Context) {
         if (!isAllowed()) return listOf()
         val dir = getDir() ?: return listOf()
         val files = dir.listFiles() ?: return listOf()
-        Log.d("LocalDrive", "restoreFromDrive: ")
         for (file in files) {
             if (file.name == FILE_NAME) {
                 val type = object : TypeToken<List<TaskGroup>>() {}.type
@@ -134,10 +115,10 @@ class LocalDrive(val context: Context) {
         output.close()
     }
 
-    private fun getDir(): java.io.File? {
+    private fun getDir(): File? {
         return if (isSdPresent()) {
             val sdPath = Environment.getExternalStorageDirectory()
-            val dir = java.io.File("$sdPath/MyDay")
+            val dir = File("$sdPath/MyDay")
             if (!dir.exists() && dir.mkdirs()) {
                 dir
             } else dir
